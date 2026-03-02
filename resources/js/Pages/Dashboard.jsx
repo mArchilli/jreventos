@@ -83,14 +83,17 @@ export default function Dashboard() {
 
                     {/* Title */}
                     <div className="mb-14 text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                            Bienvenido al{' '}
-                            <span className="text-violet-600">Panel</span>{' '}
-                            <span className="text-violet-400">de</span>{' '}
-                            <span className="text-amber-500">Administración</span>
+                        <h1
+                            className="text-6xl font-black tracking-tight sm:text-7xl text-violet-700"
+                            
+                        >
+                            JR Eventos
                         </h1>
-                        <p className="mt-3 text-base text-violet-500">
-                            Desde aquí vas a poder gestionar shows, servicios y productos
+                        {/* Decorative underline */}
+                        <div className="mx-auto mt-3 h-1 w-32 rounded-full"
+                            style={{ background: 'linear-gradient(90deg, #7c3aed, #f59e0b)' }} />
+                        <p className="mt-4 text-base text-violet-500">
+                            Desde aca vas a poder gestionar shows, servicios y productos
                         </p>
                     </div>
 
