@@ -16,9 +16,10 @@ const emptyForm = {
 export default function ProductsIndex({ products }) {
     const { flash } = usePage().props;
 
-    const [modal, setModal]     = useState(false);
-    const [editing, setEditing] = useState(null);  // full product object when editing
-    const [form, setForm]       = useState(emptyForm);
+    const [modal, setModal]         = useState(false);
+    const [editing, setEditing]     = useState(null);
+    const [form, setForm]           = useState(emptyForm);
+    const [deleteTarget, setDeleteTarget] = useState(null); // { id, title }
 
     /* ───── helpers ───── */
     function openCreate() {
@@ -93,8 +94,8 @@ export default function ProductsIndex({ products }) {
     }
 
     function handleDelete(id) {
-        if (!confirm('¿Eliminar este producto?')) return;
         router.delete(route('admin.products.destroy', id));
+        setDeleteTarget(null);
     }
 
     /* ───── render ───── */
@@ -217,7 +218,7 @@ export default function ProductsIndex({ products }) {
                                                     className="flex-1 rounded-xl border border-violet-300 bg-white px-3 py-1.5 text-xs font-semibold text-violet-700 transition hover:bg-violet-50">
                                                     Editar
                                                 </button>
-                                                <button onClick={() => handleDelete(product.id)}
+                                                <button onClick={() => setDeleteTarget({ id: product.id, title: product.title })}
                                                     className="flex-1 rounded-xl border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-50">
                                                     Eliminar
                                                 </button>
@@ -235,7 +236,39 @@ export default function ProductsIndex({ products }) {
                 </footer>
             </div>
 
-            {/* ───── Modal ───── */}
+            {/* ───── Modal Eliminar ───── */}
+            {deleteTarget && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setDeleteTarget(null)} />
+                    <div className="relative w-full max-w-sm rounded-3xl bg-white shadow-2xl p-8">
+                        {/* Icon */}
+                        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-center text-lg font-bold text-gray-800">¿Eliminar producto?</h3>
+                        <p className="mt-2 text-center text-sm text-gray-500">
+                            Estás por eliminar <span className="font-semibold text-violet-700">{deleteTarget.title}</span>.
+                            Esta acción no se puede deshacer.
+                        </p>
+                        <div className="mt-6 flex gap-3">
+                            <button
+                                onClick={() => setDeleteTarget(null)}
+                                className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50">
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={() => handleDelete(deleteTarget.id)}
+                                className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-600">
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ───── Modal Crear/Editar ───── */}
             {modal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setModal(false)} />
