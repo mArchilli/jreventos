@@ -29,6 +29,16 @@ const cards = [
             </svg>
         ),
     },
+    {
+        title: 'Artistas',
+        description: 'Artistas con los que trabajamos',
+        href: route('admin.artists.index'),
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+        ),
+    },
 ];
 
 export default function Dashboard() {
@@ -106,7 +116,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Cards */}
-                    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 sm:grid-cols-2">
+                    <div className="grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {cards.map((card) => (
                             <div key={card.title} className="relative">
                                 {/* Glow blur behind card */}
@@ -117,7 +127,7 @@ export default function Dashboard() {
                                 />
                                 <Link
                                     href={card.href}
-                                    className="group relative flex flex-col items-center rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 px-12 py-14 shadow-xl transition duration-200 hover:shadow-2xl hover:-translate-y-1"
+                                    className="group relative flex flex-col items-center rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 px-8 py-10 shadow-xl transition duration-200 hover:shadow-2xl hover:-translate-y-1"
                                 >
                                     {/* Icon */}
                                     <div className="mb-6 text-violet-500 transition group-hover:text-violet-700">

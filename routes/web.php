@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ShowServiceController;
+use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/products',                  [ProductController::class, 'store'])->name('products.store');
         Route::put('/products/{product}',         [ProductController::class, 'update'])->name('products.update');
         Route::delete('/products/{product}',      [ProductController::class, 'destroy'])->name('products.destroy');
+
+        Route::get('/artists',                    [ArtistController::class, 'index'])->name('artists.index');
+        Route::post('/artists',                   [ArtistController::class, 'store'])->name('artists.store');
+        Route::put('/artists/{artist}',           [ArtistController::class, 'update'])->name('artists.update');
+        Route::delete('/artists/{artist}',        [ArtistController::class, 'destroy'])->name('artists.destroy');
     });
 });
 
