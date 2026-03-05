@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ShowServiceController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\ShowServiceController as ClientShowServiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +16,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/shows-servicios', [ClientShowServiceController::class, 'index'])->name('shows-servicios.index');
+Route::get('/shows-servicios/{show}', [ClientShowServiceController::class, 'show'])->name('shows-servicios.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
