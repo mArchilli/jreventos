@@ -30,11 +30,11 @@ export default function ArtistsIndex({ artists }) {
                     </div>
 
                     <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl xl:text-7xl">
-                        Nuestros<br />
+                        Trabajamos con<br />
                         <span className="text-yellow-300">Artistas</span>
                     </h1>
                     <p className="mt-4 max-w-xl text-base text-white/60">
-                        Conocé a los artistas que hacen de cada evento una experiencia inolvidable.
+                        Conocé a los artistas que confiaron en nosotros para hacer de cada evento una experiencia inolvidable.
                     </p>
                 </div>
             </section>
