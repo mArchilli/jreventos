@@ -140,10 +140,10 @@ export default function Footer() {
             {/* Barra de copyright */}
             <div className="mx-auto max-w-screen-xl px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <p className="text-xs text-white/40">
-                    &copy; {year} JR Eventos. Todos los derechos reservados.
+                    &copy; {year} JR Eventos.
                 </p>
                 <p className="text-xs text-white/25">
-                    Diseñado con ♥ por JR Eventos
+                    Powered by Pampa Labs
                 </p>
             </div>
 
