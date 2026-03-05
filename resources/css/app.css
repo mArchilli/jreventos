@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .animate-scroll-up {
+        animation: scrollUp 24s linear infinite;
+        will-change: transform;
+    }
+    .animate-scroll-down {
+        animation: scrollDown 24s linear infinite;
+        will-change: transform;
+    }
+}
+
+@keyframes scrollUp {
+    from { transform: translateY(0); }
+    to   { transform: translateY(calc(var(--set-height, -33.333%) * -1)); }
+}
+
+@keyframes scrollDown {
+    from { transform: translateY(calc(var(--set-height, 33.333%) * -1)); }
+    to   { transform: translateY(0); }
+}
