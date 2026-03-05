@@ -2,12 +2,12 @@ import { Head, Link } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 
-const IMAGES_PATH = import.meta.env.VITE_SHOWANDSERVICES_IMAGES_PATH ?? '/images/show-and-services/';
+const IMAGES_PATH = import.meta.env.VITE_PRODUCTS_IMAGES_PATH ?? '/images/products/';
 
-export default function ShowAndServicesIndex({ shows }) {
+export default function ProductsIndex({ products }) {
     return (
         <>
-            <Head title="Shows y Servicios" />
+            <Head title="Productos" />
 
             <Navbar />
 
@@ -20,23 +20,21 @@ export default function ShowAndServicesIndex({ shows }) {
                     backgroundPosition: 'center',
                 }}
             >
-                
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/90" />
-                
+
                 <div className="relative z-10 mx-auto w-full max-w-screen-xl px-8 pb-14 lg:px-16">
                     {/* Badge */}
                     <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
                         <span className="text-yellow-400 text-sm leading-none">★★★★★</span>
-                        <span className="text-sm text-white/80">experiencias únicas</span>
+                        <span className="text-sm text-white/80">calidad garantizada</span>
                     </div>
 
                     <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl xl:text-7xl">
-                        Shows y<br />
-                        <span className="text-yellow-300">Servicios</span>
+                        Nuestros<br />
+                        <span className="text-yellow-300">Productos</span>
                     </h1>
                     <p className="mt-4 max-w-xl text-base text-white/60">
-                        Descubrí todo lo que podemos hacer por tu evento. Desde producción artística
-                        hasta servicios integrales para cada ocasión.
+                        Explorá todo lo que tenemos disponible para hacer de tu evento algo inolvidable.
                     </p>
                 </div>
             </section>
@@ -45,20 +43,19 @@ export default function ShowAndServicesIndex({ shows }) {
             <section className="bg-black py-20 px-6 lg:px-8">
                 <div className="mx-auto max-w-screen-xl">
 
-                    {shows.length === 0 ? (
-                        /* Estado vacío */
+                    {products.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-28 text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-white/15 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z" />
                             </svg>
                             <p className="text-white/30 text-lg font-medium">
-                                Próximamente más shows y servicios.
+                                Próximamente más productos disponibles.
                             </p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {shows.map((show) => (
-                                <ShowCard key={show.id} show={show} />
+                            {products.map((product) => (
+                                <ProductCard key={product.id} product={product} />
                             ))}
                         </div>
                     )}
@@ -69,11 +66,11 @@ export default function ShowAndServicesIndex({ shows }) {
             <section className="bg-black py-16 px-6 border-t border-white/5">
                 <div className="mx-auto max-w-screen-xl flex flex-col items-center text-center gap-6">
                     <h2 className="text-4xl font-black text-white tracking-tight lg:text-5xl">
-                        ¿Querés que formemos<br />
-                        parte de tu <span className="text-yellow-300">evento</span>?
+                        ¿Necesitás algo<br />
+                        <span className="text-yellow-300">especial</span> para tu evento?
                     </h2>
                     <p className="text-white/50 max-w-md text-base">
-                        Contactanos y armamos juntos la propuesta ideal para vos.
+                        Contactanos y te armamos una propuesta a medida.
                     </p>
                     <a
                         href="https://wa.me/"
@@ -94,16 +91,18 @@ export default function ShowAndServicesIndex({ shows }) {
     );
 }
 
-function ShowCard({ show }) {
+function ProductCard({ product }) {
+    const mainImage = product.main_image ?? null;
+
     return (
         <article className="group relative flex flex-col overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-300/30">
 
-            {/* Imagen portada */}
+            {/* Imagen principal */}
             <div className="relative h-64 w-full overflow-hidden bg-white/5 shrink-0">
-                {show.img_portada ? (
+                {mainImage ? (
                     <img
-                        src={`${IMAGES_PATH}${show.img_portada}`}
-                        alt={show.title}
+                        src={`${IMAGES_PATH}${mainImage.filename}`}
+                        alt={product.title}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                 ) : (
@@ -120,11 +119,11 @@ function ShowCard({ show }) {
             {/* Título + botón */}
             <div className="flex flex-1 flex-col justify-between gap-4 p-6">
                 <h3 className="text-xl font-black text-white tracking-tight leading-tight">
-                    {show.title}
+                    {product.title}
                 </h3>
 
                 <Link
-                    href={route('shows-servicios.show', show.id)}
+                    href={route('productos.show', product.id)}
                     className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-black shadow-md transition duration-200 hover:bg-yellow-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
                 >
                     Más información

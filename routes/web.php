@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ShowServiceController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\ShowServiceController as ClientShowServiceController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,9 @@ Route::get('/', function () {
 
 Route::get('/shows-servicios', [ClientShowServiceController::class, 'index'])->name('shows-servicios.index');
 Route::get('/shows-servicios/{show}', [ClientShowServiceController::class, 'show'])->name('shows-servicios.show');
+
+Route::get('/productos', [ClientProductController::class, 'index'])->name('productos.index');
+Route::get('/productos/{product}', [ClientProductController::class, 'show'])->name('productos.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
