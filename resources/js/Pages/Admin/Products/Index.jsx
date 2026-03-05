@@ -103,7 +103,7 @@ export default function ProductsIndex({ products }) {
         <>
             <Head title="Productos" />
 
-            <div className="min-h-screen flex flex-col relative overflow-hidden"
+            <div className="min-h-screen flex flex-col relative overflow-hidden font-sans antialiased"
                 style={{ background: 'linear-gradient(135deg, #ede9fe 0%, #f5f3ff 30%, #faf5ff 55%, #ede9fe 80%, #ddd6fe 100%)' }}>
 
                 {/* Bubbles */}
