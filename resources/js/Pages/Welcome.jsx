@@ -1,5 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
+import Navbar from '@/Components/Navbar';
+import Footer from '@/Components/Footer';
 
 const carouselImages = [
     '/images/show-and-services/show_69a5e183813587.23967872.png',
@@ -52,6 +54,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         <>
             <Head title="Welcome" />
 
+            <Navbar auth={auth} />
+
             {/* HERO */}
             <section
                 className="relative h-screen w-full overflow-hidden"
@@ -63,40 +67,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             >
                 {/* overlay */}
                 <div className="absolute inset-0 bg-black/55" />
-
-                {/* nav */}
-                <nav className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 py-6">
-                    <img
-                        src="/images/logo-jr-eventos.png"
-                        alt="JR Eventos"
-                        className="h-12 w-auto"
-                    />
-                    <div className="flex items-center gap-3">
-                        {auth.user ? (
-                            <Link
-                                href={route('dashboard')}
-                                className="rounded-full border border-white/70 px-5 py-2 text-sm text-white transition hover:bg-white hover:text-black"
-                            >
-                                Dashboard
-                            </Link>
-                        ) : (
-                            <>
-                                <Link
-                                    href={route('login')}
-                                    className="rounded-full border border-white/70 px-5 py-2 text-sm text-white transition hover:bg-white hover:text-black"
-                                >
-                                    Ingresar
-                                </Link>
-                                <Link
-                                    href={route('register')}
-                                    className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:bg-white/80"
-                                >
-                                    Registrarse
-                                </Link>
-                            </>
-                        )}
-                    </div>
-                </nav>
 
                 {/* content */}
                 <div className="relative z-10 flex h-full items-center px-8 lg:px-20">
@@ -147,7 +117,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             </section>
 
             {/* secciones futuras */}
-            <div className="bg-gray-50 dark:bg-black"></div>
+            <div className="bg-gray-950 dark:bg-black"></div>
+
+            <Footer />
         </>
     );
 }
