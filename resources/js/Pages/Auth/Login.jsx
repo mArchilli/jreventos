@@ -124,7 +124,16 @@ export default function Login({ status, canResetPassword }) {
                         </form>
                     </div>
 
-                    <p className="mt-6 text-center text-xs text-white/25">
+                    <div className="mt-5 text-center">
+                        <Link
+                            href="/"
+                            className="text-sm text-white/45 transition duration-200 hover:text-white/80 underline-offset-2 hover:underline"
+                        >
+                            ← Volver al sitio
+                        </Link>
+                    </div>
+
+                    <p className="mt-4 text-center text-xs text-white/25">
                         © {new Date().getFullYear()} JR Eventos. Todos los derechos reservados.
                     </p>
                 </div>
