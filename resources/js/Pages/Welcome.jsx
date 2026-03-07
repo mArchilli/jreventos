@@ -94,7 +94,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
 
                             {/* heading */}
-                            <h1 className="text-6xl font-black leading-none tracking-tight text-white lg:text-7xl xl:text-8xl">
+                            <h1 className="text-6xl font-black leading-none tracking-tight text-white lg:text-7xl xl:text-8xl uppercase">
                                 Hacemos<br />
                                 posible<br />
                                 <span className="text-yellow-300">el evento</span><br />

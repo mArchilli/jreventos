@@ -22,3 +22,14 @@
     from { transform: translateY(calc(var(--set-height, 33.333%) * -1)); }
     to   { transform: translateY(0); }
 }
+
+/* ─── Scroll fade-in animations ─────────────────────────────── */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}

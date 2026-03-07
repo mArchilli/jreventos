@@ -28,6 +28,10 @@ Route::get('/productos/{product}', [ClientProductController::class, 'show'])->na
 Route::get('/artistas', [ClientArtistController::class, 'index'])->name('artistas.index');
 Route::get('/artistas/{artist}', [ClientArtistController::class, 'show'])->name('artistas.show');
 
+Route::get('/sobre-nosotros', function () {
+    return Inertia::render('About');
+})->name('sobre-nosotros');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
