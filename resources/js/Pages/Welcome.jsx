@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import ProcessTimeline from '@/Components/ProcessTimeline';
 
 const carouselImages = [
     '/images/carrusel-hero-1.jpg',
@@ -132,6 +133,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
                 </div>
             </section>
+
+            {/* TIMELINE DE PROCESO */}
+            <ProcessTimeline />
 
             {/* SECCIÓN CLIENTES */}
             <section className="bg-black py-20 px-8 overflow-hidden">
