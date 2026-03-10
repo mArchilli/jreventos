@@ -73,18 +73,42 @@ export default function ProcessTimeline() {
         <section
             ref={sectionRef}
             className="relative bg-black"
-            style={{ height: `${(TOTAL_SLIDES + 1) * 100}vh` }}
+            style={{ height: `${TOTAL_SLIDES * 65 + 100}vh` }}
         >
             <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
 
                 {/* ── Etiqueta superior ───────────────────────────────────────── */}
                 <div
-                    className="absolute top-10 left-1/2 -translate-x-1/2 z-20 transition-all duration-700"
+                    className="absolute top-10 left-6 sm:left-12 lg:left-24 z-20 transition-all duration-700"
                     style={{ opacity: isCTA ? 0 : 1 }}
                 >
                     <span className="text-[10px] tracking-[0.45em] text-white/30 uppercase font-semibold">
                         Cómo trabajamos
                     </span>
+                </div>
+
+                {/* ── Flecha scroll ───────────────────────────────────────────── */}
+                <div
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 transition-opacity duration-700"
+                    style={{ opacity: isCTA ? 0 : 1 }}
+                    aria-hidden="true"
+                >
+                    <div className="animate-bounce">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.35)"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <polyline points="19 12 12 19 5 12" />
+                        </svg>
+                    </div>
                 </div>
 
                 {/* ── Indicador de pasos (puntos laterales) ───────────────────── */}
@@ -116,7 +140,7 @@ export default function ProcessTimeline() {
                         <div
                             key={i}
                             aria-hidden={!isActive}
-                            className="absolute inset-0 flex items-center justify-center px-8 lg:px-24"
+                            className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
                             style={{
                                 opacity: isActive ? 1 : 0,
                                 transform: `translateY(${offset}px)`,
@@ -125,39 +149,43 @@ export default function ProcessTimeline() {
                                 pointerEvents: isActive ? 'auto' : 'none',
                             }}
                         >
-                            <div className="w-full text-center" style={{ maxWidth: '640px' }}>
-                                {/* Número decorativo */}
+                            <div className="w-full" style={{ maxWidth: '1100px' }}>
+
+                                {/* Número de paso */}
                                 <span
-                                    className="block font-black leading-none select-none text-white"
+                                    className="block font-black text-white leading-none select-none mb-6"
                                     style={{
-                                        fontSize: 'clamp(88px, 16vw, 148px)',
-                                        opacity: 0.06,
-                                        letterSpacing: '-0.04em',
+                                        fontSize: 'clamp(18px, 2vw, 26px)',
+                                        letterSpacing: '0.35em',
+                                        opacity: 0.75,
                                     }}
                                 >
                                     {step.number}
                                 </span>
 
-                                {/* Línea divisoria fina */}
-                                <div
-                                    className="mx-auto bg-white/10"
-                                    style={{ width: '48px', height: '1px', marginTop: '-10px', marginBottom: '20px' }}
-                                />
+                                {/* Línea separadora superior */}
+                                <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '32px' }} />
 
-                                {/* Título */}
+                                {/* Título con subrayado animado */}
                                 <h3
-                                    className="font-black text-white leading-tight tracking-tight"
-                                    style={{ fontSize: 'clamp(30px, 5.5vw, 56px)' }}
+                                    className="font-black text-white leading-none tracking-tight"
+                                    style={{
+                                        fontSize: 'clamp(42px, 8vw, 100px)',
+                                        textDecoration: 'underline',
+                                        textDecorationColor: 'rgba(255,255,255,0.15)',
+                                        textUnderlineOffset: 'clamp(6px, 1vw, 14px)',
+                                        textDecorationThickness: '1px',
+                                    }}
                                 >
                                     {step.title}
                                 </h3>
 
                                 {/* Descripción */}
                                 <p
-                                    className="mx-auto mt-6 leading-relaxed text-white/50"
+                                    className="mt-8 leading-relaxed text-white/45"
                                     style={{
-                                        fontSize: 'clamp(15px, 1.8vw, 19px)',
-                                        maxWidth: '520px',
+                                        fontSize: 'clamp(15px, 1.6vw, 19px)',
+                                        maxWidth: '680px',
                                     }}
                                 >
                                     {step.description}
@@ -170,7 +198,7 @@ export default function ProcessTimeline() {
                 {/* ── Slide CTA ───────────────────────────────────────────────── */}
                 <div
                     aria-hidden={!isCTA}
-                    className="absolute inset-0 flex items-center justify-center px-8"
+                    className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
                     style={{
                         opacity: isCTA ? 1 : 0,
                         transform: `translateY(${isCTA ? 0 : 44}px)`,
@@ -179,22 +207,42 @@ export default function ProcessTimeline() {
                         pointerEvents: isCTA ? 'auto' : 'none',
                     }}
                 >
-                    <div className="text-center" style={{ maxWidth: '680px' }}>
-                        <p
-                            className="uppercase tracking-[0.38em] text-white/30 font-semibold mb-6"
-                            style={{ fontSize: '11px' }}
-                        >
-                            El siguiente paso es tuyo
-                        </p>
+                    <div className="w-full" style={{ maxWidth: '1100px' }}>
 
-                        <h2
-                            className="font-black text-white leading-tight tracking-tight"
-                            style={{ fontSize: 'clamp(30px, 5.5vw, 60px)' }}
+                        {/* Número / etiqueta */}
+                        <span
+                            className="block font-black text-white leading-none select-none mb-6"
+                            style={{ fontSize: 'clamp(18px, 2vw, 26px)', letterSpacing: '0.35em', opacity: 0.75 }}
                         >
-                            ¿Listo para empezar a<br />
-                            planificar tu evento?
+                            07
+                        </span>
+
+                        {/* Línea separadora */}
+                        <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '32px' }} />
+
+                        {/* Título con subrayado */}
+                        <h2
+                            className="font-black text-white leading-none tracking-tight"
+                            style={{
+                                fontSize: 'clamp(42px, 8vw, 100px)',
+                                textDecoration: 'underline',
+                                textDecorationColor: 'rgba(255,255,255,0.15)',
+                                textUnderlineOffset: 'clamp(6px, 1vw, 14px)',
+                                textDecorationThickness: '1px',
+                            }}
+                        >
+                            ¿Listo para empezar?
                         </h2>
 
+                        {/* Descripción */}
+                        <p
+                            className="mt-8 leading-relaxed text-white/45"
+                            style={{ fontSize: 'clamp(15px, 1.6vw, 19px)', maxWidth: '680px' }}
+                        >
+                            Contanos tu sueño y nosotros nos encargamos del resto. Un asesor de JR Eventos te está esperando para empezar a planificar juntos.
+                        </p>
+
+                        {/* Botón */}
                         <a
                             href="https://wa.me/?text=Hola%2C%20quiero%20planificar%20mi%20evento%20con%20JR%20Eventos"
                             target="_blank"
