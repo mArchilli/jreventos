@@ -11,6 +11,14 @@
         animation: scrollDown 24s linear infinite;
         will-change: transform;
     }
+    .animate-scroll-left {
+        animation: scrollLeft 24s linear infinite;
+        will-change: transform;
+    }
+    .animate-scroll-right {
+        animation: scrollRight 24s linear infinite;
+        will-change: transform;
+    }
 }
 
 @keyframes scrollUp {
@@ -21,6 +29,16 @@
 @keyframes scrollDown {
     from { transform: translateY(calc(var(--set-height, 33.333%) * -1)); }
     to   { transform: translateY(0); }
+}
+
+@keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(var(--set-width, -33.333%) * -1)); }
+}
+
+@keyframes scrollRight {
+    from { transform: translateX(calc(var(--set-width, 33.333%) * -1)); }
+    to   { transform: translateX(0); }
 }
 
 /* ─── Scroll fade-in animations ─────────────────────────────── */
