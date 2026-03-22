@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import ProcessTimeline from '@/Components/ProcessTimeline';
+import FaqSection from '@/Components/FaqSection';
 
 const carouselImages = [
     '/images/carrusel-hero-1.jpg',
@@ -137,6 +138,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             {/* TIMELINE DE PROCESO */}
             <ProcessTimeline />
 
+            {/* FAQ */}
+            <FaqSection />
+
             {/* SECCIÓN CLIENTES */}
             <section className="bg-black py-20 px-8 overflow-hidden">
                 <div className="mx-auto max-w-screen-xl flex flex-col lg:flex-row items-center gap-16">
@@ -150,7 +154,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </h2>
                         <p className="text-white/60 text-lg font-medium">Ellos ya confiaron en nosotros, podes hacerlo vos también</p>
                         <a
-                            href="https://wa.me/"
+                             href="https://wa.me/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 hover:shadow-xl hover:scale-105 active:scale-95 text-gray-900 font-semibold py-2 px-4 rounded-full transition duration-200 w-fit text-sm shadow-lg"

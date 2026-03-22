@@ -39,8 +39,8 @@ const STEPS = [
     },
 ];
 
-// 6 steps + 1 CTA slide
-const TOTAL_SLIDES = STEPS.length + 1;
+// intro + 6 steps + CTA slide
+const TOTAL_SLIDES = STEPS.length + 2;
 
 export default function ProcessTimeline() {
     const sectionRef = useRef(null);
@@ -67,7 +67,8 @@ export default function ProcessTimeline() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    const isCTA = activeIndex === STEPS.length;
+    const isIntro = activeIndex === 0;
+    const isCTA = activeIndex === STEPS.length + 1;
 
     return (
         <section
@@ -80,7 +81,7 @@ export default function ProcessTimeline() {
                 {/* ── Etiqueta superior ───────────────────────────────────────── */}
                 <div
                     className="absolute top-10 left-6 sm:left-12 lg:left-24 z-20 transition-all duration-700"
-                    style={{ opacity: isCTA ? 0 : 1 }}
+                    style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                 >
                     <span className="text-[10px] tracking-[0.45em] text-white/30 uppercase font-semibold">
                         Cómo trabajamos
@@ -114,7 +115,7 @@ export default function ProcessTimeline() {
                 {/* ── Indicador de pasos (puntos laterales) ───────────────────── */}
                 <div
                     className="absolute right-5 lg:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-20 transition-opacity duration-700"
-                    style={{ opacity: isCTA ? 0 : 1 }}
+                    style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                     aria-hidden="true"
                 >
                     {STEPS.map((_, i) => (
@@ -123,17 +124,81 @@ export default function ProcessTimeline() {
                             className="rounded-full transition-all duration-500"
                             style={{
                                 width: '6px',
-                                height: i === activeIndex ? '28px' : '6px',
-                                background: i === activeIndex ? '#ffffff' : 'rgba(255,255,255,0.2)',
+                                height: i === activeIndex - 1 ? '28px' : '6px',
+                                background: i === activeIndex - 1 ? '#ffffff' : 'rgba(255,255,255,0.2)',
                             }}
                         />
                     ))}
                 </div>
 
+                {/* ── Slide de introducción ───────────────────────────────────── */}
+                <div
+                    aria-hidden={!isIntro}
+                    className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
+                    style={{
+                        opacity: isIntro ? 1 : 0,
+                        transform: `translateY(${isIntro ? 0 : -44}px)`,
+                        transition:
+                            'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)',
+                        pointerEvents: isIntro ? 'auto' : 'none',
+                    }}
+                >
+                    <div className="w-full" style={{ maxWidth: '1300px' }}>
+
+                        {/* Badge */}
+                        <span
+                            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs tracking-[0.3em] text-white/40 uppercase font-semibold mb-8 select-none"
+                        >
+                            Nuestro proceso &mdash; {STEPS.length} pasos
+                        </span>
+
+                        {/* Línea separadora */}
+                        <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '32px' }} />
+
+                        {/* Heading */}
+                        <h2
+                            className="font-black text-white leading-none tracking-tight"
+                            style={{
+                                fontSize: 'clamp(60px, 11vw, 140px)',
+                                textDecoration: 'underline',
+                                textDecorationColor: 'rgba(255,255,255,0.15)',
+                                textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
+                                textDecorationThickness: '1px',
+                            }}
+                        >
+                            Cómo trabajamos
+                        </h2>
+
+                        {/* Descripción */}
+                        <p
+                            className="mt-10 leading-relaxed text-white/45"
+                            style={{ fontSize: 'clamp(17px, 2vw, 24px)', maxWidth: '820px' }}
+                        >
+                            Seguimos un proceso simple y personalizado para que tu evento sea exactamente como lo soñaste. Deslizá para conocer cada paso.
+                        </p>
+
+                        {/* Mini indicadores de pasos + hint */}
+                        <div className="mt-10 flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                {STEPS.map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="rounded-full bg-white/20"
+                                        style={{ width: '6px', height: '6px' }}
+                                    />
+                                ))}
+                            </div>
+                            <span className="text-white/25 text-[11px] tracking-[0.35em] uppercase font-semibold">
+                                scroll para ver
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 {/* ── Slides de pasos ─────────────────────────────────────────── */}
                 {STEPS.map((step, i) => {
-                    const isActive = i === activeIndex;
-                    const isPast   = i < activeIndex;
+                    const isActive = i + 1 === activeIndex;
+                    const isPast   = i + 1 < activeIndex;
                     const offset   = isActive ? 0 : isPast ? -44 : 44;
 
                     return (
@@ -149,13 +214,13 @@ export default function ProcessTimeline() {
                                 pointerEvents: isActive ? 'auto' : 'none',
                             }}
                         >
-                            <div className="w-full" style={{ maxWidth: '1100px' }}>
+                            <div className="w-full" style={{ maxWidth: '1300px' }}>
 
                                 {/* Número de paso */}
                                 <span
                                     className="block font-black text-white leading-none select-none mb-6"
                                     style={{
-                                        fontSize: 'clamp(18px, 2vw, 26px)',
+                                        fontSize: 'clamp(22px, 2.5vw, 36px)',
                                         letterSpacing: '0.35em',
                                         opacity: 0.75,
                                     }}
@@ -164,16 +229,16 @@ export default function ProcessTimeline() {
                                 </span>
 
                                 {/* Línea separadora superior */}
-                                <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '32px' }} />
+                                <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '40px' }} />
 
                                 {/* Título con subrayado animado */}
                                 <h3
                                     className="font-black text-white leading-none tracking-tight"
                                     style={{
-                                        fontSize: 'clamp(42px, 8vw, 100px)',
+                                        fontSize: 'clamp(60px, 11vw, 140px)',
                                         textDecoration: 'underline',
                                         textDecorationColor: 'rgba(255,255,255,0.15)',
-                                        textUnderlineOffset: 'clamp(6px, 1vw, 14px)',
+                                        textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
                                         textDecorationThickness: '1px',
                                     }}
                                 >
@@ -182,10 +247,10 @@ export default function ProcessTimeline() {
 
                                 {/* Descripción */}
                                 <p
-                                    className="mt-8 leading-relaxed text-white/45"
+                                    className="mt-10 leading-relaxed text-white/45"
                                     style={{
-                                        fontSize: 'clamp(15px, 1.6vw, 19px)',
-                                        maxWidth: '680px',
+                                        fontSize: 'clamp(17px, 2vw, 24px)',
+                                        maxWidth: '820px',
                                     }}
                                 >
                                     {step.description}
@@ -207,27 +272,27 @@ export default function ProcessTimeline() {
                         pointerEvents: isCTA ? 'auto' : 'none',
                     }}
                 >
-                    <div className="w-full" style={{ maxWidth: '1100px' }}>
+                    <div className="w-full" style={{ maxWidth: '1300px' }}>
 
                         {/* Número / etiqueta */}
                         <span
                             className="block font-black text-white leading-none select-none mb-6"
-                            style={{ fontSize: 'clamp(18px, 2vw, 26px)', letterSpacing: '0.35em', opacity: 0.75 }}
+                            style={{ fontSize: 'clamp(22px, 2.5vw, 36px)', letterSpacing: '0.35em', opacity: 0.75 }}
                         >
                             07
                         </span>
 
                         {/* Línea separadora */}
-                        <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '32px' }} />
+                        <div className="w-full bg-white/10" style={{ height: '1px', marginBottom: '40px' }} />
 
                         {/* Título con subrayado */}
                         <h2
                             className="font-black text-white leading-none tracking-tight"
                             style={{
-                                fontSize: 'clamp(42px, 8vw, 100px)',
+                                fontSize: 'clamp(60px, 11vw, 140px)',
                                 textDecoration: 'underline',
                                 textDecorationColor: 'rgba(255,255,255,0.15)',
-                                textUnderlineOffset: 'clamp(6px, 1vw, 14px)',
+                                textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
                                 textDecorationThickness: '1px',
                             }}
                         >
@@ -236,8 +301,8 @@ export default function ProcessTimeline() {
 
                         {/* Descripción */}
                         <p
-                            className="mt-8 leading-relaxed text-white/45"
-                            style={{ fontSize: 'clamp(15px, 1.6vw, 19px)', maxWidth: '680px' }}
+                            className="mt-10 leading-relaxed text-white/45"
+                            style={{ fontSize: 'clamp(17px, 2vw, 24px)', maxWidth: '820px' }}
                         >
                             Contanos tu sueño y nosotros nos encargamos del resto. Un asesor de JR Eventos te está esperando para empezar a planificar juntos.
                         </p>
