@@ -112,9 +112,10 @@ export default function ProcessTimeline() {
                     </div>
                 </div>
 
-                {/* ── Indicador de pasos (puntos laterales) ───────────────────── */}
+                {/* ── Indicador de pasos — lateral en desktop, abajo centrado en mobile ── */}
+                {/* Desktop: lateral derecho */}
                 <div
-                    className="absolute right-5 lg:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-2.5 z-20 transition-opacity duration-700"
+                    className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col gap-4 z-20 transition-opacity duration-700"
                     style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                     aria-hidden="true"
                 >
@@ -123,8 +124,26 @@ export default function ProcessTimeline() {
                             key={i}
                             className="rounded-full transition-all duration-500"
                             style={{
-                                width: '6px',
-                                height: i === activeIndex - 1 ? '28px' : '6px',
+                                width: '10px',
+                                height: i === activeIndex - 1 ? '48px' : '10px',
+                                background: i === activeIndex - 1 ? '#ffffff' : 'rgba(255,255,255,0.25)',
+                            }}
+                        />
+                    ))}
+                </div>
+                {/* Mobile: abajo centrado */}
+                <div
+                    className="lg:hidden absolute bottom-64 left-1/2 -translate-x-1/2 flex flex-row gap-2.5 z-20 transition-opacity duration-700"
+                    style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
+                    aria-hidden="true"
+                >
+                    {STEPS.map((_, i) => (
+                        <div
+                            key={i}
+                            className="rounded-full transition-all duration-500"
+                            style={{
+                                height: '6px',
+                                width: i === activeIndex - 1 ? '28px' : '6px',
                                 background: i === activeIndex - 1 ? '#ffffff' : 'rgba(255,255,255,0.2)',
                             }}
                         />
@@ -157,13 +176,15 @@ export default function ProcessTimeline() {
 
                         {/* Heading */}
                         <h2
-                            className="font-black text-white leading-none tracking-tight"
+                            className="font-black text-white leading-none tracking-tight uppercase"
                             style={{
-                                fontSize: 'clamp(60px, 11vw, 140px)',
+                                fontSize: 'clamp(32px, 11vw, 140px)',
                                 textDecoration: 'underline',
                                 textDecorationColor: 'rgba(255,255,255,0.15)',
                                 textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
                                 textDecorationThickness: '1px',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}
                         >
                             Cómo trabajamos
@@ -233,13 +254,15 @@ export default function ProcessTimeline() {
 
                                 {/* Título con subrayado animado */}
                                 <h3
-                                    className="font-black text-white leading-none tracking-tight"
+                                    className="font-black text-white leading-none tracking-tight uppercase"
                                     style={{
-                                        fontSize: 'clamp(60px, 11vw, 140px)',
+                                        fontSize: 'clamp(32px, 11vw, 140px)',
                                         textDecoration: 'underline',
                                         textDecorationColor: 'rgba(255,255,255,0.15)',
                                         textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
                                         textDecorationThickness: '1px',
+                                        wordBreak: 'break-word',
+                                        overflowWrap: 'break-word',
                                     }}
                                 >
                                     {step.title}
@@ -287,13 +310,15 @@ export default function ProcessTimeline() {
 
                         {/* Título con subrayado */}
                         <h2
-                            className="font-black text-white leading-none tracking-tight"
+                            className="font-black text-white leading-none tracking-tight uppercase"
                             style={{
-                                fontSize: 'clamp(60px, 11vw, 140px)',
+                                fontSize: 'clamp(32px, 11vw, 140px)',
                                 textDecoration: 'underline',
                                 textDecorationColor: 'rgba(255,255,255,0.15)',
                                 textUnderlineOffset: 'clamp(8px, 1.2vw, 18px)',
                                 textDecorationThickness: '1px',
+                                wordBreak: 'break-word',
+                                overflowWrap: 'break-word',
                             }}
                         >
                             ¿Listo para empezar?

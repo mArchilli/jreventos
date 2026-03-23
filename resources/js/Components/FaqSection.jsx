@@ -63,7 +63,7 @@ export default function FaqSection() {
                 {/* Título */}
                 <h2
                     className="font-black text-white uppercase leading-none tracking-tight mb-16"
-                    style={{ fontSize: 'clamp(60px, 11vw, 140px)' }}
+                    style={{ fontSize: 'clamp(32px, 11vw, 140px)' }}
                 >
                     Preguntas frecuentes
                 </h2>

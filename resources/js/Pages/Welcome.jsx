@@ -96,7 +96,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
 
                             {/* heading */}
-                            <h1 className="text-6xl font-black leading-none tracking-tight text-white lg:text-7xl xl:text-8xl uppercase">
+                            <h1 className="text-5xl font-black leading-none tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl uppercase">
                                 Hacemos<br />
                                 posible<br />
                                 <span className="text-yellow-300">el evento</span><br />
@@ -147,7 +147,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                     {/* Texto izquierda */}
                     <div className="flex-1 flex flex-col gap-6">
-                        <h2 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl xl:text-7xl uppercase">
+                        <h2 className="text-4xl font-black leading-none tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl uppercase">
                             Somos expertos en cumplir las{' '}
                             <span className="text-yellow-300">expectativas</span>{' '}
                             para tus eventos

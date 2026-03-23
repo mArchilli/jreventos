@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Evita scroll horizontal sin romper position:sticky */
+html,
+body {
+    overflow-x: clip;
+}
+
 @layer utilities {
     .animate-scroll-up {
         animation: scrollUp 24s linear infinite;

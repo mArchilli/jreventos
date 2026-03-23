@@ -25,12 +25,14 @@ export default function Navbar({ auth }) {
     }, []);
 
     return (
+        <>
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 will-change-transform ${
                 scrolled
                     ? 'bg-black/70 backdrop-blur-md shadow-lg'
                     : 'bg-transparent'
             }`}
+            style={{ transform: 'translateZ(0)' }}
         >
             <div className="mx-auto flex max-w-screen-xl items-center justify-between px-8 py-4">
 
@@ -75,12 +77,12 @@ export default function Navbar({ auth }) {
                     </div>
                 </button>
             </div>
+        </nav>
 
-            {/* Menú mobile — desliza desde arriba */}
-            <div
-                className="lg:hidden fixed inset-0 z-40 pointer-events-none"
-                style={{ top: 0 }}
-            >
+        {/* Menú mobile — desliza desde arriba (fuera del nav para evitar backdrop-filter containment) */}
+        <div
+            className="lg:hidden fixed inset-0 z-40 pointer-events-none"
+        >
                 <div
                     className="pointer-events-auto bg-black w-full h-full flex flex-col transition-transform duration-500 ease-in-out"
                     style={{
@@ -97,16 +99,14 @@ export default function Navbar({ auth }) {
                             />
                         </a>
                         <button
-                            className="flex items-center gap-2 text-white p-2"
+                            className="text-white p-2"
                             onClick={() => setMenuOpen(false)}
                             aria-label="Cerrar menú"
                         >
-                            <span className="text-xs font-semibold tracking-[0.2em] uppercase">Cerrar</span>
-                            <div className="flex flex-col justify-center">
-                                <span className="block w-6 h-0.5 bg-white rotate-45 translate-y-1.5 transition-all duration-300" />
-                                <span className="block w-6 h-0.5 bg-white my-1 opacity-0 transition-all duration-300" />
-                                <span className="block w-6 h-0.5 bg-white -rotate-45 -translate-y-1.5 transition-all duration-300" />
-                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
                         </button>
                     </div>
 
@@ -133,6 +133,6 @@ export default function Navbar({ auth }) {
                     </ul>
                 </div>
             </div>
-        </nav>
+        </>
     );
 }
