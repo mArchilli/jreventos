@@ -45,27 +45,9 @@ export default function Navbar({ auth }) {
                     />
                 </a>
 
-                {/* Links — derecha (desktop) */}
-                <ul className="hidden lg:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <li key={link.href}>
-                            <a
-                                href={link.href}
-                                className={`text-sm font-medium transition duration-200 hover:text-yellow-300 ${
-                                    isActive(link.href)
-                                        ? 'text-white underline underline-offset-4 decoration-yellow-300 decoration-2'
-                                        : 'text-white/80 hover:underline hover:underline-offset-4 hover:decoration-yellow-300 hover:decoration-2'
-                                }`}
-                            >
-                                {link.label}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-
-                {/* Hamburger (mobile) */}
+                {/* Hamburger */}
                 <button
-                    className="lg:hidden flex items-center gap-2 text-white p-2"
+                    className="flex items-center gap-2 text-white p-2"
                     onClick={() => setMenuOpen(!menuOpen)}
                     aria-label="Abrir menú"
                 >
@@ -79,9 +61,9 @@ export default function Navbar({ auth }) {
             </div>
         </nav>
 
-        {/* Menú mobile — desliza desde arriba (fuera del nav para evitar backdrop-filter containment) */}
+        {/* Menú fullscreen — desliza desde arriba */}
         <div
-            className="lg:hidden fixed inset-0 z-40 pointer-events-none"
+            className="fixed inset-0 z-40 pointer-events-none"
         >
                 <div
                     className="pointer-events-auto bg-black w-full h-full flex flex-col transition-transform duration-500 ease-in-out"
@@ -89,40 +71,21 @@ export default function Navbar({ auth }) {
                         transform: menuOpen ? 'translateY(0)' : 'translateY(-100%)',
                     }}
                 >
-                    {/* Header del menú (logo + cerrar) */}
-                    <div className="flex items-center justify-between px-8 py-4">
-                        <a href="/" className="shrink-0">
-                            <img
-                                src="/images/logo-jr-eventos.png"
-                                alt="JR Eventos"
-                                className="h-12 w-auto"
-                            />
-                        </a>
-                        <button
-                            className="text-white p-2"
-                            onClick={() => setMenuOpen(false)}
-                            aria-label="Cerrar menú"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18" />
-                                <line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
-                        </button>
-                    </div>
-
                     {/* Links */}
-                    <ul className="flex flex-col gap-2 px-8 pt-8 flex-1">
+                    <ul className="flex flex-col gap-0 px-8 pt-24 flex-1">
                         {navLinks.map((link, i) => (
                             <li key={link.href}>
                                 <a
                                     href={link.href}
                                     onClick={() => setMenuOpen(false)}
-                                    className={`block py-3 text-2xl font-black uppercase tracking-tight transition-all duration-300 hover:text-yellow-300 ${
+                                    className={`block py-4 font-black uppercase tracking-tight transition-all duration-300 hover:text-yellow-300 ${
                                         isActive(link.href)
                                             ? 'text-white underline underline-offset-8 decoration-yellow-300 decoration-2'
                                             : 'text-white/80'
                                     }`}
                                     style={{
+                                        fontSize: 'clamp(42px, 8vw, 96px)',
+                                        lineHeight: 1.05,
                                         transitionDelay: menuOpen ? `${i * 60}ms` : '0ms',
                                     }}
                                 >
