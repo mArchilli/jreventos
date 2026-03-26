@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import AboutUs from '@/Components/AboutUs';
 import ProcessTimeline from '@/Components/ProcessTimeline';
 import FaqSection from '@/Components/FaqSection';
 
@@ -134,6 +135,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
                 </div>
             </section>
+
+            {/* ACERCA DE NOSOTROS */}
+            <AboutUs />
 
             {/* TIMELINE DE PROCESO */}
             <ProcessTimeline />
