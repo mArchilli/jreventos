@@ -63,12 +63,14 @@ export default function Navbar({ auth }) {
 
         {/* Menú fullscreen — desliza desde arriba */}
         <div
-            className="fixed inset-0 z-40 pointer-events-none"
+            className="fixed inset-0 z-40 pointer-events-none overflow-hidden"
         >
                 <div
-                    className="pointer-events-auto bg-black w-full h-full flex flex-col transition-transform duration-500 ease-in-out"
+                    className="pointer-events-auto bg-black w-full h-full flex flex-col overflow-hidden"
                     style={{
                         transform: menuOpen ? 'translateY(0)' : 'translateY(-100%)',
+                        visibility: menuOpen ? 'visible' : 'hidden',
+                        transition: 'transform 500ms ease-in-out, visibility 500ms ease-in-out',
                     }}
                 >
                     {/* Links */}
