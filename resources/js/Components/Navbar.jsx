@@ -34,14 +34,21 @@ export default function Navbar({ auth }) {
             }`}
             style={{ transform: 'translateZ(0)' }}
         >
-            <div className="mx-auto flex max-w-screen-xl items-center justify-between px-8 py-4">
+            <div
+                className="mx-auto flex items-center justify-between py-4"
+                style={{
+                    maxWidth: scrolled ? '100vw' : '1280px',
+                    padding: scrolled ? '1rem 1.5rem' : '1rem 2rem',
+                    transition: 'max-width 700ms cubic-bezier(0.4, 0, 0.2, 1), padding 700ms cubic-bezier(0.4, 0, 0.2, 1)',
+                }}
+            >
 
                 {/* Logo */}
                 <a href="/" className="shrink-0 transition duration-200 hover:opacity-75 hover:scale-105">
                     <img
                         src="/images/logo-jr-eventos.png"
                         alt="JR Eventos"
-                        className="h-12 w-auto"
+                        className="h-16 w-auto mix-blend-lighten"
                     />
                 </a>
 
