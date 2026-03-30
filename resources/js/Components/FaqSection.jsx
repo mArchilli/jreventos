@@ -65,7 +65,8 @@ export default function FaqSection() {
                     className="font-black text-white uppercase leading-none tracking-tight mb-16"
                     style={{ fontSize: 'clamp(32px, 11vw, 140px)' }}
                 >
-                    Preguntas frecuentes
+                    <span className="text-yellow-300">PREGUNTAS</span>
+                    <span className="text-white"> frecuentes</span>
                 </h2>
 
                 {/* Items */}
