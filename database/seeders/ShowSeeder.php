@@ -9,6 +9,7 @@ class ShowSeeder extends Seeder
 {
     public function run(): void
     {
+        #region SHOWS/SERVICIO ALFOMBRAS GLAMOUR + DECORACION
         ShowService::create([
             'title' => 'Alfombras Glamour + Decoración',
             'description' => <<<'DESC'
@@ -17,10 +18,42 @@ class ShowSeeder extends Seeder
             'img_portada' => 'alfombras-vista.jpg',
             'img_vista' => 'alfombras-vista.jpg',
         ]);
+        #endregion
 
-                ShowService::create([
-                        'title' => 'Ambientacion & Decoracion en Flores',
-                        'description' => <<<'DESC'
+        #region SHOWS/SERVICIO ANIMACION & LOCUCION
+
+        ShowService::create([
+            'title' => 'Animación y Locución',
+            'description' => <<<'DESC'
+                <p>¡Confía en nosotros para llevar tu evento al siguiente nivel! Nuestro equipo ofrece servicios completos de locución y conducción, asegurando que cada momento sea presentado de manera profesional y cautivadora. Además, nos encargaremos de los recibimientos y la animación de las tandas de baile, manteniendo a tus invitados emocionados y comprometidos. Con nuestra experiencia en el manejo de cronogramas, garantizamos que tu evento se desarrolle sin contratiempos.</p>
+
+                <p>¡Deja en nuestras manos la organización y disfruta de un evento impecable y lleno de diversión!</p>
+
+                <p>El servicio incluye:</p>
+
+                <ul>
+                    <li>Locución / conducción del evento</li>
+                    <li>Recibimientos</li>
+                    <li>Animación tandas de baile</li>
+                    <li>Presentación de cada momento</li>
+                    <li>Manejo de cronograma</li>
+                </ul>
+
+                <p>En el siguiente enlace obtendrá más videos: <a href="https://www.youtube.com/watch?v=nhyi73a1Uqk" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=nhyi73a1Uqk</a></p>
+
+                <p>#Animadores #Animador #Locutor #Conductor</p>
+                DESC,
+            'img_portada' => 'locucion-portada.png',
+            'img_vista' => 'locucion-portada.png',
+        ]);
+
+        #endregion
+
+        #region SHOWS/SERVICIO AMBIENTACION & DECORACION EN FLORES
+
+        ShowService::create([
+            'title' => 'Ambientacion & Decoracion en Flores',
+            'description' => <<<'DESC'
             <p>Ambientación y Decoración integral en flores naturales y preservadas.</p>
 
             <p>Fusionamos arte, diseño y creatividad para lograr momentos únicos con herramientas de alta calidad logrando que tú evento sea una experiencia inolvidable. Personalizamos cada detalle buscando una combinación armoniosa y de estilos que lo hagan único.</p>
@@ -46,8 +79,11 @@ class ShowSeeder extends Seeder
 
             <p>y todo lo que puedas imaginar, ¡lo creamos!</p>
             DESC,
-                        'img_portada' => 'ambiente-vista.jpeg',
-                        'img_vista' => 'ambiente-vista.jpeg',
-                ]);
+            'img_portada' => 'ambiente-vista.jpeg',
+            'img_vista' => 'ambiente-vista.jpeg',
+        ]);
+        #endregion
+
+
     }
 }
