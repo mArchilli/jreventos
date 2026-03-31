@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRef, useEffect } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
 export default function ShowsServicesIndex({ shows }) {
     const { flash } = usePage().props;
@@ -14,6 +15,8 @@ export default function ShowsServicesIndex({ shows }) {
     const [form, setForm]             = useState({ title: '', description: '', img_portada: null, img_vista: null });
     const [previews, setPreviews]     = useState({ img_portada: null, img_vista: null });
     const [deleteTarget, setDeleteTarget] = useState(null); // { id, title }
+    const quillContainerRef = useRef(null);
+    const quillRef = useRef(null);
 
     function openCreate() {
         setEditing(null);
@@ -39,11 +42,65 @@ export default function ShowsServicesIndex({ shows }) {
         setPreviews(p => ({ ...p, [field]: URL.createObjectURL(file) }));
     }
 
+    useEffect(() => {
+        if (!modal) return;
+        if (quillContainerRef.current && !quillRef.current) {
+            quillRef.current = new Quill(quillContainerRef.current, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        ['link', 'image']
+                    ]
+                }
+            });
+
+            const q = quillRef.current;
+            const _handleTextChange = () => {
+                try {
+                    setForm(f => ({ ...f, description: q.root.innerHTML }));
+                } catch (e) {}
+            };
+            q.on('text-change', _handleTextChange);
+        }
+
+        if (quillRef.current) {
+            const current = quillRef.current.root.innerHTML;
+            if ((form.description || '') !== current) {
+                quillRef.current.clipboard.dangerouslyPasteHTML(form.description || '');
+            }
+        }
+    }, [modal, form.description]);
+
+    // Cleanup Quill when modal closes so edit opens fresh
+    useEffect(() => {
+        if (modal) return;
+        if (quillRef.current) {
+            // clear editor reference and DOM so next open initializes cleanly
+            try {
+                if (quillRef.current.root && quillRef.current.root.innerHTML) {
+                    quillRef.current.root.innerHTML = '';
+                }
+            } catch (e) {}
+            quillRef.current = null;
+        }
+        if (quillContainerRef.current) {
+            quillContainerRef.current.innerHTML = '';
+        }
+    }, [modal]);
+
     function handleSubmit(e) {
         e.preventDefault();
+        const description = quillRef.current ? quillRef.current.root.innerHTML : form.description;
+        if (!description || description.replace(/<[^>]*>/g, '').trim() === '') {
+            alert('La descripción es requerida');
+            return;
+        }
+
         const data = new FormData();
         data.append('title', form.title);
-        data.append('description', form.description);
+        data.append('description', DOMPurify.sanitize(description));
         if (form.img_portada) data.append('img_portada', form.img_portada);
         if (form.img_vista)   data.append('img_vista',   form.img_vista);
 
@@ -157,7 +214,7 @@ export default function ShowsServicesIndex({ shows }) {
 
                                     <div className="p-5">
                                         <h3 className="text-lg font-bold text-gray-800 truncate">{show.title}</h3>
-                                        <p className="mt-1 text-sm text-gray-500 line-clamp-2">{show.description}</p>
+                                        <div className="mt-1 text-sm text-gray-500 line-clamp-2" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(show.description || '') }} />
 
                                         {/* Vista thumbnail */}
                                         {show.img_vista && (
@@ -231,7 +288,7 @@ export default function ShowsServicesIndex({ shows }) {
                     {/* Backdrop */}
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setModal(false)} />
 
-                    <div className="relative w-full max-w-lg rounded-3xl bg-white shadow-2xl p-8">
+                    <div className="relative w-full max-w-lg rounded-3xl bg-white shadow-2xl p-8 max-h-[85vh] overflow-y-auto">
                         <h2 className="text-xl font-bold text-gray-800 mb-6">
                             {editing ? 'Editar Show/Servicio' : 'Nuevo Show/Servicio'}
                         </h2>
@@ -253,14 +310,9 @@ export default function ShowsServicesIndex({ shows }) {
                             {/* Description */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                                <textarea
-                                    required
-                                    rows={3}
-                                    value={form.description}
-                                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                                    className="w-full rounded-xl border border-violet-200 px-4 py-2.5 text-sm text-gray-800 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 resize-none"
-                                    placeholder="Descripción del show o servicio"
-                                />
+                                <div className="w-full">
+                                    <div ref={quillContainerRef} className="rounded-xl border border-violet-200 overflow-hidden" style={{ minHeight: 110 }} />
+                                </div>
                             </div>
 
                             {/* Images row */}
