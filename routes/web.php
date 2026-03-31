@@ -57,6 +57,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/artists',                   [ArtistController::class, 'store'])->name('artists.store');
         Route::put('/artists/{artist}',           [ArtistController::class, 'update'])->name('artists.update');
         Route::delete('/artists/{artist}',        [ArtistController::class, 'destroy'])->name('artists.destroy');
+
+        // Eventos CRUD
+        Route::resource('events', \App\Http\Controllers\EventController::class);
+        Route::delete('events/image/{image}', [\App\Http\Controllers\EventController::class, 'destroyImage'])->name('events.image.destroy');
     });
 });
 

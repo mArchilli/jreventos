@@ -39,6 +39,17 @@ const cards = [
             </svg>
         ),
     },
+    {
+        title: 'Eventos',
+        description: 'Gestión de eventos',
+        href: route('admin.events.index'),
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" fill="#ede9fe" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h8M8 14h5" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
+        ),
+    },
 ];
 
 export default function Dashboard() {
@@ -116,7 +127,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Cards */}
-                    <div className="grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {cards.map((card) => (
                             <div key={card.title} className="relative">
                                 {/* Glow blur behind card */}
