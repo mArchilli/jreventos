@@ -2,6 +2,9 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 
 const IMAGES_PATH = import.meta.env.VITE_SHOWANDSERVICES_IMAGES_PATH ?? '/images/show-and-services/';
 import { useState } from 'react';
+import { useRef, useEffect } from 'react';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 export default function ShowsServicesIndex({ shows }) {
     const { flash } = usePage().props;
