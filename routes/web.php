@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\ShowServiceController as ClientShowServiceController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\ArtistController as ClientArtistController;
+use App\Http\Controllers\Client\EventController as ClientEventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,9 @@ Route::get('/productos/{product}', [ClientProductController::class, 'show'])->na
 
 Route::get('/artistas', [ClientArtistController::class, 'index'])->name('artistas.index');
 Route::get('/artistas/{artist}', [ClientArtistController::class, 'show'])->name('artistas.show');
+
+Route::get('/eventos', [ClientEventController::class, 'index'])->name('eventos.index');
+Route::get('/eventos/{event}', [ClientEventController::class, 'show'])->name('eventos.show');
 
 Route::get('/sobre-nosotros', function () {
     return Inertia::render('About');

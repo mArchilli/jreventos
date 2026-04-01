@@ -2,7 +2,7 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 
 const IMAGES_PATH = import.meta.env.VITE_SHOWANDSERVICES_IMAGES_PATH ?? '/images/show-and-services/';
 import { useState } from 'react';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
@@ -15,8 +15,20 @@ export default function ShowsServicesIndex({ shows }) {
     const [form, setForm]             = useState({ title: '', description: '', img_portada: null, img_vista: null });
     const [previews, setPreviews]     = useState({ img_portada: null, img_vista: null });
     const [deleteTarget, setDeleteTarget] = useState(null); // { id, title }
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
     const quillContainerRef = useRef(null);
     const quillRef = useRef(null);
+
+    const filteredShows = useMemo(() => {
+        const term = searchTerm.trim().toLowerCase();
+        return [...shows]
+            .filter(show => show.title?.toLowerCase().includes(term))
+            .sort((a, b) => {
+                const direction = sortOrder === 'asc' ? 1 : -1;
+                return direction * (a.title ?? '').localeCompare(b.title ?? '', 'es', { sensitivity: 'base' });
+            });
+    }, [shows, searchTerm, sortOrder]);
 
     function openCreate() {
         setEditing(null);
@@ -183,6 +195,30 @@ export default function ShowsServicesIndex({ shows }) {
                         </button>
                     </div>
 
+                    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            placeholder="Buscar show o servicio por título..."
+                            className="w-full sm:max-w-md rounded-xl border border-violet-200 px-4 py-2.5 text-sm text-gray-800 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+                        />
+                        <div className="inline-flex rounded-xl border border-violet-200 bg-white p-1">
+                            <button
+                                onClick={() => setSortOrder('asc')}
+                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${sortOrder === 'asc' ? 'bg-violet-600 text-white' : 'text-violet-700 hover:bg-violet-50'}`}
+                            >
+                                A - Z
+                            </button>
+                            <button
+                                onClick={() => setSortOrder('desc')}
+                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${sortOrder === 'desc' ? 'bg-violet-600 text-white' : 'text-violet-700 hover:bg-violet-50'}`}
+                            >
+                                Z - A
+                            </button>
+                        </div>
+                    </div>
+
                     {/* Flash */}
                     {flash?.success && (
                         <div className="mb-6 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-700">
@@ -198,9 +234,13 @@ export default function ShowsServicesIndex({ shows }) {
                             </svg>
                             <p className="text-gray-500 text-sm">No hay shows ni servicios cargados aún.</p>
                         </div>
+                    ) : filteredShows.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center rounded-3xl bg-white/70 backdrop-blur-sm border border-violet-100 py-20 shadow-md">
+                            <p className="text-gray-500 text-sm">No se encontraron shows o servicios para la búsqueda.</p>
+                        </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {shows.map((show) => (
+                            {filteredShows.map((show) => (
                                 <div key={show.id} className="relative group rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 shadow-lg overflow-hidden transition hover:-translate-y-1 hover:shadow-xl">
                                     {/* Portada */}
                                     <div className="h-44 w-full bg-violet-50 overflow-hidden">

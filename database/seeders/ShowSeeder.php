@@ -93,8 +93,8 @@ class ShowSeeder extends Seeder
 
             <p>- Una manera distinta en tu ingreso -</p>
             DESC,
-            'img_portada' => 'magia-portada.jpeg',
-            'img_vista' => 'magia-portada.jpeg',
+            'img_portada' => 'magia-portada.png',
+            'img_vista' => 'magia-portada.png',
         ]);
 
         #endregion

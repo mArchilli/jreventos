@@ -1,6 +1,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Quill from 'quill';
+import DOMPurify from 'dompurify';
 import 'quill/dist/quill.snow.css';
 
 const IMAGES_PATH = import.meta.env.VITE_PRODUCTS_IMAGES_PATH ?? '/images/products/';
@@ -15,13 +16,60 @@ const emptyForm = {
     removeIds: [],      // ids of existing images to delete
 };
 
+const sanitizeDescription = (html) => ({ __html: DOMPurify.sanitize(html ?? '') });
+
 export default function ProductsIndex({ products }) {
     const { flash } = usePage().props;
+    const quillRef = useRef(null);
+    const quillInstanceRef = useRef(null);
 
     const [modal, setModal]         = useState(false);
     const [editing, setEditing]     = useState(null);
     const [form, setForm]           = useState(emptyForm);
     const [deleteTarget, setDeleteTarget] = useState(null); // { id, title }
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
+
+    const filteredProducts = useMemo(() => {
+        const term = searchTerm.trim().toLowerCase();
+        return [...products]
+            .filter(product => product.title?.toLowerCase().includes(term))
+            .sort((a, b) => {
+                const direction = sortOrder === 'asc' ? 1 : -1;
+                return direction * (a.title ?? '').localeCompare(b.title ?? '', 'es', { sensitivity: 'base' });
+            });
+    }, [products, searchTerm, sortOrder]);
+
+    useEffect(() => {
+        if (!modal || !quillRef.current || quillInstanceRef.current) return;
+
+        const quill = new Quill(quillRef.current, {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    ['link', 'clean'],
+                ],
+            },
+        });
+
+        quill.on('text-change', () => {
+            const html = quill.root.innerHTML;
+            setForm(f => ({
+                ...f,
+                description: html === '<p><br></p>' ? '' : html,
+            }));
+        });
+
+        quillInstanceRef.current = quill;
+    }, [modal]);
+
+    useEffect(() => {
+        if (!modal || !quillInstanceRef.current) return;
+        quillInstanceRef.current.root.innerHTML = form.description || '';
+    }, [modal, editing?.id]);
 
     /* ───── helpers ───── */
     function openCreate() {
@@ -159,6 +207,30 @@ export default function ProductsIndex({ products }) {
                         </button>
                     </div>
 
+                    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            placeholder="Buscar producto por título..."
+                            className="w-full sm:max-w-md rounded-xl border border-violet-200 px-4 py-2.5 text-sm text-gray-800 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100"
+                        />
+                        <div className="inline-flex rounded-xl border border-violet-200 bg-white p-1">
+                            <button
+                                onClick={() => setSortOrder('asc')}
+                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${sortOrder === 'asc' ? 'bg-violet-600 text-white' : 'text-violet-700 hover:bg-violet-50'}`}
+                            >
+                                A - Z
+                            </button>
+                            <button
+                                onClick={() => setSortOrder('desc')}
+                                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${sortOrder === 'desc' ? 'bg-violet-600 text-white' : 'text-violet-700 hover:bg-violet-50'}`}
+                            >
+                                Z - A
+                            </button>
+                        </div>
+                    </div>
+
                     {flash?.success && (
                         <div className="mb-6 rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-violet-700">
                             {flash.success}
@@ -173,9 +245,13 @@ export default function ProductsIndex({ products }) {
                             </svg>
                             <p className="text-gray-500 text-sm">No hay productos cargados aún.</p>
                         </div>
+                    ) : filteredProducts.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center rounded-3xl bg-white/70 backdrop-blur-sm border border-violet-100 py-20 shadow-md">
+                            <p className="text-gray-500 text-sm">No se encontraron productos para la búsqueda.</p>
+                        </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {products.map(product => {
+                            {filteredProducts.map(product => {
                                 const mainImg = product.main_image ?? product.images?.[0] ?? null;
                                 return (
                                     <div key={product.id} className="relative group rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 shadow-lg overflow-hidden transition hover:-translate-y-1 hover:shadow-xl">
@@ -199,7 +275,10 @@ export default function ProductsIndex({ products }) {
                                                     ${Number(product.price).toLocaleString('es-AR')}
                                                 </span>
                                             </div>
-                                            <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
+                                            <div
+                                                className="mt-1 text-sm text-gray-500 line-clamp-2"
+                                                dangerouslySetInnerHTML={sanitizeDescription(product.description)}
+                                            />
 
                                             {/* Thumbnails strip */}
                                             {product.images?.length > 1 && (
@@ -294,10 +373,9 @@ export default function ProductsIndex({ products }) {
                             {/* Description */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                                <textarea required rows={3} value={form.description}
-                                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                                    className="w-full rounded-xl border border-violet-200 px-4 py-2.5 text-sm text-gray-800 outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-100 resize-none"
-                                    placeholder="Descripción del producto" />
+                                <div className="rounded-xl border border-violet-200 bg-white overflow-hidden focus-within:border-violet-500 focus-within:ring-2 focus-within:ring-violet-100">
+                                    <div ref={quillRef} className="min-h-[180px]" />
+                                </div>
                             </div>
 
                             {/* Price */}
