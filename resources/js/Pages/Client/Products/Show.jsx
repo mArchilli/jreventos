@@ -60,7 +60,7 @@ export default function ProductsShow({ product }) {
                         {product.title}
                     </h1>
 
-                    {product.price && (
+                    {Number(product.price) > 0 && (
                         <p className="mt-4 text-2xl font-bold text-yellow-300">
                             ${Number(product.price).toLocaleString('es-AR')}
                         </p>
@@ -99,11 +99,12 @@ export default function ProductsShow({ product }) {
                                 Sobre este <span className="text-yellow-300">producto</span>
                             </h2>
 
-                            <p className="text-white/60 text-base leading-relaxed whitespace-pre-line">
-                                {product.description}
-                            </p>
+                            <div
+                                className="text-white/60 text-base leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: product.description }}
+                            />
 
-                            {product.price && (
+                            {Number(product.price) > 0 && (
                                 <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-6 py-4 w-fit">
                                     <span className="text-white/50 text-sm font-medium">Precio</span>
                                     <span className="text-2xl font-black text-yellow-300">

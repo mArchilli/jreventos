@@ -91,14 +91,20 @@ export default function ProductsIndex({ products }) {
     );
 }
 
+function stripHtml(html) {
+    return html ? html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+}
+
 function ProductCard({ product }) {
     const mainImage = product.main_image ?? null;
+    const preview = stripHtml(product.description ?? '').slice(0, 120);
+    const hasPrice = Number(product.price) > 0;
 
     return (
         <article className="group relative flex flex-col overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-300/30">
 
             {/* Imagen principal */}
-            <div className="relative h-64 w-full overflow-hidden bg-white/5 shrink-0">
+            <div className="relative h-56 w-full overflow-hidden bg-white/5 shrink-0">
                 {mainImage ? (
                     <img
                         src={`${IMAGES_PATH}${mainImage.filename}`}
@@ -112,15 +118,26 @@ function ProductCard({ product }) {
                         </svg>
                     </div>
                 )}
-                {/* Degradado inferior */}
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" />
+                {hasPrice && (
+                    <div className="absolute top-3 right-3 rounded-full bg-yellow-300 px-3 py-1 text-xs font-black text-black shadow">
+                        ${Number(product.price).toLocaleString('es-AR')}
+                    </div>
+                )}
             </div>
 
-            {/* Título + botón */}
+            {/* Cuerpo */}
             <div className="flex flex-1 flex-col justify-between gap-4 p-6">
-                <h3 className="text-xl font-black text-white tracking-tight leading-tight">
-                    {product.title}
-                </h3>
+                <div className="flex flex-col gap-2">
+                    <h3 className="text-lg font-black text-white tracking-tight leading-tight">
+                        {product.title}
+                    </h3>
+                    {preview && (
+                        <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
+                            {preview}{preview.length >= 120 ? '…' : ''}
+                        </p>
+                    )}
+                </div>
 
                 <Link
                     href={route('productos.show', product.id)}

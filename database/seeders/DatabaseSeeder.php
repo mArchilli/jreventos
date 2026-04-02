@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             ShowSeeder::class,
             ArtistSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }
