@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ShowServiceController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Client\ShowServiceController as ClientShowServiceController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\ArtistController as ClientArtistController;
@@ -17,6 +18,7 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'faqs' => \App\Models\Faq::orderBy('order')->get(),
     ]);
 });
 
@@ -65,6 +67,12 @@ Route::middleware('auth')->group(function () {
         // Eventos CRUD
         Route::resource('events', \App\Http\Controllers\EventController::class);
         Route::delete('events/image/{image}', [\App\Http\Controllers\EventController::class, 'destroyImage'])->name('events.image.destroy');
+
+        // FAQs CRUD
+        Route::get('/faqs',                       [FaqController::class, 'index'])->name('faqs.index');
+        Route::post('/faqs',                      [FaqController::class, 'store'])->name('faqs.store');
+        Route::put('/faqs/{faq}',                 [FaqController::class, 'update'])->name('faqs.update');
+        Route::delete('/faqs/{faq}',              [FaqController::class, 'destroy'])->name('faqs.destroy');
     });
 });
 

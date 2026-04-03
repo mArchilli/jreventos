@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ShowSeeder::class,
             ArtistSeeder::class,
             ProductSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

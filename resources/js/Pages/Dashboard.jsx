@@ -50,6 +50,16 @@ const cards = [
             </svg>
         ),
     },
+    {
+        title: 'Preguntas Frecuentes',
+        description: 'Gestión de FAQ del sitio',
+        href: route('admin.faqs.index'),
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+            </svg>
+        ),
+    },
 ];
 
 export default function Dashboard() {
@@ -127,9 +137,9 @@ export default function Dashboard() {
                     </div>
 
                     {/* Cards */}
-                    <div className="grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid w-full max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                         {cards.map((card) => (
-                            <div key={card.title} className="relative">
+                            <div key={card.title} className="relative flex">
                                 {/* Glow blur behind card */}
                                 <div
                                     aria-hidden="true"
@@ -138,24 +148,27 @@ export default function Dashboard() {
                                 />
                                 <Link
                                     href={card.href}
-                                    className="group relative flex flex-col items-center rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 px-8 py-10 shadow-xl transition duration-200 hover:shadow-2xl hover:-translate-y-1"
+                                    className="group relative flex flex-1 flex-col items-center justify-between rounded-3xl bg-white/75 backdrop-blur-md border border-violet-200 px-6 py-10 shadow-xl transition duration-200 hover:shadow-2xl hover:-translate-y-1"
                                 >
-                                    {/* Icon */}
-                                    <div className="mb-6 text-violet-500 transition group-hover:text-violet-700">
-                                        {card.icon}
+                                    {/* Top content */}
+                                    <div className="flex flex-col items-center">
+                                        {/* Icon */}
+                                        <div className="mb-6 text-violet-500 transition group-hover:text-violet-700">
+                                            {card.icon}
+                                        </div>
+
+                                        {/* Text */}
+                                        <h2 className="text-xl font-bold text-gray-800 text-center">{card.title}</h2>
+                                        <p className="mt-2 text-sm text-gray-500 text-center">{card.description}</p>
                                     </div>
 
-                                    {/* Text */}
-                                    <h2 className="text-2xl font-bold text-gray-800">{card.title}</h2>
-                                    <p className="mt-2 text-sm text-gray-500 text-center">{card.description}</p>
-
-                                    {/* Divider */}
-                                    <div className="mt-8 w-full border-t border-violet-100" />
-
-                                    {/* Link */}
-                                    <span className="mt-5 text-sm font-semibold text-violet-500 transition group-hover:text-violet-700">
-                                        Acceder &rarr;
-                                    </span>
+                                    {/* Bottom content */}
+                                    <div className="w-full mt-8">
+                                        <div className="w-full border-t border-violet-100" />
+                                        <span className="mt-5 block text-center text-sm font-semibold text-violet-500 transition group-hover:text-violet-700">
+                                            Acceder &rarr;
+                                        </span>
+                                    </div>
                                 </Link>
                             </div>
                         ))}
