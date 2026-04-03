@@ -22,9 +22,9 @@ export default function AboutUs() {
     return (
         <section
             ref={sectionRef}
-            className="relative bg-black py-20 px-6 sm:px-12 lg:px-24 overflow-hidden"
+            className="relative bg-black py-20 px-8 lg:px-32 overflow-hidden"
         >
-            <div className="mx-auto max-w-screen-xl">
+            <div>
 
                 {/* Badge */}
                 <span

@@ -11,8 +11,8 @@ export default function FaqSection() {
     if (faqs.length === 0) return null;
 
     return (
-        <section className="bg-black py-24 px-6 sm:px-12 lg:px-24">
-            <div className="mx-auto" style={{ maxWidth: '1300px' }}>
+        <section className="bg-black py-24 px-8 lg:px-32">
+            <div>
 
                 {/* Título */}
                 <h2

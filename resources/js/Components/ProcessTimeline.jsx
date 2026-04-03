@@ -80,7 +80,7 @@ export default function ProcessTimeline() {
 
                 {/* ── Etiqueta superior ───────────────────────────────────────── */}
                 <div
-                    className="absolute top-10 left-6 sm:left-12 lg:left-24 z-20 transition-all duration-700"
+                    className="absolute top-10 left-8 lg:left-32 z-20 transition-all duration-700"
                     style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                 >
                     <span className="text-[10px] tracking-[0.45em] text-white/30 uppercase font-semibold">
@@ -153,7 +153,7 @@ export default function ProcessTimeline() {
                 {/* ── Slide de introducción ───────────────────────────────────── */}
                 <div
                     aria-hidden={!isIntro}
-                    className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
+                    className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
                     style={{
                         opacity: isIntro ? 1 : 0,
                         transform: `translateY(${isIntro ? 0 : -44}px)`,
@@ -162,7 +162,7 @@ export default function ProcessTimeline() {
                         pointerEvents: isIntro ? 'auto' : 'none',
                     }}
                 >
-                    <div className="w-full" style={{ maxWidth: '1300px' }}>
+                    <div className="w-full">
 
                         {/* Badge */}
                         <span
@@ -226,7 +226,7 @@ export default function ProcessTimeline() {
                         <div
                             key={i}
                             aria-hidden={!isActive}
-                            className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
+                            className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
                             style={{
                                 opacity: isActive ? 1 : 0,
                                 transform: `translateY(${offset}px)`,
@@ -235,7 +235,7 @@ export default function ProcessTimeline() {
                                 pointerEvents: isActive ? 'auto' : 'none',
                             }}
                         >
-                            <div className="w-full" style={{ maxWidth: '1300px' }}>
+                            <div className="w-full">
 
                                 {/* Número de paso */}
                                 <span
@@ -286,7 +286,7 @@ export default function ProcessTimeline() {
                 {/* ── Slide CTA ───────────────────────────────────────────────── */}
                 <div
                     aria-hidden={!isCTA}
-                    className="absolute inset-0 flex items-center justify-center px-6 sm:px-12 lg:px-24"
+                    className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
                     style={{
                         opacity: isCTA ? 1 : 0,
                         transform: `translateY(${isCTA ? 0 : 44}px)`,
@@ -295,7 +295,7 @@ export default function ProcessTimeline() {
                         pointerEvents: isCTA ? 'auto' : 'none',
                     }}
                 >
-                    <div className="w-full" style={{ maxWidth: '1300px' }}>
+                    <div className="w-full">
 
                         {/* Número / etiqueta */}
                         <span

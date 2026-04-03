@@ -146,8 +146,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <FaqSection />
 
             {/* SECCIÓN CLIENTES */}
-            <section className="bg-black py-20 px-8 overflow-hidden">
-                <div className="mx-auto max-w-screen-xl flex flex-col lg:flex-row items-center gap-16">
+            <section className="bg-black py-20 px-8 lg:px-32 overflow-hidden">
+                <div className="flex flex-col lg:flex-row items-center gap-16">
 
                     {/* Texto izquierda */}
                     <div className="flex-1 flex flex-col gap-6">

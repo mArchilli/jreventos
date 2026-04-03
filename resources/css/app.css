@@ -8,6 +8,11 @@ body {
     overflow-x: clip;
 }
 
+::selection {
+    background-color: #fde047; /* yellow-300 */
+    color: #000;
+}
+
 @layer utilities {
     .animate-scroll-up {
         animation: scrollUp 24s linear infinite;
