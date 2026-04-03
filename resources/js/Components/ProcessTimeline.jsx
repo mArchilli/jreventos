@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 
 const STEPS = [
     {
@@ -45,27 +45,97 @@ const TOTAL_SLIDES = STEPS.length + 2;
 export default function ProcessTimeline() {
     const sectionRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
+    const isSnapping = useRef(false);
+    const touchStartY = useRef(0);
+    const targetSlideRef = useRef(0);
+
+    const scrollToSlide = useCallback((index) => {
+        const section = sectionRef.current;
+        if (!section || isSnapping.current) return;
+        const clamped = Math.max(0, Math.min(TOTAL_SLIDES - 1, index));
+        targetSlideRef.current = clamped;
+        const scrollable = section.offsetHeight - window.innerHeight;
+        const target = section.offsetTop + (clamped / TOTAL_SLIDES) * scrollable;
+        isSnapping.current = true;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+        setTimeout(() => { isSnapping.current = false; }, 800);
+    }, []);
 
     useEffect(() => {
         const onScroll = () => {
             const section = sectionRef.current;
             if (!section) return;
-
             const { top, height } = section.getBoundingClientRect();
             const scrolled = -top;
             const scrollable = height - window.innerHeight;
-
-            if (scrolled <= 0) { setActiveIndex(0); return; }
-            if (scrolled >= scrollable) { setActiveIndex(TOTAL_SLIDES - 1); return; }
-
-            const progress = scrolled / scrollable;
-            setActiveIndex(Math.floor(progress * TOTAL_SLIDES));
+            let idx = 0;
+            if (scrolled <= 0) { idx = 0; }
+            else if (scrolled >= scrollable) { idx = TOTAL_SLIDES - 1; }
+            else { idx = Math.floor((scrolled / scrollable) * TOTAL_SLIDES); }
+            setActiveIndex(idx);
+            if (!isSnapping.current) {
+                targetSlideRef.current = idx;
+            }
         };
-
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const isInSection = () => {
+            const { top, bottom } = section.getBoundingClientRect();
+            return top < window.innerHeight && bottom > 0 && top <= 0;
+        };
+
+        const isMobileViewport = () => window.innerWidth < 1024;
+
+        const onWheel = (e) => {
+            if (!isMobileViewport() || !isInSection()) return;
+            const t = targetSlideRef.current;
+            if (e.deltaY > 0 && t >= TOTAL_SLIDES - 1) return;
+            if (e.deltaY < 0 && t <= 0) return;
+            e.preventDefault();
+            if (!isSnapping.current) {
+                if (e.deltaY > 0) scrollToSlide(t + 1);
+                else scrollToSlide(t - 1);
+            }
+        };
+
+        const onTouchStart = (e) => {
+            touchStartY.current = e.touches[0].clientY;
+        };
+        const onTouchMove = (e) => {
+            if (!isMobileViewport() || !isInSection()) return;
+            const t = targetSlideRef.current;
+            const deltaY = touchStartY.current - e.touches[0].clientY;
+            if (deltaY > 0 && t >= TOTAL_SLIDES - 1) return;
+            if (deltaY < 0 && t <= 0) return;
+            e.preventDefault();
+        };
+        const onTouchEnd = (e) => {
+            if (!isMobileViewport() || !isInSection() || isSnapping.current) return;
+            const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+            if (Math.abs(deltaY) < 30) return;
+            const t = targetSlideRef.current;
+            if (deltaY > 0 && t < TOTAL_SLIDES - 1) scrollToSlide(t + 1);
+            else if (deltaY < 0 && t > 0) scrollToSlide(t - 1);
+        };
+
+        section.addEventListener('wheel', onWheel, { passive: false });
+        section.addEventListener('touchstart', onTouchStart, { passive: true });
+        section.addEventListener('touchmove', onTouchMove, { passive: false });
+        section.addEventListener('touchend', onTouchEnd, { passive: true });
+        return () => {
+            section.removeEventListener('wheel', onWheel);
+            section.removeEventListener('touchstart', onTouchStart);
+            section.removeEventListener('touchmove', onTouchMove);
+            section.removeEventListener('touchend', onTouchEnd);
+        };
+    }, [scrollToSlide]);
 
     const isIntro = activeIndex === 0;
     const isCTA = activeIndex === STEPS.length + 1;
@@ -73,6 +143,7 @@ export default function ProcessTimeline() {
     return (
         <section
             ref={sectionRef}
+            id="como-trabajamos"
             className="relative bg-black"
             style={{ height: `${TOTAL_SLIDES * 65 + 100}vh` }}
         >
@@ -84,7 +155,7 @@ export default function ProcessTimeline() {
                     style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                 >
                     <span className="text-[10px] tracking-[0.45em] text-white/30 uppercase font-semibold">
-                        Cómo trabajamos
+                        ¿Cómo trabajamos?
                     </span>
                 </div>
 
@@ -133,7 +204,7 @@ export default function ProcessTimeline() {
                 </div>
                 {/* Mobile: abajo centrado */}
                 <div
-                    className="lg:hidden absolute bottom-64 left-1/2 -translate-x-1/2 flex flex-row gap-2.5 z-20 transition-opacity duration-700"
+                    className="lg:hidden absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-row gap-2.5 z-20 transition-opacity duration-700"
                     style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
                     aria-hidden="true"
                 >
@@ -187,7 +258,7 @@ export default function ProcessTimeline() {
                                 overflowWrap: 'break-word',
                             }}
                         >
-                            Cómo trabajamos
+                            ¿Cómo trabajamos?
                         </h2>
 
                         {/* Descripción */}
