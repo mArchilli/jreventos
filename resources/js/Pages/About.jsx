@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useEffect, useRef } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -24,28 +24,90 @@ function useFadeIn(threshold = 0.12) {
     return ref;
 }
 
-/* ─── Pilares / valores ──────────────────────────────────────── */
-const pillars = [
+/* ─── Values / Bento cards ───────────────────────────────────── */
+const values = [
     {
-        title: 'Creatividad sin límites',
-        desc: 'Cada evento es una oportunidad para sorprender. Diseñamos propuestas originales que reflejan la identidad de tu marca o celebración, convirtiéndolas en experiencias visuales y emocionales únicas.',
+        title: 'Experiencias Inmersivas',
+        titleAccent: 'Inmersivas',
+        desc: 'Diseñamos cada ángulo visual y cada frecuencia sonora para crear sensaciones duraderas. La técnica y la emoción se fusionan en cada escenario.',
+        footer: 'Sensaciones Kinéticas',
+        span: 2, // col-span-2 on desktop
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-cyan-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z" />
+            </svg>
+        ),
+        accentColor: 'cyan',
     },
     {
-        title: 'Compromiso total',
-        desc: 'Desde la primera reunión hasta el último aplauso, acompañamos cada etapa con dedicación absoluta. Tu tranquilidad es nuestra prioridad: nos encargamos de cada detalle para que vos solo disfrutes.',
+        title: 'Ingeniería del Espacio',
+        desc: 'Desde la acústica hasta la iluminación arquitectónica, cada detalle técnico es una pieza de un rompecabezas emocional.',
+        span: 1,
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-purple-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+            </svg>
+        ),
+        accentColor: 'purple',
     },
     {
-        title: 'Excelencia en producción',
-        desc: 'Contamos con tecnología profesional, equipo técnico especializado y proveedores de primer nivel para garantizar que cada evento supere las expectativas en sonido, iluminación, escenografía y logística.',
+        title: 'Tecnología de Vanguardia',
+        desc: 'Equipamiento de audio y video de última generación que garantiza una fidelidad absoluta y una potencia visual inigualable en cada montaje.',
+        span: 1,
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-yellow-300">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+            </svg>
+        ),
+        accentColor: 'yellow',
+    },
+    {
+        title: 'Diseño Emocional',
+        titleAccent: 'Emocional',
+        desc: 'Entendemos que el impacto real de un evento ocurre en el corazón de los asistentes. Creamos narrativas visuales que conectan y conmueven.',
+        footer: 'Impacto Humano',
+        span: 2,
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-purple-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+        ),
+        accentColor: 'purple',
+    },
+    {
+        title: 'Calidad Premium',
+        desc: 'Estándares internacionales en producción técnica y logística de eventos corporativos y sociales.',
+        span: 1,
+        stats: [
+            { value: '500+', label: 'Eventos anuales' },
+            { value: '100%', label: 'Pasión técnica' },
+        ],
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-cyan-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+            </svg>
+        ),
+        accentColor: 'cyan',
+    },
+    {
+        title: 'Gestión Integral',
+        titleAccent: 'Integral',
+        desc: 'Desde la conceptualización inicial hasta el desmontaje final, coordinamos cada recurso para una ejecución perfecta y sin contratiempos.',
+        footer: 'Eficiencia Logística',
+        span: 2,
+        icon: (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-8 h-8 text-yellow-300">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+            </svg>
+        ),
+        accentColor: 'yellow',
     },
 ];
 
 export default function About({ auth }) {
-    const heroRef    = useFadeIn(0.05);
-    const mediaRef   = useFadeIn(0.1);
-    const pillarsRef = useFadeIn(0.1);
-    const splitRef   = useFadeIn(0.12);
-    const ctaRef     = useFadeIn(0.12);
+    const heroRef = useFadeIn(0.05);
+    const gridRef = useFadeIn(0.1);
+    const ctaRef = useFadeIn(0.12);
 
     return (
         <>
@@ -64,89 +126,99 @@ export default function About({ auth }) {
             <Navbar auth={auth} />
 
             {/* ══════════════════════════════════════════════════════════
-                SECCIÓN 1 — HERO CENTRADO (estilo screenshot)
+                SECCIÓN 1 — HERO SPLIT
             ══════════════════════════════════════════════════════════ */}
-            <section
-                className="relative w-full overflow-hidden pt-36 pb-20 px-8 text-center"
-                style={{ background: 'linear-gradient(160deg, #05001a 0%, #0d0030 40%, #080d2a 75%, #02080f 100%)' }}
-            >
-                {/* Glow central */}
+            <section className="relative bg-black overflow-hidden">
+                {/* Ambient glows */}
+                <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[40%] bg-purple-500/8 blur-[120px] rounded-full pointer-events-none" />
+                <div className="absolute bottom-[-5%] right-[-10%] w-[50%] h-[40%] bg-cyan-400/5 blur-[100px] rounded-full pointer-events-none" />
+
                 <div
-                    className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full blur-3xl opacity-25"
-                    style={{ background: 'radial-gradient(ellipse, rgba(168,85,247,0.55) 0%, transparent 65%)' }}
-                />
+                    ref={heroRef}
+                    className="fade-in-up relative z-10 max-w-7xl mx-auto px-8 lg:px-32 pt-36 pb-20 md:py-32 md:pt-44 flex flex-col md:flex-row items-center gap-12"
+                >
+                    {/* Left — Text */}
+                    <div className="w-full md:w-1/2">
+                        <h1 className="text-5xl md:text-6xl lg:text-8xl font-black tracking-tight leading-none uppercase mb-8">
+                            SOBRE<br />
+                            <span className="text-yellow-300">NOSOTROS</span>
+                        </h1>
 
-                <div ref={heroRef} className="fade-in-up relative z-10 mx-auto max-w-4xl flex flex-col items-center gap-7">
+                        {/* Mobile: divider */}
+                        <div className="w-12 h-1 bg-yellow-300 mb-8 md:hidden" />
 
-                    {/* Badge */}
-                    <div className="inline-flex items-center gap-2 rounded-full bg-white/8 px-4 py-1.5 border border-white/10">
-                        <span className="text-yellow-400 text-sm">✦</span>
-                        <span className="text-xs font-semibold text-white/70 tracking-widest uppercase">Sobre Nosotros</span>
+                        <div className="space-y-6 max-w-xl">
+                            <p className="text-xl md:text-2xl font-medium text-white leading-relaxed">
+                                En JR Eventos, llevamos <span className="text-yellow-300 font-bold">17 años</span> perfeccionando el arte de lo efímero.
+                            </p>
+                            <p className="text-white/50 text-base md:text-lg leading-relaxed">
+                                No solo organizamos eventos; <span className="text-white">transformamos espacios</span> físicos en experiencias sensoriales. Nuestra misión es orquestar momentos que se queden grabados en la memoria, utilizando tecnología de vanguardia y un diseño estético impecable.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* H1 — SEO principal */}
-                    <h1 className="text-5xl font-black leading-[0.9] tracking-tight text-white uppercase lg:text-7xl xl:text-8xl">
-                        Producimos<br />
-                        <span className="text-yellow-300">experiencias</span><br />
-                        extraordinarias
-                    </h1>
+                    {/* Right — Asymmetrical Image Composition */}
+                    <div className="w-full md:w-1/2 relative group">
+                        <div className="absolute -top-8 -left-8 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all duration-700" />
 
-                    {/* Descripción SEO */}
-                    <p className="max-w-2xl text-lg text-white/60 leading-relaxed">
-                        En <strong className="text-white font-semibold">JR Eventos</strong> transformamos ideas en momentos que perduran.
-                        Somos una productora integral especializada en eventos corporativos, sociales y artísticos en Argentina,
-                        con más de una década de experiencia creando experiencias que conectan marcas con personas.
-                    </p>
+                        <div className="relative rounded-xl overflow-hidden border border-white/5 aspect-[4/5] md:aspect-[3/4]" style={{ boxShadow: '0 0 60px -15px rgba(255, 228, 131, 0.15)' }}>
+                            <img
+                                src="/images/about-banner.jpg"
+                                alt="Producción profesional de eventos — JR Eventos Argentina"
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    e.target.parentElement.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
+                                    e.target.style.display = 'none';
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                        </div>
 
-                    {/* CTA */}
-                    <a
-                        href="/shows-servicios"
-                        className="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-yellow-300 hover:shadow-yellow-400/30 hover:shadow-xl hover:scale-105 active:scale-95"
-                    >
-                        Conocer nuestros servicios
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                            <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
-                        </svg>
-                    </a>
+                        {/* Floating Info Card */}
+                        <div className="absolute bottom-12 -left-4 md:-left-12 bg-neutral-900/80 backdrop-blur-lg p-8 rounded-xl border border-white/10 shadow-2xl max-w-xs">
+                            <p className="text-yellow-300 text-4xl font-black mb-2">17+</p>
+                            <p className="text-white font-bold tracking-tight uppercase text-sm">Años transformando la industria de eventos en la región</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             {/* ══════════════════════════════════════════════════════════
-                SECCIÓN 2 — IMAGEN DESTACADA (estilo screenshot)
+                SECCIÓN 2 — VALUES BENTO GRID
             ══════════════════════════════════════════════════════════ */}
-            <section
-                className="relative w-full px-8 pb-24 overflow-hidden"
-                style={{ background: 'linear-gradient(180deg, #02080f 0%, #000000 100%)' }}
-            >
-                <div ref={mediaRef} className="fade-in-up mx-auto max-w-screen-xl">
-                    <div
-                        className="relative w-full rounded-3xl overflow-hidden"
-                        style={{
-                            border: '2px solid rgba(168,85,247,0.35)',
-                            boxShadow: '0 0 60px rgba(168,85,247,0.15), 0 0 120px rgba(168,85,247,0.07)',
-                        }}
-                    >
+            <section className="bg-black px-8 lg:px-32 py-20 md:py-28">
+                <div ref={gridRef} className="fade-in-up max-w-7xl mx-auto">
+
+                    {/* Desktop bento grid (3 cols) */}
+                    <div className="hidden md:grid grid-cols-3 gap-6">
+                        {values.map((v) => (
+                            <ValueCard key={v.title} value={v} />
+                        ))}
+                    </div>
+
+                    {/* Mobile stacked cards */}
+                    <div className="flex md:hidden flex-col gap-5">
+                        {values.map((v) => (
+                            <MobileValueCard key={v.title} value={v} />
+                        ))}
+                    </div>
+
+                    {/* Visual asset image (mobile only) */}
+                    <div className="md:hidden mt-10 h-[300px] rounded-xl overflow-hidden relative">
                         <img
-                            src="/images/about-banner.jpg"
-                            alt="Producción profesional de eventos — JR Eventos Argentina"
-                            className="w-full h-auto max-h-[560px] object-cover"
+                            src="/images/about-story.jpg"
+                            alt="Producción profesional de eventos"
+                            className="w-full h-full object-cover grayscale brightness-75 contrast-125"
                             onError={(e) => {
-                                e.target.parentElement.style.minHeight = '420px';
-                                e.target.parentElement.style.background =
-                                    'linear-gradient(135deg, #1a0035 0%, #1e1060 50%, #0a1a4a 100%)';
+                                e.target.parentElement.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
                                 e.target.style.display = 'none';
                             }}
                         />
-                        {/* Overlay con texto flotante */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                        <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between">
-                            <div>
-                                <span className="text-xs font-semibold text-white/50 tracking-widest uppercase">Producción integral</span>
-                                <p className="text-2xl font-black text-white leading-tight">Cada evento, una obra maestra.</p>
-                            </div>
-                            <div className="hidden sm:flex items-center gap-2 rounded-full bg-black/50 backdrop-blur-md px-5 py-2.5 border border-white/10">
-                                <span className="text-yellow-300 text-lg">★★★★★</span>
-                                <span className="text-sm font-medium text-white/80">+300 eventos realizados</span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                        <div className="absolute bottom-6 left-6 right-6">
+                            <div className="flex items-center gap-2">
+                                <span className="w-8 h-px bg-yellow-300" />
+                                <span className="text-[10px] uppercase tracking-widest text-yellow-300 font-black">Performance & Precision</span>
                             </div>
                         </div>
                     </div>
@@ -154,220 +226,113 @@ export default function About({ auth }) {
             </section>
 
             {/* ══════════════════════════════════════════════════════════
-                SECCIÓN 3 — 3 PILARES (estilo columnas del screenshot)
+                SECCIÓN 3 — CTA FINAL
             ══════════════════════════════════════════════════════════ */}
-            <section className="bg-black py-24 px-8 relative overflow-hidden">
-                {/* Línea decorativa superior */}
-                <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
-
-                <div ref={pillarsRef} className="fade-in-up mx-auto max-w-screen-xl">
-
-                    {/* Header centrado */}
-                    <div className="mb-16 flex flex-col items-center gap-3 text-center">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-1.5 border border-white/10">
-                            <span className="text-yellow-400 text-sm">✦</span>
-                            <span className="text-xs font-semibold text-white/60 tracking-widest uppercase">Lo que nos define</span>
-                        </div>
-                        <h2 className="text-4xl font-black text-white uppercase lg:text-5xl leading-tight">
-                            Nuestros <span className="text-yellow-300">pilares</span>
-                        </h2>
-                    </div>
-
-                    {/* Grid 3 columnas */}
-                    <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                        {pillars.map((p, i) => (
-                            <article
-                                key={p.title}
-                                className="group flex flex-col items-center text-center gap-5 rounded-2xl border border-white/6 bg-white/[0.025] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:bg-white/[0.04]"
-                                style={{ animationDelay: `${i * 120}ms` }}
-                            >
-                                {/* Número decorativo */}
-                                <div
-                                    className="flex items-center justify-center w-12 h-12 rounded-full border border-yellow-300/30 text-yellow-300 font-black text-lg"
-                                    style={{ background: 'rgba(253,224,71,0.07)' }}
-                                >
-                                    0{i + 1}
-                                </div>
-
-                                <h3 className="text-xl font-bold text-white">{p.title}</h3>
-
-                                {/* Divider */}
-                                <div className="w-10 h-0.5 rounded-full bg-gradient-to-r from-yellow-300/60 to-purple-400/60" />
-
-                                <p className="text-white/55 text-base leading-relaxed">{p.desc}</p>
-                            </article>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Línea decorativa inferior */}
-                <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
-            </section>
-
-            {/* ══════════════════════════════════════════════════════════
-                SECCIÓN 4 — SPLIT: imagen izq + headline derecha
-                (estilo "RESPONSABILIDAD CON CONVICCIÓN" del screenshot)
-            ══════════════════════════════════════════════════════════ */}
-            <section
-                className="py-24 px-8 relative overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #08001f 0%, #0d0030 50%, #02080f 100%)' }}
-            >
-                {/* Glow ambiental */}
-                <div
-                    className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-20"
-                    style={{ background: 'radial-gradient(ellipse, rgba(236,72,153,0.5) 0%, transparent 70%)' }}
-                />
-
-                <div ref={splitRef} className="fade-in-up relative z-10 mx-auto max-w-screen-xl">
-                    <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
-
-                        {/* LEFT — imagen con borde de color (igual screenshot) */}
-                        <div className="relative">
-                            <div
-                                className="relative rounded-2xl overflow-hidden aspect-[4/3]"
-                                style={{
-                                    border: '2px solid rgba(168,85,247,0.4)',
-                                    boxShadow: '0 0 50px rgba(168,85,247,0.12)',
-                                }}
-                            >
-                                <img
-                                    src="/images/about-story.jpg"
-                                    alt="Equipo de JR Eventos en producción — eventos corporativos y sociales"
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                        e.target.parentElement.style.background =
-                                            'linear-gradient(135deg, #1a0035 0%, #0a1a4a 100%)';
-                                        e.target.style.display = 'none';
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-transparent" />
-                            </div>
-                            {/* Elemento decorativo esquina */}
-                            <div className="absolute -bottom-4 -left-4 w-28 h-28 rounded-2xl border border-yellow-300/15 bg-yellow-300/3" />
-                        </div>
-
-                        {/* RIGHT — headline grande con fondo destaque (estilo screenshot) */}
-                        <div className="flex flex-col gap-7">
-
-                            {/* Headline con "highlight" de fondo como en la screenshot */}
-                            <h2 className="text-4xl font-black uppercase leading-tight tracking-tight lg:text-5xl xl:text-6xl">
-                                <span
-                                    className="inline text-black px-2 py-0.5 leading-snug"
-                                    style={{ background: 'linear-gradient(90deg, #fde047, #facc15)' }}
-                                >
-                                    PASIÓN Y DETALLE
-                                </span>
-                                <br />
-                                <span
-                                    className="inline text-black px-2 py-0.5 leading-snug mt-1"
-                                    style={{ background: 'linear-gradient(90deg, #fde047, #facc15)' }}
-                                >
-                                    EN CADA EVENTO
-                                </span>
-                            </h2>
-
-                            <p className="text-white/60 text-lg leading-relaxed">
-                                Cada proyecto que tomamos es mucho más que una lista de tareas.
-                                Es la historia de alguien que merece vivir algo único.
-                                Por eso nos involucramos desde el concepto hasta el último instante,
-                                asegurándonos de que cada persona que asista al evento lo recuerde para siempre.
-                            </p>
-
-                            {/* Stats inline */}
-                            <div className="flex gap-8 py-2">
-                                <div>
-                                    <p className="text-3xl font-black text-white leading-none">+300</p>
-                                    <p className="text-xs text-white/45 mt-1 uppercase tracking-wide">Eventos realizados</p>
-                                </div>
-                                <div className="w-px bg-white/10" />
-                                <div>
-                                    <p className="text-3xl font-black text-white leading-none">10+</p>
-                                    <p className="text-xs text-white/45 mt-1 uppercase tracking-wide">Años de experiencia</p>
-                                </div>
-                                <div className="w-px bg-white/10" />
-                                <div>
-                                    <p className="text-3xl font-black text-white leading-none">+50</p>
-                                    <p className="text-xs text-white/45 mt-1 uppercase tracking-wide">Marcas que confiaron</p>
-                                </div>
-                            </div>
-
-                            {/* CTA */}
-                            <a
-                                href="https://wa.me/tuNumero"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex w-fit items-center gap-3 rounded-full border-2 border-white/25 px-7 py-3.5 text-sm font-bold text-white uppercase tracking-widest backdrop-blur-sm transition duration-200 hover:border-yellow-300 hover:text-yellow-300 hover:scale-105 active:scale-95"
-                            >
-                                Consultanos por WhatsApp
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                                    <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ══════════════════════════════════════════════════════════
-                SECCIÓN 5 — CTA FINAL con glow
-            ══════════════════════════════════════════════════════════ */}
-            <section
-                className="relative overflow-hidden py-32 px-8 text-center"
-                style={{ background: 'linear-gradient(135deg, #0d001a 0%, #1a0035 30%, #1e1060 65%, #05111e 100%)' }}
-            >
-                {/* Glows */}
-                <div
-                    className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full blur-3xl opacity-35"
-                    style={{ background: 'radial-gradient(ellipse, rgba(168,85,247,0.5) 0%, transparent 70%)' }}
-                />
-                <div
-                    className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[300px] rounded-full blur-3xl opacity-25"
-                    style={{ background: 'radial-gradient(ellipse, rgba(236,72,153,0.4) 0%, transparent 70%)' }}
-                />
-
-                <div ref={ctaRef} className="fade-in-up relative z-10 mx-auto max-w-3xl flex flex-col items-center gap-8">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-white/8 px-4 py-1.5 border border-white/10">
-                        <span className="text-yellow-400 text-sm">✦</span>
-                        <span className="text-xs font-semibold text-white/70 tracking-widest uppercase">¿Listo para empezar?</span>
-                    </div>
-
-                    <h2
-                        className="text-5xl font-black uppercase leading-[0.92] tracking-tight text-white lg:text-6xl xl:text-7xl"
-                        style={{ textShadow: '0 0 80px rgba(168,85,247,0.4)' }}
-                    >
-                        Hagamos realidad<br />
-                        tu <span className="text-yellow-300">próximo evento</span>
+            <section className="bg-black px-8 lg:px-32 py-20 md:py-28 text-center">
+                <div ref={ctaRef} className="fade-in-up max-w-4xl mx-auto flex flex-col items-center gap-6">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-tight">
+                        ¿LISTO PARA <span className="text-yellow-300">TRANSFORMAR</span> TU PRÓXIMO ESPACIO?
                     </h2>
-
-                    <p className="max-w-lg text-lg text-white/55 leading-relaxed">
-                        Contanos tu idea y nuestro equipo te acompañará desde el concepto hasta el último detalle.
-                        Sin compromisos, sin costos ocultos.
+                    <p className="text-white/50 text-sm md:text-base max-w-md">
+                        Hablemos sobre cómo llevar tu evento al siguiente nivel de excelencia técnica.
                     </p>
-
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
-                        <a
-                            href="https://wa.me/tuNumero"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-yellow-300 hover:shadow-yellow-400/40 hover:shadow-2xl hover:scale-105 active:scale-95"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.828L.057 23.428a.5.5 0 0 0 .609.61l5.7-1.49A11.947 11.947 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.888 9.888 0 0 1-5.031-1.371l-.36-.214-3.733.976.998-3.645-.235-.374A9.862 9.862 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.466 0 9.9 4.433 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/>
-                            </svg>
-                            Hablar con un asesor
-                        </a>
-                        <a
-                            href="/shows-servicios"
-                            className="inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-8 py-4 text-base font-semibold text-white transition duration-200 hover:border-white/60 hover:bg-white/10 hover:scale-105 active:scale-95"
-                        >
-                            Ver servicios
-                        </a>
-                    </div>
+                    <Link
+                        href="/sobre-nosotros"
+                        className="inline-flex items-center gap-3 rounded-full bg-neutral-800 border border-white/10 px-10 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 active:scale-95"
+                    >
+                        Hablemos de tu visión
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                            <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                        </svg>
+                    </Link>
                 </div>
             </section>
 
             <Footer />
         </>
+    );
+}
+
+/* ─── Desktop Value Card ────────────────────────────────────── */
+function ValueCard({ value }) {
+    const isWide = value.span === 2;
+    const bgClass = isWide ? 'bg-neutral-950' : 'bg-neutral-900/50';
+
+    return (
+        <div className={`${isWide ? 'col-span-2' : 'col-span-1'} ${bgClass} p-10 rounded-xl flex flex-col justify-between group overflow-hidden relative border border-white/5`}>
+            {/* Ambient glow */}
+            {isWide && (
+                <div className={`absolute top-0 right-0 w-64 h-64 ${value.accentColor === 'cyan' ? 'bg-cyan-400/5' : value.accentColor === 'yellow' ? 'bg-yellow-300/5' : 'bg-purple-500/5'} rounded-full blur-3xl -mr-32 -mt-32 transition-colors ${value.accentColor === 'cyan' ? 'group-hover:bg-cyan-400/10' : value.accentColor === 'yellow' ? 'group-hover:bg-yellow-300/10' : 'group-hover:bg-purple-500/10'}`} />
+            )}
+
+            <div>
+                <div className="mb-6">{value.icon}</div>
+                <h3 className={`${isWide ? 'text-3xl' : 'text-2xl'} font-bold uppercase tracking-tight mb-4`}>
+                    {value.titleAccent ? (
+                        <>
+                            {value.title.replace(value.titleAccent, '').trim()}{' '}
+                            <span className={value.accentColor === 'cyan' ? 'text-cyan-400' : value.accentColor === 'yellow' ? 'text-yellow-300' : 'text-purple-400'}>
+                                {value.titleAccent}
+                            </span>
+                        </>
+                    ) : (
+                        value.title
+                    )}
+                </h3>
+                <p className={`text-white/50 ${isWide ? 'text-lg max-w-lg' : ''} leading-relaxed`}>
+                    {value.desc}
+                </p>
+            </div>
+
+            {value.stats && (
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                    {value.stats.map((s) => (
+                        <div key={s.label}>
+                            <p className="text-white font-black text-2xl">{s.value}</p>
+                            <p className="text-xs text-white/40 uppercase tracking-tight">{s.label}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {value.footer && (
+                <div className="mt-12 flex gap-4 items-center">
+                    <div className="h-px flex-1 bg-white/10" />
+                    <span className="text-xs font-bold tracking-widest text-white/30 uppercase">{value.footer}</span>
+                </div>
+            )}
+        </div>
+    );
+}
+
+/* ─── Mobile Value Card (glass card style) ──────────────────── */
+function MobileValueCard({ value }) {
+    return (
+        <div className="relative p-6 rounded-xl overflow-hidden group border border-yellow-300/8" style={{ background: 'linear-gradient(135deg, rgba(32, 31, 31, 0.7) 0%, rgba(19, 19, 19, 0.8) 100%)', backdropFilter: 'blur(12px)' }}>
+            {/* Ghost icon background */}
+            <div className="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <div className="scale-[3]">{value.icon}</div>
+            </div>
+
+            <div className="flex items-center gap-4 mb-4">
+                <div className="bg-yellow-300/10 p-3 rounded-lg shrink-0">
+                    {value.icon}
+                </div>
+                <h3 className="font-bold text-lg leading-tight uppercase tracking-wide">{value.title}</h3>
+            </div>
+
+            <p className="text-white/50 text-sm leading-relaxed">{value.desc}</p>
+
+            {value.stats && (
+                <div className="grid grid-cols-2 gap-4 mt-5 pt-4 border-t border-white/5">
+                    {value.stats.map((s) => (
+                        <div key={s.label}>
+                            <p className="text-white font-black text-xl">{s.value}</p>
+                            <p className="text-xs text-white/40 uppercase tracking-tight">{s.label}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
     );
 }
