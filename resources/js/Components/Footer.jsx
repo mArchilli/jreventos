@@ -1,33 +1,16 @@
-const footerColumns = [
-    {
-        title: 'Navegación',
-        links: [
-            { label: 'Inicio',            href: '/'                },
-            { label: 'Eventos',           href: '/eventos'         },
-            { label: 'Shows y Servicios', href: '/shows-servicios' },
-            { label: 'Productos',         href: '/productos'       },
-        ],
-    },
-    {
-        title: 'Nosotros',
-        links: [
-            { label: 'Sobre Nosotros', href: '/sobre-nosotros' },
-            { label: 'Artistas',       href: '/artistas'       },
-            { label: 'Preguntas frecuentes', href: '/faq'      },
-        ],
-    },
-    {
-        title: 'Contacto',
-        links: [
-            { label: 'Contáctanos',  href: '/contacto'  },
-            { label: 'Presupuesto', href: '/presupuesto' },
-        ],
-    },
+import { Link } from '@inertiajs/react';
+
+const exploreLinks = [
+    { label: 'Sobre Nosotros',    href: '/sobre-nosotros'    },
+    { label: 'Shows y Servicios', href: '/shows-servicios'   },
+    { label: 'Productos',         href: '/productos'         },
+    { label: 'Artistas',          href: '/artistas'          },
+    { label: 'Eventos',           href: '/eventos'           },
 ];
 
 const socialLinks = [
     {
-        href: 'https://instagram.com',
+        href: 'https://instagram.com/jreventos',
         label: 'Instagram',
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -36,7 +19,7 @@ const socialLinks = [
         ),
     },
     {
-        href: 'https://facebook.com',
+        href: 'https://facebook.com/jreventos',
         label: 'Facebook',
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -45,7 +28,7 @@ const socialLinks = [
         ),
     },
     {
-        href: 'https://youtube.com',
+        href: 'https://youtube.com/jreventos',
         label: 'YouTube',
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -54,11 +37,11 @@ const socialLinks = [
         ),
     },
     {
-        href: 'https://tiktok.com',
-        label: 'TikTok',
+        href: 'https://wa.me/541123456789',
+        label: 'WhatsApp',
         icon: (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06Z"/>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
         ),
     },
@@ -68,85 +51,163 @@ export default function Footer() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="bg-black text-white">
+        <footer id="footer" className="w-full relative overflow-hidden bg-[#0e0e0e] leading-relaxed min-h-screen flex flex-col justify-end">
+            {/* Ambient Light Leaks */}
+            <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[150px] -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-yellow-300/5 rounded-full blur-[150px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-            {/* Franja superior amarilla decorativa */}
-            <div className="h-1 w-full bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300" />
+            <div className="relative z-10 flex flex-col justify-end flex-1 px-8 lg:px-32 pt-12 md:pt-16 pb-4 md:pb-6">
 
-            {/* Cuerpo principal */}
-            <div className="mx-auto max-w-screen-xl px-8 py-16">
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
-
-                    {/* Logo + descripción */}
-                    <div className="flex flex-col gap-4 lg:col-span-1">
-                        <a href="/">
-                            <img
-                                src="/images/logo-jr-eventos.png"
-                                alt="JR Eventos"
-                                className="h-14 w-auto"
-                            />
-                        </a>
-                        <p className="text-sm text-white/55 leading-relaxed max-w-xs">
-                            Hacemos realidad el evento de tus sueños. Producción,
-                            shows y servicios para cada ocasión.
+                {/* ── CTA Header ── */}
+                <div className="md:flex items-end justify-between gap-12 mb-14 md:mb-16">
+                    <div className="max-w-3xl">
+                        <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white mb-5 md:mb-8 leading-none uppercase">
+                            HABLEMOS DE{' '}
+                            <br className="hidden md:block" />
+                            <span className="text-yellow-300">TU GRAN MOMENTO</span>
+                        </h2>
+                        <p className="text-neutral-400 text-lg md:text-xl max-w-xl leading-relaxed">
+                            Transformamos visiones en experiencias cinéticas que perduran en la memoria. Nuestro equipo de producción está a un clic de distancia.
                         </p>
+                    </div>
+                    <div className="mt-6 md:mt-0 shrink-0">
+                        <Link
+                            href="/sobre-nosotros"
+                            className="w-full md:w-auto inline-flex items-center justify-between md:justify-center gap-4 bg-white md:bg-white text-black px-10 py-5 rounded-full font-extrabold text-lg hover:bg-yellow-300 transition-all duration-300 group shadow-lg shadow-white/10 md:shadow-none"
+                        >
+                            <span>Empezar Proyecto</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 transition-transform group-hover:translate-x-2">
+                                <path fillRule="evenodd" d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" clipRule="evenodd" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
 
-                        {/* Redes sociales */}
-                        <div className="flex gap-3 mt-2">
-                            {socialLinks.map((s) => (
-                                <a
-                                    key={s.label}
-                                    href={s.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={s.label}
-                                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/60 transition hover:border-yellow-300 hover:text-yellow-300"
+                {/* ── Main Grid ── */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16 py-10 md:py-14 border-t border-white/5">
+
+                    {/* Brand Column */}
+                    <div className="col-span-1">
+                        <div className="text-4xl font-black tracking-tight text-yellow-300 mb-4 uppercase">
+                            JR EVENTOS
+                        </div>
+                        <p className="text-white/50 mb-8 max-w-xs text-base">
+                            Líderes en producción de eventos, combinando tecnología de vanguardia con diseño artístico excepcional.
+                        </p>
+                        <img
+                            src="/images/logo-jr-eventos.png"
+                            alt="JR Eventos"
+                            className="hidden md:block h-16 w-auto object-contain"
+                        />
+                    </div>
+
+                    {/* Explorar */}
+                    <div>
+                        <h4 className="font-black text-white mb-5 md:mb-8 text-sm uppercase tracking-tight md:text-xl">
+                            EXPLORAR
+                        </h4>
+                        <nav className="flex flex-col gap-3 md:gap-4">
+                            {exploreLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="text-white/50 hover:text-yellow-300 transition-all duration-300 hover:translate-x-1 inline-block md:text-lg text-xl font-bold md:font-medium"
                                 >
-                                    {s.icon}
-                                </a>
+                                    {link.label}
+                                </Link>
                             ))}
+                        </nav>
+                    </div>
+
+                    {/* Redes Sociales */}
+                    <div>
+                        <h4 className="font-black text-white mb-5 md:mb-8 text-sm uppercase tracking-tight md:text-xl">
+                            REDES SOCIALES
+                        </h4>
+                        <ul className="space-y-4">
+                            {socialLinks.map((s) => (
+                                <li key={s.label}>
+                                    <a
+                                        href={s.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-3 text-white/50 hover:text-yellow-300 transition-all duration-300 hover:translate-x-1 md:text-lg"
+                                    >
+                                        <span className="w-5 h-5 shrink-0">{s.icon}</span>
+                                        {s.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contacto */}
+                    <div>
+                        <h4 className="font-black text-white mb-5 md:mb-8 text-sm uppercase tracking-tight md:text-xl">
+                            CONTACTO
+                        </h4>
+                        <div className="space-y-6">
+                            <a href="https://wa.me/541123456789" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
+                                <div className="mt-0.5 w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center text-yellow-300 group-hover:bg-yellow-300 group-hover:text-black transition-colors">
+                                    {/* WhatsApp logo */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-white/30 text-xs uppercase tracking-widest font-bold mb-0.5">WhatsApp</p>
+                                    <span className="text-white/70 group-hover:text-white transition-colors text-sm">+54 11 2345-6789</span>
+                                </div>
+                            </a>
+                            <a href="mailto:hola@jreventos.com" className="flex items-start gap-4 group">
+                                <div className="mt-0.5 w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center text-yellow-300 group-hover:bg-yellow-300 group-hover:text-black transition-colors">
+                                    {/* Email envelope */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-white/30 text-xs uppercase tracking-widest font-bold mb-0.5">Email</p>
+                                    <span className="text-white/70 group-hover:text-white transition-colors text-sm">hola@jreventos.com</span>
+                                </div>
+                            </a>
+                            <div className="flex items-start gap-4 group">
+                                <div className="mt-0.5 w-10 h-10 rounded-lg bg-neutral-800 flex items-center justify-center text-yellow-300">
+                                    {/* Map pin */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-white/30 text-xs uppercase tracking-widest font-bold mb-0.5">Ubicación</p>
+                                    <p className="text-white/70 text-sm">Buenos Aires, Argentina</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    {/* Columnas de links */}
-                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-3">
-                        {footerColumns.map((col) => (
-                            <div key={col.title}>
-                                <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-yellow-300">
-                                    {col.title}
-                                </h3>
-                                <ul className="flex flex-col gap-3">
-                                    {col.links.map((link) => (
-                                        <li key={link.href}>
-                                            <a
-                                                href={link.href}
-                                                className="text-sm text-white/55 transition hover:text-yellow-300"
-                                            >
-                                                {link.label}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
+                {/* ── Bottom Bar ── */}
+                <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-white/30 text-sm font-medium tracking-wide">
+                        &copy; {year} JR Eventos.
+                    </p>
 
+                    <p className="text-white/30 text-sm">
+                        Powered by{' '}
+                        <a
+                            href="https://archillimatias.dev"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-yellow-300 hover:text-yellow-200 transition-colors uppercase font-bold"
+                        >
+                            PAMPA LABS
+                        </a>
+                    </p>
                 </div>
             </div>
-
-            {/* Línea divisoria */}
-            <div className="border-t border-white/10" />
-
-            {/* Barra de copyright */}
-            <div className="mx-auto max-w-screen-xl px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <p className="text-xs text-white/40">
-                    &copy; {year} JR Eventos.
-                </p>
-                <p className="text-xs text-white/25">
-                    Powered by Pampa Labs
-                </p>
-            </div>
-
         </footer>
     );
 }

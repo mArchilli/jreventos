@@ -12,6 +12,7 @@ const navLinks = [
 
 export default function Navbar({ auth }) {
     const [scrolled, setScrolled] = useState(false);
+    const [footerVisible, setFooterVisible] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const { url } = usePage();
 
@@ -24,13 +25,26 @@ export default function Navbar({ auth }) {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    useEffect(() => {
+        const footer = document.getElementById('footer');
+        if (!footer) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => setFooterVisible(entry.isIntersecting),
+            { threshold: 0.05 }
+        );
+        observer.observe(footer);
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <>
         <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 will-change-transform ${
-                scrolled
-                    ? 'bg-black/70 backdrop-blur-md shadow-lg'
-                    : 'bg-transparent'
+                footerVisible
+                    ? 'bg-transparent'
+                    : scrolled
+                        ? 'bg-black/70 backdrop-blur-md shadow-lg'
+                        : 'bg-transparent'
             }`}
             style={{ transform: 'translateZ(0)' }}
         >

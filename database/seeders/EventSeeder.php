@@ -9,6 +9,8 @@ class EventSeeder extends Seeder
 {
     public function run()
     {
+        Event::truncate();
+
         Event::create([
             'title' => 'Casamientos',
             'description' => 'Te ayudamos a planificar tu fiesta con un servicio completo y ajustándonos a tu presupuesto para que vos solo tengas que ocuparte de disfrutarlo.'

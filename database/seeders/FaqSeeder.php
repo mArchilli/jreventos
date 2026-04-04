@@ -9,6 +9,8 @@ class FaqSeeder extends Seeder
 {
     public function run(): void
     {
+        Faq::truncate();
+
         $faqs = [
             ['question' => '¿CON CUÁNTA ANTICIPACIÓN DEBO RESERVAR MI EVENTO?', 'answer' => '<p>Lo ideal es contactarnos con al menos <strong>3 a 6 meses de anticipación</strong>, especialmente en temporada alta (fin de año, San Valentín, etc.). Sin embargo, hacemos lo posible por adaptarnos a cualquier plazo.</p>', 'order' => 1],
             ['question' => '¿QUÉ TIPO DE EVENTOS ORGANIZAN?', 'answer' => '<p>Organizamos todo tipo de eventos:</p><ul><li>Cumpleaños</li><li>Casamientos</li><li>Fiestas de 15</li><li>Eventos corporativos</li><li>Bautismos</li><li>Baby showers</li><li>Aniversarios y más</li></ul><p>Cada evento lo personalizamos según tus necesidades.</p>', 'order' => 2],
