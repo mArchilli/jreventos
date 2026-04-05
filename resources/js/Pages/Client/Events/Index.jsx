@@ -30,6 +30,16 @@ function isLargeCard(span) {
     return span >= 6;
 }
 
+const HUB_IMAGES = {
+    'Casamientos':                      '/images/casamientos-hub.png',
+    'Cumpleaños':                        '/images/cumpleaños-hub.png',
+    'Eventos Deportivos':                '/images/deportivos-hub.png',
+    'Eventos Empresariales':             '/images/empresariales-hub.png',
+    'Fiestas de 15':                     '/images/xv-hub.png',
+    'Fiestas de egresados - upd - etc':  '/images/upd-hub.png',
+    'Fiestas Infantiles':                '/images/hub-infantiles.png',
+};
+
 export default function EventsIndex({ events }) {
     const gridRef = useRef(null);
 
@@ -101,7 +111,9 @@ export default function EventsIndex({ events }) {
 
 /* ── Desktop Card ── */
 function DesktopCard({ event, span, large }) {
-    const cover = event.images?.[0]?.image_path ? `/${event.images[0].image_path}` : null;
+    const cover = event.images?.[0]?.image_path
+        ? `/${event.images[0].image_path}`
+        : (HUB_IMAGES[event.title] ?? null);
     const preview = stripHtml(event.description ?? '').slice(0, 100);
 
     return (
@@ -162,7 +174,9 @@ function DesktopCard({ event, span, large }) {
 
 /* ── Mobile Card ── */
 function MobileCard({ event, featured }) {
-    const cover = event.images?.[0]?.image_path ? `/${event.images[0].image_path}` : null;
+    const cover = event.images?.[0]?.image_path
+        ? `/${event.images[0].image_path}`
+        : (HUB_IMAGES[event.title] ?? null);
 
     return (
         <Link

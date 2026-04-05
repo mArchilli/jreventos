@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { router } from '@inertiajs/react';
 
 const CATEGORIES = [
     {
@@ -85,6 +86,7 @@ export default function EventCategories() {
                 onMouseMove={handleMouseMove}
                 onMouseEnter={() => setVisible(true)}
                 onMouseLeave={() => setVisible(false)}
+                onClick={() => router.visit(route('eventos.index'))}
             >
                 {/* Cursor personalizado global */}
                 <div
