@@ -12,7 +12,7 @@ export default function ShowAndServicesIndex({ shows }) {
             <Navbar />
 
             {/* ── HERO ── */}
-            <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+            <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
                 <img
                     src="/images/fondo-hero.jpg"
                     alt="Shows y Servicios"
@@ -20,7 +20,7 @@ export default function ShowAndServicesIndex({ shows }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
 
-                <div className="relative z-10 w-full px-8 lg:px-32 pb-16 md:pb-24">
+                <div className="relative z-10 w-full px-8 lg:px-32 pb-10 md:pb-14">
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
                         <span className="text-white">SHOWS Y</span> <span className="text-yellow-300">SERVICIOS</span>
                     </h1>

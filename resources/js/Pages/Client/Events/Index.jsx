@@ -49,7 +49,7 @@ export default function EventsIndex({ events }) {
             <Navbar />
 
             {/* ── Header ── */}
-            <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+            <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
                 {/* Hero image with gradient to black */}
                 <img
                     src="/images/fondo-hero.jpg"
@@ -58,7 +58,7 @@ export default function EventsIndex({ events }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
 
-                <div className="relative z-10 w-full px-8 lg:px-32 pb-16 md:pb-24">
+                <div className="relative z-10 w-full px-8 lg:px-32 pb-10 md:pb-14">
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
                         <span className="text-white">HUB DE</span> <span className="text-yellow-300">EVENTOS</span>
                     </h1>

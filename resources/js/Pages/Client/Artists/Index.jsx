@@ -12,7 +12,7 @@ export default function ArtistsIndex({ artists }) {
             <Navbar />
 
             {/* ── HERO ── */}
-            <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+            <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
                 <img
                     src="/images/fondo-hero.jpg"
                     alt="Artistas"
@@ -20,12 +20,12 @@ export default function ArtistsIndex({ artists }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
 
-                <div className="relative z-10 w-full px-8 lg:px-32 pb-16 md:pb-24">
+                <div className="relative z-10 w-full px-8 lg:px-32 pb-10 md:pb-14">
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
                         <span className="text-white">TRABAJAMOS CON</span> <span className="text-yellow-300">ARTISTAS</span>
                     </h1>
                     <p className="mt-4 max-w-2xl text-white/50 text-sm md:text-lg leading-relaxed">
-                        Conocé a los artistas que confiaron en nosotros para hacer de cada evento una experiencia inolvidable.
+                        Conocé a los artistas que confiaron en nosotros tanto para que  los representemos como para que los contratemos para eventos de todo tipo.
                     </p>
                 </div>
             </section>
