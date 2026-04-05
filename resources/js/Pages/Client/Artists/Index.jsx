@@ -12,36 +12,26 @@ export default function ArtistsIndex({ artists }) {
             <Navbar />
 
             {/* ── HERO ── */}
-            <section
-                className="relative flex h-[55vh] min-h-[380px] w-full items-end overflow-hidden"
-                style={{
-                    backgroundImage: "url('/images/fondo-hero.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            >
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/90" />
+            <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+                <img
+                    src="/images/fondo-hero.jpg"
+                    alt="Artistas"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
 
-                <div className="relative z-10 mx-auto w-full max-w-screen-xl px-8 pb-14 lg:px-16">
-                    {/* Badge */}
-                    <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
-                        <span className="text-yellow-400 text-sm leading-none">★★★★★</span>
-                        <span className="text-sm text-white/80">talento único</span>
-                    </div>
-
-                    <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl xl:text-7xl">
-                        Trabajamos con<br />
-                        <span className="text-yellow-300">Artistas</span>
+                <div className="relative z-10 w-full px-8 lg:px-32 pb-16 md:pb-24">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
+                        <span className="text-white">TRABAJAMOS CON</span> <span className="text-yellow-300">ARTISTAS</span>
                     </h1>
-                    <p className="mt-4 max-w-xl text-base text-white/60">
+                    <p className="mt-4 max-w-2xl text-white/50 text-sm md:text-lg leading-relaxed">
                         Conocé a los artistas que confiaron en nosotros para hacer de cada evento una experiencia inolvidable.
                     </p>
                 </div>
             </section>
 
             {/* ── LISTADO ── */}
-            <section className="bg-black py-20 px-6 lg:px-8">
-                <div className="mx-auto max-w-screen-xl">
+            <section className="bg-black px-8 lg:px-32 pb-20 md:pb-28">
 
                     {artists.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-28 text-center">
@@ -53,18 +43,17 @@ export default function ArtistsIndex({ artists }) {
                             </p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                             {artists.map((artist) => (
                                 <ArtistCard key={artist.id} artist={artist} />
                             ))}
                         </div>
                     )}
-                </div>
             </section>
 
             {/* ── CTA ── */}
-            <section className="bg-black py-16 px-6 border-t border-white/5">
-                <div className="mx-auto max-w-screen-xl flex flex-col items-center text-center gap-6">
+            <section className="bg-black px-8 lg:px-32 py-16 border-t border-white/5">
+                <div className="flex flex-col items-center text-center gap-6">
                     <h2 className="text-4xl font-black text-white tracking-tight lg:text-5xl">
                         ¿Querés contratar<br />
                         <span className="text-yellow-300">un artista</span> para tu evento?
@@ -97,52 +86,43 @@ function stripHtml(html) {
 
 function ArtistCard({ artist }) {
     const mainImage = artist.main_image ?? null;
-    const preview = stripHtml(artist.description ?? '').slice(0, 120);
+    const preview = stripHtml(artist.description ?? '').slice(0, 100);
 
     return (
-        <article className="group relative flex flex-col overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-300/30">
+        <Link
+            href={route('artistas.show', artist.id)}
+            className="group relative flex flex-col overflow-hidden rounded-xl bg-neutral-900 aspect-[3/4]"
+        >
+            {/* Imagen */}
+            {mainImage ? (
+                <img
+                    src={`${IMAGES_PATH}${mainImage.filename}`}
+                    alt={artist.name}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+            ) : (
+                <div className="absolute inset-0 bg-white/5" />
+            )}
 
-            {/* Imagen principal */}
-            <div className="relative h-56 w-full overflow-hidden bg-white/5 shrink-0">
-                {mainImage ? (
-                    <img
-                        src={`${IMAGES_PATH}${mainImage.filename}`}
-                        alt={artist.name}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                ) : (
-                    <div className="flex h-full w-full items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-white/10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                        </svg>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
+
+            {/* Contenido */}
+            <div className="absolute bottom-0 left-0 w-full p-6">
+                <div className="flex justify-between items-end">
+                    <div>
+                        <h3 className="text-xl font-black text-white uppercase tracking-tight leading-none mb-1">
+                            {artist.name}
+                        </h3>
+                        {preview && (
+                            <p className="text-white/50 text-sm line-clamp-2">{preview}{preview.length >= 100 ? '…' : ''}</p>
+                        )}
                     </div>
-                )}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" />
-            </div>
-
-            {/* Cuerpo */}
-            <div className="flex flex-1 flex-col justify-between gap-4 p-6">
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-lg font-black text-white tracking-tight leading-tight">
-                        {artist.name}
-                    </h3>
-                    {preview && (
-                        <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
-                            {preview}{preview.length >= 120 ? '…' : ''}
-                        </p>
-                    )}
-                </div>
-
-                <Link
-                    href={route('artistas.show', artist.id)}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-black shadow-md transition duration-200 hover:bg-yellow-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
-                >
-                    Más información
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-yellow-300 shrink-0 ml-3 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
+                        <path fillRule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clipRule="evenodd" />
                     </svg>
-                </Link>
+                </div>
             </div>
-        </article>
+        </Link>
     );
 }

@@ -12,29 +12,19 @@ export default function ShowAndServicesIndex({ shows }) {
             <Navbar />
 
             {/* ── HERO ── */}
-            <section
-                className="relative flex h-[55vh] min-h-[380px] w-full items-end overflow-hidden"
-                style={{
-                    backgroundImage: "url('/images/fondo-hero.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            >
-                
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/90" />
-                
-                <div className="relative z-10 mx-auto w-full max-w-screen-xl px-8 pb-14 lg:px-16">
-                    {/* Badge */}
-                    <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
-                        <span className="text-yellow-400 text-sm leading-none">★★★★★</span>
-                        <span className="text-sm text-white/80">experiencias únicas</span>
-                    </div>
+            <section className="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+                <img
+                    src="/images/fondo-hero.jpg"
+                    alt="Shows y Servicios"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
 
-                    <h1 className="text-5xl font-black leading-none tracking-tight text-white lg:text-6xl xl:text-7xl">
-                        Shows y<br />
-                        <span className="text-yellow-300">Servicios</span>
+                <div className="relative z-10 w-full px-8 lg:px-32 pb-16 md:pb-24">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none uppercase">
+                        <span className="text-white">SHOWS Y</span> <span className="text-yellow-300">SERVICIOS</span>
                     </h1>
-                    <p className="mt-4 max-w-xl text-base text-white/60">
+                    <p className="mt-4 max-w-2xl text-white/50 text-sm md:text-lg leading-relaxed">
                         Descubrí todo lo que podemos hacer por tu evento. Desde producción artística
                         hasta servicios integrales para cada ocasión.
                     </p>
@@ -42,8 +32,7 @@ export default function ShowAndServicesIndex({ shows }) {
             </section>
 
             {/* ── LISTADO ── */}
-            <section className="bg-black py-20 px-6 lg:px-8">
-                <div className="mx-auto max-w-screen-xl">
+            <section className="bg-black px-8 lg:px-32 pb-20 md:pb-28">
 
                     {shows.length === 0 ? (
                         /* Estado vacío */
@@ -56,18 +45,17 @@ export default function ShowAndServicesIndex({ shows }) {
                             </p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                             {shows.map((show) => (
                                 <ShowCard key={show.id} show={show} />
                             ))}
                         </div>
                     )}
-                </div>
             </section>
 
             {/* ── CTA ── */}
-            <section className="bg-black py-16 px-6 border-t border-white/5">
-                <div className="mx-auto max-w-screen-xl flex flex-col items-center text-center gap-6">
+            <section className="bg-black px-8 lg:px-32 py-16 border-t border-white/5">
+                <div className="flex flex-col items-center text-center gap-6">
                     <h2 className="text-4xl font-black text-white tracking-tight lg:text-5xl">
                         ¿Querés que formemos<br />
                         parte de tu <span className="text-yellow-300">evento</span>?
@@ -99,52 +87,43 @@ function stripHtml(html) {
 }
 
 function ShowCard({ show }) {
-    const preview = stripHtml(show.description ?? '').slice(0, 120);
+    const preview = stripHtml(show.description ?? '').slice(0, 100);
 
     return (
-        <article className="group relative flex flex-col overflow-hidden rounded-3xl bg-white/5 border border-white/10 shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-yellow-300/30">
+        <Link
+            href={route('shows-servicios.show', show.id)}
+            className="group relative flex flex-col overflow-hidden rounded-xl bg-neutral-900 aspect-[3/4]"
+        >
+            {/* Imagen */}
+            {show.img_portada ? (
+                <img
+                    src={`${IMAGES_PATH}${show.img_portada}`}
+                    alt={show.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+            ) : (
+                <div className="absolute inset-0 bg-white/5" />
+            )}
 
-            {/* Imagen portada */}
-            <div className="relative h-56 w-full overflow-hidden bg-white/5 shrink-0">
-                {show.img_portada ? (
-                    <img
-                        src={`${IMAGES_PATH}${show.img_portada}`}
-                        alt={show.title}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                ) : (
-                    <div className="flex h-full w-full items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-white/10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M13.5 4.5h6m0 0v6m0-6L13.5 10.5" />
-                        </svg>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent" />
+
+            {/* Contenido */}
+            <div className="absolute bottom-0 left-0 w-full p-6">
+                <div className="flex justify-between items-end">
+                    <div>
+                        <h3 className="text-xl font-black text-white uppercase tracking-tight leading-none mb-1">
+                            {show.title}
+                        </h3>
+                        {preview && (
+                            <p className="text-white/50 text-sm line-clamp-2">{preview}{preview.length >= 100 ? '…' : ''}</p>
+                        )}
                     </div>
-                )}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent" />
-            </div>
-
-            {/* Cuerpo */}
-            <div className="flex flex-1 flex-col justify-between gap-4 p-6">
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-lg font-black text-white tracking-tight leading-tight">
-                        {show.title}
-                    </h3>
-                    {preview && (
-                        <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
-                            {preview}{preview.length >= 120 ? '…' : ''}
-                        </p>
-                    )}
-                </div>
-
-                <Link
-                    href={route('shows-servicios.show', show.id)}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-black shadow-md transition duration-200 hover:bg-yellow-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
-                >
-                    Más información
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-yellow-300 shrink-0 ml-3 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
+                        <path fillRule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clipRule="evenodd" />
                     </svg>
-                </Link>
+                </div>
             </div>
-        </article>
+        </Link>
     );
 }
