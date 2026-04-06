@@ -3,13 +3,16 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use App\Models\Event;
 
 class EventSeeder extends Seeder
 {
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         Event::truncate();
+        Schema::enableForeignKeyConstraints();
 
         Event::create([
             'title' => 'Casamientos',
