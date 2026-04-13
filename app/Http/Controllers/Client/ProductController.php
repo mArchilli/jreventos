@@ -21,8 +21,15 @@ class ProductController extends Controller
     {
         $product->load('images', 'mainImage');
 
+        $relatedProducts = Product::with('mainImage')
+            ->where('id', '!=', $product->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
         return Inertia::render('Client/Products/Show', [
             'product' => $product,
+            'relatedProducts' => $relatedProducts,
         ]);
     }
 }
