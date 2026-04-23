@@ -66,13 +66,13 @@ function HeroCarousel() {
     );
 }
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome() {
 
     return (
         <>
             <Head title="Welcome" />
 
-            <Navbar auth={auth} />
+            <Navbar />
 
             {/* HERO */}
             <section
@@ -246,9 +246,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                 </div>
             </section>
-
-            {/* secciones futuras */}
-            <div className="bg-gray-950 dark:bg-black"></div>
 
             <Footer />
         </>

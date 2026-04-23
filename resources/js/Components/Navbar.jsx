@@ -10,7 +10,7 @@ const navLinks = [
     { label: 'Artistas',          href: '/artistas'        },
 ];
 
-export default function Navbar({ auth }) {
+export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [footerVisible, setFooterVisible] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);

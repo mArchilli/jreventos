@@ -9,15 +9,11 @@ use App\Http\Controllers\Client\ShowServiceController as ClientShowServiceContro
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\ArtistController as ClientArtistController;
 use App\Http\Controllers\Client\EventController as ClientEventController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
         'faqs' => \App\Models\Faq::orderBy('order')->get(),
     ]);
 });
