@@ -21,8 +21,15 @@ class ArtistController extends Controller
     {
         $artist->load('images', 'mainImage');
 
+        $relatedArtists = Artist::with('mainImage')
+            ->where('id', '!=', $artist->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
         return Inertia::render('Client/Artists/Show', [
             'artist' => $artist,
+            'relatedArtists' => $relatedArtists,
         ]);
     }
 }
