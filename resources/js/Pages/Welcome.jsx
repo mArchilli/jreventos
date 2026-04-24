@@ -140,6 +140,58 @@ export default function Welcome() {
             {/* ABOUT TIMELINE */}
             <AboutTimeLine />
 
+            {/* INTRO EVENTOS */}
+            <section className="bg-black px-8 lg:px-32 py-24 lg:py-32 border-t border-white/5">
+                <div className="flex flex-col lg:flex-row lg:items-end gap-12 lg:gap-24">
+
+                    {/* Izquierda: heading */}
+                    <div className="flex-1">
+                        <span className="block text-[10px] tracking-[0.45em] text-yellow-300/70 uppercase font-semibold mb-6">
+                            Nuestros eventos
+                        </span>
+                        <h2
+                            className="font-black text-white leading-none tracking-tight uppercase"
+                            style={{ fontSize: 'clamp(36px, 7vw, 100px)' }}
+                        >
+                            Así realizamos<br />
+                            nuestros{' '}
+                            <span
+                                style={{
+                                    textDecoration: 'underline',
+                                    textDecorationColor: 'rgba(253,224,71,0.4)',
+                                    textUnderlineOffset: 'clamp(6px, 0.9vw, 14px)',
+                                    textDecorationThickness: '2px',
+                                }}
+                            >
+                                eventos
+                            </span>
+                        </h2>
+                    </div>
+
+                    {/* Derecha: texto + pilares */}
+                    <div className="flex-1 flex flex-col gap-10">
+                        <p className="text-white/55 leading-relaxed" style={{ fontSize: 'clamp(16px, 1.5vw, 20px)' }}>
+                            Cada evento que organizamos es único. Nos involucramos desde la primera idea hasta el último detalle, combinando creatividad, logística y pasión para transformar tu visión en una experiencia que vas a recordar toda la vida.
+                        </p>
+
+                        {/* Pilares */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            {[
+                                { num: '01', label: 'Diseño personalizado', desc: 'Cada propuesta se arma desde cero según tus gustos y necesidades.' },
+                                { num: '02', label: 'Equipo profesional', desc: 'Coordinadores, proveedores y técnicos trabajando en sintonía.' },
+                                { num: '03', label: 'Acompañamiento total', desc: 'Estamos con vos en cada etapa, antes, durante y después del evento.' },
+                            ].map(({ num, label, desc }) => (
+                                <div key={num} className="flex flex-col gap-3 border-t border-white/10 pt-5">
+                                    <span className="text-yellow-300/60 font-black text-xs tracking-[0.35em]">{num}</span>
+                                    <span className="text-white font-bold text-sm uppercase tracking-wide leading-tight">{label}</span>
+                                    <span className="text-white/40 text-sm leading-relaxed">{desc}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* CATEGORÍAS DE EVENTOS */}
             <EventCategories />
 

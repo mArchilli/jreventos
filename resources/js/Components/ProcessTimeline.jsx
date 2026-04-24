@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+// CAROUSEL VERSION — replaced scroll-snap with click/swipe navigation
 
 const STEPS = [
     {
@@ -39,115 +40,50 @@ const STEPS = [
     },
 ];
 
-// intro + 6 steps + CTA slide
-const TOTAL_SLIDES = STEPS.length + 2;
+// intro + 6 steps + CTA
+const TOTAL = STEPS.length + 2;
+
+const SLIDE_TRANSITION = 'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)';
 
 export default function ProcessTimeline() {
-    const sectionRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
-    const isSnapping = useRef(false);
+    const touchStartX = useRef(0);
     const touchStartY = useRef(0);
-    const targetSlideRef = useRef(0);
 
-    const scrollToSlide = useCallback((index) => {
-        const section = sectionRef.current;
-        if (!section || isSnapping.current) return;
-        const clamped = Math.max(0, Math.min(TOTAL_SLIDES - 1, index));
-        targetSlideRef.current = clamped;
-        const scrollable = section.offsetHeight - window.innerHeight;
-        const target = section.offsetTop + (clamped / TOTAL_SLIDES) * scrollable;
-        isSnapping.current = true;
-        window.scrollTo({ top: target, behavior: 'smooth' });
-        setTimeout(() => { isSnapping.current = false; }, 800);
-    }, []);
+    const prev = useCallback(() => setActiveIndex(i => Math.max(0, i - 1)), []);
+    const next = useCallback(() => setActiveIndex(i => Math.min(TOTAL - 1, i + 1)), []);
 
     useEffect(() => {
-        const onScroll = () => {
-            const section = sectionRef.current;
-            if (!section) return;
-            const { top, height } = section.getBoundingClientRect();
-            const scrolled = -top;
-            const scrollable = height - window.innerHeight;
-            let idx = 0;
-            if (scrolled <= 0) { idx = 0; }
-            else if (scrolled >= scrollable) { idx = TOTAL_SLIDES - 1; }
-            else { idx = Math.floor((scrolled / scrollable) * TOTAL_SLIDES); }
-            setActiveIndex(idx);
-            if (!isSnapping.current) {
-                targetSlideRef.current = idx;
-            }
+        const onKey = (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
         };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [prev, next]);
 
-    useEffect(() => {
-        const section = sectionRef.current;
-        if (!section) return;
-
-        const isInSection = () => {
-            const { top, bottom } = section.getBoundingClientRect();
-            return top < window.innerHeight && bottom > 0 && top <= 0;
-        };
-
-        const isMobileViewport = () => window.innerWidth < 1024;
-
-        const onWheel = (e) => {
-            if (!isMobileViewport() || !isInSection()) return;
-            const t = targetSlideRef.current;
-            if (e.deltaY > 0 && t >= TOTAL_SLIDES - 1) return;
-            if (e.deltaY < 0 && t <= 0) return;
-            e.preventDefault();
-            if (!isSnapping.current) {
-                if (e.deltaY > 0) scrollToSlide(t + 1);
-                else scrollToSlide(t - 1);
-            }
-        };
-
-        const onTouchStart = (e) => {
-            touchStartY.current = e.touches[0].clientY;
-        };
-        const onTouchMove = (e) => {
-            if (!isMobileViewport() || !isInSection()) return;
-            const t = targetSlideRef.current;
-            const deltaY = touchStartY.current - e.touches[0].clientY;
-            if (deltaY > 0 && t >= TOTAL_SLIDES - 1) return;
-            if (deltaY < 0 && t <= 0) return;
-            e.preventDefault();
-        };
-        const onTouchEnd = (e) => {
-            if (!isMobileViewport() || !isInSection() || isSnapping.current) return;
-            const deltaY = touchStartY.current - e.changedTouches[0].clientY;
-            if (Math.abs(deltaY) < 30) return;
-            const t = targetSlideRef.current;
-            if (deltaY > 0 && t < TOTAL_SLIDES - 1) scrollToSlide(t + 1);
-            else if (deltaY < 0 && t > 0) scrollToSlide(t - 1);
-        };
-
-        section.addEventListener('wheel', onWheel, { passive: false });
-        section.addEventListener('touchstart', onTouchStart, { passive: true });
-        section.addEventListener('touchmove', onTouchMove, { passive: false });
-        section.addEventListener('touchend', onTouchEnd, { passive: true });
-        return () => {
-            section.removeEventListener('wheel', onWheel);
-            section.removeEventListener('touchstart', onTouchStart);
-            section.removeEventListener('touchmove', onTouchMove);
-            section.removeEventListener('touchend', onTouchEnd);
-        };
-    }, [scrollToSlide]);
+    const onTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+    };
+    const onTouchEnd = (e) => {
+        const dx = touchStartX.current - e.changedTouches[0].clientX;
+        const dy = Math.abs(touchStartY.current - e.changedTouches[0].clientY);
+        if (Math.abs(dx) < 50 || dy > Math.abs(dx)) return;
+        if (dx > 0) next(); else prev();
+    };
 
     const isIntro = activeIndex === 0;
-    const isCTA = activeIndex === STEPS.length + 1;
+    const isCTA = activeIndex === TOTAL - 1;
+    const stepIndex = !isIntro && !isCTA ? activeIndex - 1 : -1;
 
     return (
         <section
-            ref={sectionRef}
             id="como-trabajamos"
-            className="relative bg-black"
-            style={{ height: `${TOTAL_SLIDES * 65 + 100}vh` }}
+            className="relative bg-black h-screen flex items-center justify-center overflow-hidden"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
         >
-            <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
 
                 {/* ── Etiqueta superior ───────────────────────────────────────── */}
                 <div
@@ -159,32 +95,18 @@ export default function ProcessTimeline() {
                     </span>
                 </div>
 
-                {/* ── Flecha scroll ───────────────────────────────────────────── */}
+                {/* ── Contador mobile ─────────────────────────────────────────── */}
                 <div
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 transition-opacity duration-700"
-                    style={{ opacity: isCTA ? 0 : 1 }}
+                    className="lg:hidden absolute bottom-10 right-8 z-20 transition-opacity duration-500"
+                    style={{ opacity: stepIndex >= 0 ? 1 : 0 }}
                     aria-hidden="true"
                 >
-                    <div className="animate-bounce">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="rgba(255,255,255,0.35)"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <polyline points="19 12 12 19 5 12" />
-                        </svg>
-                    </div>
+                    <span className="text-white/30 text-xs font-bold tracking-[0.3em] uppercase">
+                        {String(stepIndex + 1).padStart(2, '0')}&thinsp;/&thinsp;{String(STEPS.length).padStart(2, '0')}
+                    </span>
                 </div>
 
-                {/* ── Indicador de pasos — lateral en desktop, abajo centrado en mobile ── */}
-                {/* Desktop: lateral derecho */}
+                {/* ── Indicadores laterales — desktop ─────────────────────────── */}
                 <div
                     className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col gap-4 z-20 transition-opacity duration-700"
                     style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
@@ -196,26 +118,8 @@ export default function ProcessTimeline() {
                             className="rounded-full transition-all duration-500"
                             style={{
                                 width: '10px',
-                                height: i === activeIndex - 1 ? '48px' : '10px',
-                                background: i === activeIndex - 1 ? '#ffffff' : 'rgba(255,255,255,0.25)',
-                            }}
-                        />
-                    ))}
-                </div>
-                {/* Mobile: abajo centrado */}
-                <div
-                    className="lg:hidden absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-row gap-2.5 z-20 transition-opacity duration-700"
-                    style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
-                    aria-hidden="true"
-                >
-                    {STEPS.map((_, i) => (
-                        <div
-                            key={i}
-                            className="rounded-full transition-all duration-500"
-                            style={{
-                                height: '6px',
-                                width: i === activeIndex - 1 ? '28px' : '6px',
-                                background: i === activeIndex - 1 ? '#ffffff' : 'rgba(255,255,255,0.2)',
+                                height: i === stepIndex ? '48px' : '10px',
+                                background: i === stepIndex ? '#ffffff' : 'rgba(255,255,255,0.25)',
                             }}
                         />
                     ))}
@@ -224,12 +128,13 @@ export default function ProcessTimeline() {
                 {/* ── Slide de introducción ───────────────────────────────────── */}
                 <div
                     aria-hidden={!isIntro}
-                    className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
+                    className="absolute inset-0 flex flex-col justify-center px-8 lg:px-32"
                     style={{
+                        paddingTop: '64px',
+                        paddingBottom: '96px',
                         opacity: isIntro ? 1 : 0,
                         transform: `translateY(${isIntro ? 0 : -44}px)`,
-                        transition:
-                            'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)',
+                        transition: SLIDE_TRANSITION,
                         pointerEvents: isIntro ? 'auto' : 'none',
                     }}
                 >
@@ -266,7 +171,7 @@ export default function ProcessTimeline() {
                             className="mt-10 leading-relaxed text-white/45"
                             style={{ fontSize: 'clamp(17px, 2vw, 24px)', maxWidth: '820px' }}
                         >
-                            Seguimos un proceso simple y personalizado para que tu evento sea exactamente como lo soñaste. Deslizá para conocer cada paso.
+                            Seguimos un proceso simple y personalizado para que tu evento sea exactamente como lo soñaste. Usá las flechas para conocer cada paso.
                         </p>
 
                         {/* Mini indicadores de pasos + hint */}
@@ -281,7 +186,7 @@ export default function ProcessTimeline() {
                                 ))}
                             </div>
                             <span className="text-white/25 text-[11px] tracking-[0.35em] uppercase font-semibold">
-                                scroll para ver
+                                seguí las flechas
                             </span>
                         </div>
                     </div>
@@ -297,12 +202,13 @@ export default function ProcessTimeline() {
                         <div
                             key={i}
                             aria-hidden={!isActive}
-                            className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
+                            className="absolute inset-0 flex flex-col justify-center px-8 lg:px-32"
                             style={{
+                                paddingTop: '64px',
+                                paddingBottom: '96px',
                                 opacity: isActive ? 1 : 0,
                                 transform: `translateY(${offset}px)`,
-                                transition:
-                                    'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)',
+                                transition: SLIDE_TRANSITION,
                                 pointerEvents: isActive ? 'auto' : 'none',
                             }}
                         >
@@ -357,12 +263,13 @@ export default function ProcessTimeline() {
                 {/* ── Slide CTA ───────────────────────────────────────────────── */}
                 <div
                     aria-hidden={!isCTA}
-                    className="absolute inset-0 flex items-center justify-center px-8 lg:px-32"
+                    className="absolute inset-0 flex flex-col justify-center px-8 lg:px-32"
                     style={{
+                        paddingTop: '64px',
+                        paddingBottom: '96px',
                         opacity: isCTA ? 1 : 0,
                         transform: `translateY(${isCTA ? 0 : 44}px)`,
-                        transition:
-                            'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)',
+                        transition: SLIDE_TRANSITION,
                         pointerEvents: isCTA ? 'auto' : 'none',
                     }}
                 >
@@ -433,7 +340,52 @@ export default function ProcessTimeline() {
                     </div>
                 </div>
 
+            {/* ── Flechas de navegación ─────────────────────────────────────── */}
+            <div className="absolute bottom-8 lg:bottom-12 right-8 lg:right-32 z-20 flex items-center gap-5 lg:gap-7">
+                <button
+                    onClick={prev}
+                    disabled={activeIndex === 0}
+                    aria-label="Paso anterior"
+                    className="transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-10 h-10 lg:w-14 lg:h-14 stroke-yellow-300"
+                    >
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button
+                    onClick={next}
+                    disabled={activeIndex === TOTAL - 1}
+                    aria-label="Paso siguiente"
+                    className="transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-10 h-10 lg:w-14 lg:h-14 stroke-yellow-300"
+                    >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
+
+            {/* ── Barra de progreso ─────────────────────────────────────────── */}
+            <div className="absolute bottom-0 left-0 w-full h-px bg-white/10 z-20" aria-hidden="true">
+                <div
+                    className="h-full bg-white/50 transition-all duration-700 ease-in-out"
+                    style={{ width: `${(activeIndex / (TOTAL - 1)) * 100}%` }}
+                />
+            </div>
+
         </section>
     );
 }
