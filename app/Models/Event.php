@@ -12,10 +12,31 @@ class Event extends Model
     protected $fillable = [
         'title',
         'description',
+        'timeline',
+        'includes',
+        'testimonials',
+        'card_image_id',
+        'hero_image_id',
+    ];
+
+    protected $casts = [
+        'timeline'     => 'array',
+        'includes'     => 'array',
+        'testimonials' => 'array',
     ];
 
     public function images()
     {
         return $this->hasMany(EventImage::class);
+    }
+
+    public function cardImage()
+    {
+        return $this->belongsTo(EventImage::class, 'card_image_id');
+    }
+
+    public function heroImage()
+    {
+        return $this->belongsTo(EventImage::class, 'hero_image_id');
     }
 }
