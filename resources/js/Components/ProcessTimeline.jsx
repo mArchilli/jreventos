@@ -43,7 +43,7 @@ const STEPS = [
 // intro + 6 steps + CTA
 const TOTAL = STEPS.length + 2;
 
-const SLIDE_TRANSITION = 'opacity 0.85s cubic-bezier(0.4,0,0.2,1), transform 0.85s cubic-bezier(0.4,0,0.2,1)';
+const SLIDE_TRANSITION = 'opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1)';
 
 export default function ProcessTimeline() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -95,17 +95,6 @@ export default function ProcessTimeline() {
                     </span>
                 </div>
 
-                {/* ── Contador mobile ─────────────────────────────────────────── */}
-                <div
-                    className="lg:hidden absolute bottom-10 right-8 z-20 transition-opacity duration-500"
-                    style={{ opacity: stepIndex >= 0 ? 1 : 0 }}
-                    aria-hidden="true"
-                >
-                    <span className="text-white/30 text-xs font-bold tracking-[0.3em] uppercase">
-                        {String(stepIndex + 1).padStart(2, '0')}&thinsp;/&thinsp;{String(STEPS.length).padStart(2, '0')}
-                    </span>
-                </div>
-
                 {/* ── Indicadores laterales — desktop ─────────────────────────── */}
                 <div
                     className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col gap-4 z-20 transition-opacity duration-700"
@@ -133,7 +122,7 @@ export default function ProcessTimeline() {
                         paddingTop: '64px',
                         paddingBottom: '96px',
                         opacity: isIntro ? 1 : 0,
-                        transform: `translateY(${isIntro ? 0 : -44}px)`,
+                        transform: `translateX(${isIntro ? 0 : -60}px)`,
                         transition: SLIDE_TRANSITION,
                         pointerEvents: isIntro ? 'auto' : 'none',
                     }}
@@ -196,7 +185,7 @@ export default function ProcessTimeline() {
                 {STEPS.map((step, i) => {
                     const isActive = i + 1 === activeIndex;
                     const isPast   = i + 1 < activeIndex;
-                    const offset   = isActive ? 0 : isPast ? -44 : 44;
+                    const offset   = isActive ? 0 : isPast ? -60 : 60;
 
                     return (
                         <div
@@ -207,7 +196,7 @@ export default function ProcessTimeline() {
                                 paddingTop: '64px',
                                 paddingBottom: '96px',
                                 opacity: isActive ? 1 : 0,
-                                transform: `translateY(${offset}px)`,
+                                transform: `translateX(${offset}px)`,
                                 transition: SLIDE_TRANSITION,
                                 pointerEvents: isActive ? 'auto' : 'none',
                             }}
@@ -247,7 +236,7 @@ export default function ProcessTimeline() {
 
                                 {/* Descripción */}
                                 <p
-                                    className="mt-10 leading-relaxed text-white/45"
+                                    className="mt-10 leading-relaxed text-white/65 font-medium"
                                     style={{
                                         fontSize: 'clamp(17px, 2vw, 24px)',
                                         maxWidth: '820px',
@@ -268,7 +257,7 @@ export default function ProcessTimeline() {
                         paddingTop: '64px',
                         paddingBottom: '96px',
                         opacity: isCTA ? 1 : 0,
-                        transform: `translateY(${isCTA ? 0 : 44}px)`,
+                        transform: `translateX(${isCTA ? 0 : 60}px)`,
                         transition: SLIDE_TRANSITION,
                         pointerEvents: isCTA ? 'auto' : 'none',
                     }}
@@ -341,38 +330,35 @@ export default function ProcessTimeline() {
                 </div>
 
             {/* ── Flechas de navegación ─────────────────────────────────────── */}
-            <div className="absolute bottom-8 lg:bottom-12 right-8 lg:right-32 z-20 flex items-center gap-5 lg:gap-7">
+            {/* Mobile: centradas con contador en medio | Desktop: esquina inferior derecha */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-32 lg:bottom-12 z-20 flex items-center gap-4 lg:gap-5">
                 <button
                     onClick={prev}
                     disabled={activeIndex === 0}
                     aria-label="Paso anterior"
-                    className="transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none"
+                    className="flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 rounded-full border border-yellow-300/30 text-yellow-300 transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300/70 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
                 >
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 lg:w-14 lg:h-14 stroke-yellow-300"
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 lg:w-7 lg:h-7 stroke-current">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </button>
+
+                {/* Contador — visible solo en mobile, en el centro */}
+                <span
+                    className="lg:hidden text-white/35 text-xs font-bold tracking-[0.3em] uppercase w-16 text-center transition-opacity duration-500"
+                    style={{ opacity: stepIndex >= 0 ? 1 : 0 }}
+                    aria-hidden="true"
+                >
+                    {String(Math.max(stepIndex + 1, 1)).padStart(2, '0')}&thinsp;/&thinsp;{String(STEPS.length).padStart(2, '0')}
+                </span>
+
                 <button
                     onClick={next}
                     disabled={activeIndex === TOTAL - 1}
                     aria-label="Paso siguiente"
-                    className="transition-all duration-300 disabled:opacity-20 disabled:pointer-events-none"
+                    className="flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 rounded-full border border-yellow-300/30 text-yellow-300 transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300/70 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
                 >
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="w-10 h-10 lg:w-14 lg:h-14 stroke-yellow-300"
-                    >
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 lg:w-7 lg:h-7 stroke-current">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                 </button>

@@ -32,7 +32,7 @@ function isLargeCard(span) {
 
 const HUB_IMAGES = {
     'Casamientos':                      '/images/casamientos-hub.png',
-    'Cumpleaños':                        '/images/cumpleaños-hub.png',
+    'CumpleaÃ±os':                        '/images/cumpleaÃ±os-hub.png',
     'Eventos Deportivos':                '/images/deportivos-hub.png',
     'Eventos Empresariales':             '/images/empresariales-hub.png',
     'Fiestas de 15':                     '/images/xv-hub.png',
@@ -48,7 +48,7 @@ export default function EventsIndex({ events }) {
             <Head title="Eventos" />
             <Navbar />
 
-            {/* ── Header ── */}
+            {/* â”€â”€ Header â”€â”€ */}
             <section className="relative h-[40vh] min-h-[300px] flex items-end overflow-hidden">
                 {/* Hero image with gradient to black */}
                 <img
@@ -64,19 +64,19 @@ export default function EventsIndex({ events }) {
                     </h1>
 
                     <p className="mt-4 max-w-2xl text-white/50 text-sm md:text-lg leading-relaxed">
-                        Cada evento es una historia que cobra vida. Descubrí las puestas en escena, la energía y la magia detrás de cada celebración que dejó huella.
+                        Cada evento es una historia que cobra vida. DescubrÃ­ las puestas en escena, la energÃ­a y la magia detrÃ¡s de cada celebraciÃ³n que dejÃ³ huella.
                     </p>
                 </div>
             </section>
 
-            {/* ── Bento Grid ── */}
+            {/* â”€â”€ Bento Grid â”€â”€ */}
             <section className="bg-black px-8 lg:px-32 pb-20 md:pb-28">
                 {events.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-28 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-white/15 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                         </svg>
-                        <p className="text-white/30 text-lg font-medium">Próximamente nuevos eventos.</p>
+                        <p className="text-white/30 text-lg font-medium">PrÃ³ximamente nuevos eventos.</p>
                     </div>
                 ) : (
                     <>
@@ -109,7 +109,7 @@ export default function EventsIndex({ events }) {
     );
 }
 
-/* ── Desktop Card ── */
+/* â”€â”€ Desktop Card â”€â”€ */
 function DesktopCard({ event, span, large }) {
     const cover = event.card_image?.image_path
         ? `/${event.card_image.image_path}`
@@ -141,7 +141,7 @@ function DesktopCard({ event, span, large }) {
                                 {event.title}
                             </h3>
                             {preview && (
-                                <p className="text-white/50 font-medium text-sm max-w-md">{preview}{preview.length >= 100 ? '…' : ''}</p>
+                                <p className="text-white/50 font-medium text-sm max-w-md">{preview}{preview.length >= 100 ? 'â€¦' : ''}</p>
                             )}
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 text-yellow-300 shrink-0 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
@@ -154,7 +154,7 @@ function DesktopCard({ event, span, large }) {
                             {event.title}
                         </h3>
                         {preview && (
-                            <p className="mt-1 text-white/50 text-sm line-clamp-2">{preview}{preview.length >= 100 ? '…' : ''}</p>
+                            <p className="mt-1 text-white/50 text-sm line-clamp-2">{preview}{preview.length >= 100 ? 'â€¦' : ''}</p>
                         )}
                     </>
                 )}
@@ -172,7 +172,7 @@ function DesktopCard({ event, span, large }) {
     );
 }
 
-/* ── Mobile Card ── */
+/* â”€â”€ Mobile Card â”€â”€ */
 function MobileCard({ event, featured }) {
     const cover = event.card_image?.image_path
         ? `/${event.card_image.image_path}`
