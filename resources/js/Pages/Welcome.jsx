@@ -1,15 +1,10 @@
 import { Head } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import AboutTimeLine from '@/Components/AboutTimeLine';
 import EventCategories from '@/Components/EventCategories';
 import ProcessTimeline from '@/Components/ProcessTimeline';
 import FaqSection from '@/Components/FaqSection';
-
-const carouselImages = [
-    '/images/carrusel-hero-1.jpg',
-];
 
 const clientLogos = [
     '/images/clientes-1.png',
@@ -26,46 +21,6 @@ const clientLogos2 = [
     '/images/clientes-1.png',
 ];
 
-function HeroCarousel() {
-    const [current, setCurrent] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % carouselImages.length);
-        }, 3500);
-        return () => clearInterval(timer);
-    }, []);
-
-    return (
-        <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
-            {carouselImages.map((src, i) => (
-                <img
-                    key={i}
-                    src={src}
-                    alt={`Evento ${i + 1}`}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                        i === current ? 'opacity-100' : 'opacity-0'
-                    }`}
-                />
-            ))}
-            {/* dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {carouselImages.map((_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => setCurrent(i)}
-                        className={`w-2.5 h-2.5 rounded-full transition-all ${
-                            i === current
-                                ? 'bg-white scale-110'
-                                : 'bg-white/40'
-                        }`}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-}
-
 export default function Welcome() {
 
     return (
@@ -75,64 +30,52 @@ export default function Welcome() {
             <Navbar />
 
             {/* HERO */}
-            <section
-                className="relative h-screen w-full overflow-hidden"
-                style={{
-                    backgroundImage: "url('/images/fondo-hero.jpg')",
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            >
+            <section className="relative h-screen w-full overflow-hidden">
+                {/* Video de fondo */}
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                >
+                    <source src="/videos/video-hero.mp4" type="video/mp4" />
+                    <source src="/videos/video-hero.webm" type="video/webm" />
+                </video>
 
+                {/* Overlay difuminado negro */}
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, black 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.1) 65%, transparent 100%)' }} />
 
-                {/* content */}
-                <div className="relative z-10 flex h-full items-center px-8 lg:px-32">
-                    <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2 lg:items-center">
+                {/* Contenido - abajo a la izquierda */}
+                <div className="absolute bottom-0 left-0 px-8 lg:px-32 pb-16 lg:pb-24 z-10">
+                    {/* heading */}
+                    <h1 className="font-black leading-none tracking-tight text-white uppercase" style={{ fontSize: 'clamp(32px, 6vw, 88px)' }}>
+                        Hacemos posible<br />
+                        <span className="text-yellow-300">el evento</span><br />
+                        de tus sueños
+                    </h1>
 
-                        {/* LEFT */}
-                        <div className="flex flex-col gap-6">
-                            {/* badge con estrellas */}
-                            <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
-                                <span className="text-yellow-400 text-base leading-none tracking-wide">★★★★★</span>
-                                <span className="text-sm text-white/90">nuestros clientes nos respaldan</span>
-                            </div>
-
-                            {/* heading */}
-                            <h1 className="text-5xl font-black leading-none tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl uppercase">
-                                Hacemos<br />
-                                posible<br />
-                                <span className="text-yellow-300">el evento</span><br />
-                                de tus sueños
-                            </h1>
-
-                            {/* buttons */}
-                            <div className="flex flex-wrap items-center gap-4 pt-2">
-                                <a
-                                    href="#contacto"
-                                    className="rounded-full bg-white px-7 py-3 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-gray-100 hover:shadow-xl hover:scale-105 active:scale-95"
-                                >
-                                    Construyamos juntos tu evento
-                                </a>
-                                <a
-                                    href="https://wa.me/tuNumero"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center rounded-full border-2 border-white/70 bg-transparent p-3.5 backdrop-blur-sm transition duration-200 hover:bg-white/20 hover:border-white hover:scale-110 active:scale-95"
-                                    aria-label="Contactar por WhatsApp"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-6 w-6">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.828L.057 23.428a.5.5 0 0 0 .609.61l5.7-1.49A11.947 11.947 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.888 9.888 0 0 1-5.031-1.371l-.36-.214-3.733.976.998-3.645-.235-.374A9.862 9.862 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.466 0 9.9 4.433 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* RIGHT carousel */}
-                        <div className="hidden lg:flex h-[55vh] max-h-[560px] w-full items-center justify-center">
-                            <HeroCarousel />
-                        </div>
-
+                    {/* buttons */}
+                    <div className="flex flex-wrap items-center gap-4 pt-6">
+                        <a
+                            href="#sobre-nosotros"
+                            onClick={(e) => { e.preventDefault(); document.getElementById('sobre-nosotros')?.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="rounded-full bg-white px-7 py-3 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-gray-100 hover:shadow-xl hover:scale-105 active:scale-95"
+                        >
+                            Conoce como trabajamos
+                        </a>
+                        <a
+                            href="https://wa.me/tuNumero"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-3 rounded-full border-2 border-white/70 bg-transparent px-7 py-3 text-base font-bold text-white backdrop-blur-sm transition duration-200 hover:bg-white/20 hover:border-white hover:scale-105 active:scale-95"
+                        >
+                            Contáctanos
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 shrink-0">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.828L.057 23.428a.5.5 0 0 0 .609.61l5.7-1.49A11.947 11.947 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.888 9.888 0 0 1-5.031-1.371l-.36-.214-3.733.976.998-3.645-.235-.374A9.862 9.862 0 0 1 2.1 12C2.1 6.533 6.533 2.1 12 2.1c5.466 0 9.9 4.433 9.9 9.9 0 5.466-4.434 9.9-9.9 9.9z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </section>

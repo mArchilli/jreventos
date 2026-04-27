@@ -106,6 +106,7 @@ export default function AboutTimeLine() {
 
     return (
         <section
+            id="sobre-nosotros"
             ref={sectionRef}
             className="relative bg-black"
             style={{ height: `${TOTAL_SLIDES * 65 + 100}vh` }}
