@@ -111,9 +111,9 @@ export default function EventsIndex({ events }) {
 
 /* ── Desktop Card ── */
 function DesktopCard({ event, span, large }) {
-    const cover = event.images?.[0]?.image_path
-        ? `/${event.images[0].image_path}`
-        : (HUB_IMAGES[event.title] ?? null);
+    const cover = event.card_image?.image_path
+        ? `/${event.card_image.image_path}`
+        : (event.images?.[0]?.image_path ? `/${event.images[0].image_path}` : (HUB_IMAGES[event.title] ?? null));
     const preview = stripHtml(event.description ?? '').slice(0, 100);
 
     return (
@@ -174,9 +174,9 @@ function DesktopCard({ event, span, large }) {
 
 /* ── Mobile Card ── */
 function MobileCard({ event, featured }) {
-    const cover = event.images?.[0]?.image_path
-        ? `/${event.images[0].image_path}`
-        : (HUB_IMAGES[event.title] ?? null);
+    const cover = event.card_image?.image_path
+        ? `/${event.card_image.image_path}`
+        : (event.images?.[0]?.image_path ? `/${event.images[0].image_path}` : (HUB_IMAGES[event.title] ?? null));
 
     return (
         <Link

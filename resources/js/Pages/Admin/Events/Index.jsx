@@ -7,12 +7,20 @@ import 'quill/dist/quill.snow.css';
 
 const IMAGES_PATH = import.meta.env.VITE_EVENTS_IMAGES_PATH ?? '/images/events/';
 
+const emptyTimeline = () => ({ step: '', title: '', desc: '' });
+const emptyTestimonial = () => ({ name: '', text: '', detail: '' });
+
 const emptyForm = {
     title: '',
     description: '',
     newFiles: [],
     newPreviews: [],
     removeIds: [],
+    timeline: [],
+    includes: [],
+    testimonials: [],
+    cardImageId: null,
+    heroImageId: null,
 };
 
 const sanitizeDescription = (html) => ({ __html: DOMPurify.sanitize(html ?? '') });
@@ -80,8 +88,13 @@ export default function EventsIndex({ events }) {
         setEditing(event);
         setForm({
             ...emptyForm,
-            title:       event.title,
-            description: event.description,
+            title:        event.title,
+            description:  event.description,
+            timeline:     event.timeline     ?? [],
+            includes:     event.includes     ?? [],
+            testimonials: event.testimonials ?? [],
+            cardImageId:  event.card_image_id ?? null,
+            heroImageId:  event.hero_image_id ?? null,
         });
         setModal(true);
     }
@@ -119,11 +132,15 @@ export default function EventsIndex({ events }) {
         const data = new FormData();
         data.append('title', form.title);
         data.append('description', form.description);
+        if (form.timeline.length)     data.append('timeline',     JSON.stringify(form.timeline));
+        if (form.includes.length)     data.append('includes',     JSON.stringify(form.includes));
+        if (form.testimonials.length) data.append('testimonials', JSON.stringify(form.testimonials));
+        if (form.cardImageId)         data.append('card_image_id', form.cardImageId);
+        if (form.heroImageId)         data.append('hero_image_id', form.heroImageId);
 
         if (editing) {
             data.append('_method', 'PUT');
             form.removeIds.forEach(id => data.append('remove_image_ids[]', id));
-            // Enviar nuevas imágenes como images[] también en edición
             form.newFiles.forEach(f => data.append('images[]', f));
             router.post(route('admin.events.update', editing.id), data, { forceFormData: true });
         } else {
@@ -360,27 +377,64 @@ export default function EventsIndex({ events }) {
                             {/* ── Existing images (edit mode) ── */}
                             {editing && editing.images?.length > 0 && (
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase tracking-wide text-white/50 mb-2">
+                                    <label className="block text-xs font-semibold uppercase tracking-wide text-white/50 mb-1">
                                         Imágenes actuales
-                                        <span className="ml-1 text-white/30 normal-case font-normal">(✕ para eliminar)</span>
                                     </label>
+                                    <p className="text-[11px] text-white/25 mb-3">
+                                        Seleccioná cuál aparece en la <span className="text-yellow-300/60 font-semibold">card</span> del hub y cuál en el <span className="text-sky-400/60 font-semibold">hero</span> del detalle. ✕ elimina la imagen.
+                                    </p>
                                     <div className="flex flex-wrap gap-3">
                                         {editing.images.map(img => {
                                             const markedRemove = form.removeIds.includes(img.id);
+                                            const isCard = form.cardImageId === img.id;
+                                            const isHero = form.heroImageId === img.id;
                                             return (
-                                                <div key={img.id} className="relative">
+                                                <div key={img.id} className="relative group/img">
                                                     <img
                                                         src={`/${img.image_path}`}
-                                                        className={`h-20 w-20 rounded-xl object-cover border-2 transition
-                                                            ${markedRemove ? 'opacity-30 border-red-500/50' : 'border-white/10'}`}
+                                                        className={`h-24 w-24 rounded-xl object-cover border-2 transition
+                                                            ${markedRemove ? 'opacity-20 border-red-500/50' : isCard && isHero ? 'border-purple-400' : isCard ? 'border-yellow-300' : isHero ? 'border-sky-400' : 'border-white/10'}`}
                                                         alt=""
                                                     />
-                                                    <button type="button"
-                                                        onClick={() => toggleRemoveExisting(img.id)}
-                                                        className={`absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold shadow transition
-                                                            ${markedRemove ? 'bg-white/20 text-white/60' : 'bg-red-500 text-white hover:bg-red-600'}`}>
-                                                        {markedRemove ? '↩' : '✕'}
-                                                    </button>
+                                                    {/* Badges */}
+                                                    {!markedRemove && (
+                                                        <div className="absolute top-1 left-1 flex flex-col gap-1">
+                                                            {isCard && (
+                                                                <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-yellow-300 text-black leading-none">CARD</span>
+                                                            )}
+                                                            {isHero && (
+                                                                <span className="px-1.5 py-0.5 rounded text-[9px] font-black bg-sky-400 text-black leading-none">HERO</span>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                    {/* Overlay con acciones */}
+                                                    {!markedRemove && (
+                                                        <div className="absolute inset-0 rounded-xl bg-black/70 opacity-0 group-hover/img:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-1">
+                                                            <button type="button"
+                                                                onClick={() => setForm(f => ({ ...f, cardImageId: isCard ? null : img.id }))}
+                                                                className={`w-full text-[10px] font-bold py-0.5 rounded transition ${isCard ? 'bg-yellow-300 text-black' : 'bg-white/20 text-white hover:bg-yellow-300/80 hover:text-black'}`}>
+                                                                {isCard ? '★ Card' : 'Card'}
+                                                            </button>
+                                                            <button type="button"
+                                                                onClick={() => setForm(f => ({ ...f, heroImageId: isHero ? null : img.id }))}
+                                                                className={`w-full text-[10px] font-bold py-0.5 rounded transition ${isHero ? 'bg-sky-400 text-black' : 'bg-white/20 text-white hover:bg-sky-400/80 hover:text-black'}`}>
+                                                                {isHero ? '★ Hero' : 'Hero'}
+                                                            </button>
+                                                            <button type="button"
+                                                                onClick={() => toggleRemoveExisting(img.id)}
+                                                                className="w-full text-[10px] font-bold py-0.5 rounded bg-red-500/80 text-white hover:bg-red-600 transition">
+                                                                Eliminar
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                    {/* Restore si está marcada para eliminar */}
+                                                    {markedRemove && (
+                                                        <button type="button"
+                                                            onClick={() => toggleRemoveExisting(img.id)}
+                                                            className="absolute inset-0 flex items-center justify-center rounded-xl text-[10px] font-bold text-white/60 hover:text-white transition">
+                                                            ↩
+                                                        </button>
+                                                    )}
                                                 </div>
                                             );
                                         })}
@@ -415,6 +469,137 @@ export default function EventsIndex({ events }) {
                                         ))}
                                     </div>
                                 )}
+                            </div>
+
+                            {/* ── Timeline ── */}
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-xs font-semibold uppercase tracking-wide text-white/50">
+                                        Línea de tiempo <span className="normal-case font-normal text-white/25">(opcional)</span>
+                                    </label>
+                                    <button type="button"
+                                        onClick={() => setForm(f => ({ ...f, timeline: [...f.timeline, emptyTimeline()] }))}
+                                        className="text-xs text-yellow-300/70 hover:text-yellow-300 font-semibold transition">
+                                        + Agregar paso
+                                    </button>
+                                </div>
+                                {form.timeline.length === 0 && (
+                                    <p className="text-xs text-white/20 italic">Sin pasos definidos. Se usará el contenido por defecto del tipo de evento.</p>
+                                )}
+                                <div className="flex flex-col gap-3">
+                                    {form.timeline.map((step, i) => (
+                                        <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-4 flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="N° (ej: 01)"
+                                                    value={step.step}
+                                                    onChange={e => setForm(f => { const t = [...f.timeline]; t[i] = { ...t[i], step: e.target.value }; return { ...f, timeline: t }; })}
+                                                    className="w-16 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Título del paso"
+                                                    value={step.title}
+                                                    onChange={e => setForm(f => { const t = [...f.timeline]; t[i] = { ...t[i], title: e.target.value }; return { ...f, timeline: t }; })}
+                                                    className="flex-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50"
+                                                />
+                                                <button type="button"
+                                                    onClick={() => setForm(f => ({ ...f, timeline: f.timeline.filter((_, j) => j !== i) }))}
+                                                    className="text-red-400/60 hover:text-red-400 text-xs font-bold px-1">✕</button>
+                                            </div>
+                                            <textarea
+                                                placeholder="Descripción del paso"
+                                                value={step.desc}
+                                                rows={2}
+                                                onChange={e => setForm(f => { const t = [...f.timeline]; t[i] = { ...t[i], desc: e.target.value }; return { ...f, timeline: t }; })}
+                                                className="w-full rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50 resize-none"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* ── Qué incluye ── */}
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-xs font-semibold uppercase tracking-wide text-white/50">
+                                        Qué incluye <span className="normal-case font-normal text-white/25">(opcional)</span>
+                                    </label>
+                                    <button type="button"
+                                        onClick={() => setForm(f => ({ ...f, includes: [...f.includes, ''] }))}
+                                        className="text-xs text-yellow-300/70 hover:text-yellow-300 font-semibold transition">
+                                        + Agregar ítem
+                                    </button>
+                                </div>
+                                {form.includes.length === 0 && (
+                                    <p className="text-xs text-white/20 italic">Sin ítems definidos. Se usará el contenido por defecto del tipo de evento.</p>
+                                )}
+                                <div className="flex flex-col gap-2">
+                                    {form.includes.map((item, i) => (
+                                        <div key={i} className="flex items-center gap-2">
+                                            <input
+                                                type="text"
+                                                placeholder="Ej: Venue de primer nivel"
+                                                value={item}
+                                                onChange={e => setForm(f => { const inc = [...f.includes]; inc[i] = e.target.value; return { ...f, includes: inc }; })}
+                                                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50"
+                                            />
+                                            <button type="button"
+                                                onClick={() => setForm(f => ({ ...f, includes: f.includes.filter((_, j) => j !== i) }))}
+                                                className="text-red-400/60 hover:text-red-400 text-xs font-bold px-1">✕</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* ── Testimonios ── */}
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-xs font-semibold uppercase tracking-wide text-white/50">
+                                        Experiencias reales <span className="normal-case font-normal text-white/25">(opcional)</span>
+                                    </label>
+                                    <button type="button"
+                                        onClick={() => setForm(f => ({ ...f, testimonials: [...f.testimonials, emptyTestimonial()] }))}
+                                        className="text-xs text-yellow-300/70 hover:text-yellow-300 font-semibold transition">
+                                        + Agregar testimonio
+                                    </button>
+                                </div>
+                                {form.testimonials.length === 0 && (
+                                    <p className="text-xs text-white/20 italic">Sin testimonios definidos. Se usará el contenido por defecto del tipo de evento.</p>
+                                )}
+                                <div className="flex flex-col gap-3">
+                                    {form.testimonials.map((t, i) => (
+                                        <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-4 flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Nombre (ej: Lucía & Martín)"
+                                                    value={t.name}
+                                                    onChange={e => setForm(f => { const ts = [...f.testimonials]; ts[i] = { ...ts[i], name: e.target.value }; return { ...f, testimonials: ts }; })}
+                                                    className="flex-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50"
+                                                />
+                                                <button type="button"
+                                                    onClick={() => setForm(f => ({ ...f, testimonials: f.testimonials.filter((_, j) => j !== i) }))}
+                                                    className="text-red-400/60 hover:text-red-400 text-xs font-bold px-1">✕</button>
+                                            </div>
+                                            <textarea
+                                                placeholder="Texto del testimonio"
+                                                value={t.text}
+                                                rows={3}
+                                                onChange={e => setForm(f => { const ts = [...f.testimonials]; ts[i] = { ...ts[i], text: e.target.value }; return { ...f, testimonials: ts }; })}
+                                                className="w-full rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50 resize-none"
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Detalle (ej: Boda — 150 invitados)"
+                                                value={t.detail}
+                                                onChange={e => setForm(f => { const ts = [...f.testimonials]; ts[i] = { ...ts[i], detail: e.target.value }; return { ...f, testimonials: ts }; })}
+                                                className="w-full rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-yellow-300/50"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Buttons */}

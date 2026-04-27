@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::with('images')->latest()->get();
+        $events = Event::with(['images', 'cardImage'])->latest()->get();
 
         return Inertia::render('Client/Events/Index', [
             'events' => $events,
@@ -19,16 +19,16 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        $event->load('images');
+        $event->load(['images', 'cardImage', 'heroImage']);
 
-        $relatedEvents = Event::with('images')
+        $relatedEvents = Event::with(['images', 'cardImage'])
             ->where('id', '!=', $event->id)
             ->latest()
             ->take(3)
             ->get();
 
         return Inertia::render('Client/Events/Show', [
-            'event' => $event,
+            'event'         => $event,
             'relatedEvents' => $relatedEvents,
         ]);
     }

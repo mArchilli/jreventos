@@ -24,24 +24,11 @@ const THEMES = {
         emotionalTitle: 'No es solo una fiesta. Es tu noche.',
         emotionalDesc: 'Los XV años son ese momento único donde la niña que fuiste se convierte en la mujer que serás. Merece una noche irrepetible, llena de magia, emoción y todos los detalles que siempre imaginaste.',
         differentials: ['Diseño personalizado desde cero', 'Coordinación completa el día del evento', 'Producción integral de decoración y ambientación', 'Experiencia en cientos de fiestas de quince'],
-        timeline: [
-            { step: '01', title: 'Recepción', desc: 'Bienvenida de los invitados con ambientación especial y música de fondo.' },
-            { step: '02', title: 'Entrada de la festejada', desc: 'El momento más esperado: tu entrada triunfal con efectos y música en vivo.' },
-            { step: '03', title: 'Cena', desc: 'Menú cuidadosamente seleccionado con presentación de primer nivel.' },
-            { step: '04', title: 'Show en vivo', desc: 'Animación, coreografías y sorpresas que hacen el evento único.' },
-            { step: '05', title: 'Baile y celebración', desc: 'La pista se abre para festejar toda la noche con la mejor música.' },
-            { step: '06', title: 'Cierre memorable', desc: 'Despedida especial con detalles que los invitados llevan de recuerdo.' },
-        ],
         styles: [
             { name: 'Princesa', desc: 'Tonos pastel, flores y detalles románticos', bg: '#f9a8d4' },
             { name: 'Glamour', desc: 'Dorado, negro y un toque de sofisticación', bg: '#c9a84c' },
             { name: 'Boho', desc: 'Rústico, natural y lleno de personalidad', bg: '#c4a07a' },
             { name: 'Minimalista', desc: 'Líneas limpias, elegancia en la sencillez', bg: '#94a3b8' },
-        ],
-        includes: ['Salón premium', 'Decoración temática', 'DJ profesional', 'Iluminación escénica', 'Catering completo', 'Coordinadora del evento'],
-        testimonials: [
-            { name: 'Valentina M.', text: 'Fue la noche más especial de mi vida. Cada detalle estaba perfecto, desde la decoración hasta la música. Mis amigas siguen hablando de mis XV.', detail: 'XV años en Mar del Plata' },
-            { name: 'Sofía R.', text: 'Nunca pensé que iba a llorar de emoción al hacer mi entrada. El equipo de JR Eventos superó todas mis expectativas.', detail: 'Fiesta de XV — 200 invitados' },
         ],
     },
     casamiento: {
@@ -58,24 +45,11 @@ const THEMES = {
         emotionalTitle: 'El día más importante de tu vida merece ser perfecto.',
         emotionalDesc: 'Una boda no es solo una fiesta: es la celebración de una historia de amor. Cada flor, cada luz, cada canción debe contar algo de ustedes. Eso es lo que hacemos posible.',
         differentials: ['Wedding planning integral', 'Coordinación en tiempo real el día del evento', 'Proveedores de confianza con años de experiencia', 'Personalización total según su historia'],
-        timeline: [
-            { step: '01', title: 'Ceremonia', desc: 'El momento del "sí" en un ambiente íntimo y emocionante.' },
-            { step: '02', title: 'Sesión de fotos', desc: 'Captura de los mejores momentos con luz y escenografía ideal.' },
-            { step: '03', title: 'Cocktail', desc: 'Bienvenida a los invitados con bebidas y aperitivos de autor.' },
-            { step: '04', title: 'Cena de gala', desc: 'Banquete completo con menú personalizado y servicio de primer nivel.' },
-            { step: '05', title: 'Primer baile & show', desc: 'El momento más romántico de la noche con música y efectos especiales.' },
-            { step: '06', title: 'Celebración', desc: 'Pista de baile, DJ y brindis hasta el final de la noche.' },
-        ],
         styles: [
             { name: 'Clásico', desc: 'Blanco, marfil y detalles atemporales', bg: '#e8dcc8' },
             { name: 'Romántico', desc: 'Flores, velas y una atmósfera íntima', bg: '#f4c2c2' },
             { name: 'Moderno', desc: 'Líneas contemporáneas y elegancia urbana', bg: '#94a3b8' },
             { name: 'Jardín', desc: 'Verde, natural y lleno de vida', bg: '#86efac' },
-        ],
-        includes: ['Venue de primer nivel', 'Decoración floral', 'DJ y banda', 'Iluminación escénica', 'Catering premium', 'Wedding planner'],
-        testimonials: [
-            { name: 'Lucía & Martín', text: 'Fue exactamente como lo habíamos imaginado. El equipo estuvo presente en cada momento y resolvieron todo sin que nos diéramos cuenta.', detail: 'Boda — 150 invitados' },
-            { name: 'Camila & Diego', text: 'Nuestros invitados no paraban de hablar de lo bien organizado que estuvo todo. Cada detalle fue cuidado con un amor increíble.', detail: 'Casamiento de temporada' },
         ],
     },
     deportivo: {
@@ -92,24 +66,11 @@ const THEMES = {
         emotionalTitle: 'Donde el esfuerzo se convierte en espectáculo.',
         emotionalDesc: 'Un evento deportivo bien producido eleva la experiencia de atletas y espectadores. La energía del campo, amplificada por una producción profesional, crea momentos que se graban en la memoria.',
         differentials: ['Sonido e iluminación profesional para exteriores', 'Comunicación y cobertura en tiempo real', 'Logística y coordinación de espacios', 'Experiencia en torneos y competencias de alto nivel'],
-        timeline: [
-            { step: '01', title: 'Apertura del evento', desc: 'Ceremonia de apertura con presentación oficial y música.' },
-            { step: '02', title: 'Competencia', desc: 'Desarrollo del torneo con cobertura y transmisión en vivo.' },
-            { step: '03', title: 'Intermedio', desc: 'Shows, activaciones de marca y entretenimiento para el público.' },
-            { step: '04', title: 'Final', desc: 'El partido o prueba decisiva con producción escénica máxima.' },
-            { step: '05', title: 'Premiación', desc: 'Entrega de trofeos y medallas con ceremonia emotiva.' },
-            { step: '06', title: 'Cierre', desc: 'Festejo colectivo y cobertura final del evento.' },
-        ],
         styles: [
             { name: 'Profesional', desc: 'Estética de grandes ligas deportivas', bg: '#1d4ed8' },
             { name: 'Universitario', desc: 'Energético, colorido y lleno de pasión', bg: '#16a34a' },
             { name: 'Comunitario', desc: 'Cercano, familiar y festivo', bg: '#f59e0b' },
             { name: 'Premium', desc: 'Gala deportiva de alto nivel', bg: '#6d28d9' },
-        ],
-        includes: ['Escenografía deportiva', 'Sonido profesional outdoor', 'Pantallas LED', 'Iluminación nocturna', 'Cobertura fotográfica', 'Coordinación logística'],
-        testimonials: [
-            { name: 'Club Atlético Rivadavia', text: 'Transformaron nuestro torneo amateur en un espectáculo de primer nivel. Los jugadores y el público quedaron impresionados.', detail: 'Torneo regional — 800 asistentes' },
-            { name: 'Org. Running MdP', text: 'La producción fue impecable. Cada punto de la carrera estaba perfectamente equipado y el cierre fue increíble.', detail: 'Carrera 10K Mar del Plata' },
         ],
     },
     empresarial: {
@@ -126,24 +87,11 @@ const THEMES = {
         emotionalTitle: 'Tu marca merece una puesta en escena de primer nivel.',
         emotionalDesc: 'Un evento corporativo bien ejecutado no solo transmite profesionalismo: construye cultura, genera conexiones y potencia el impacto de tu mensaje. Cada detalle habla de quiénes son.',
         differentials: ['Producción audiovisual y escénica profesional', 'Planificación estratégica del evento', 'Logística integral y coordinación on-site', 'Experiencia con marcas líderes de la región'],
-        timeline: [
-            { step: '01', title: 'Acreditación', desc: 'Check-in organizado y bienvenida institucional.' },
-            { step: '02', title: 'Apertura oficial', desc: 'Presentación de autoridades y apertura del programa.' },
-            { step: '03', title: 'Programa central', desc: 'Conferencias, paneles o lanzamiento de producto.' },
-            { step: '04', title: 'Coffee & Networking', desc: 'Espacio pensado para conectar y compartir.' },
-            { step: '05', title: 'Gala o cena', desc: 'Celebración formal con producción escénica premium.' },
-            { step: '06', title: 'Cierre institucional', desc: 'Palabras finales y entrega de reconocimientos.' },
-        ],
         styles: [
             { name: 'Corporativo', desc: 'Serio, impecable y con identidad de marca', bg: '#1e40af' },
             { name: 'Gala', desc: 'Elegancia y distinción en cada detalle', bg: '#b45309' },
             { name: 'Moderno', desc: 'Tecnología, innovación y diseño de vanguardia', bg: '#0f766e' },
             { name: 'Outdoor', desc: 'Frescura y dinamismo fuera de la oficina', bg: '#15803d' },
-        ],
-        includes: ['Escenario y producción técnica', 'Sonido e iluminación profesional', 'Pantallas y videowall', 'Catering corporativo', 'Registro y acreditación', 'Coordinación ejecutiva'],
-        testimonials: [
-            { name: 'Grupo Empresarial Norte', text: 'El lanzamiento superó todas las expectativas. La producción fue impecable y cada momento del programa fluyó perfectamente.', detail: 'Lanzamiento de producto — 300 asistentes' },
-            { name: 'Cámara de Comercio MdP', text: 'Profesionalismo de principio a fin. Nuestros socios quedaron muy bien impresionados con la organización del congreso.', detail: 'Congreso anual — 500 participantes' },
         ],
     },
     egresados: {
@@ -160,24 +108,11 @@ const THEMES = {
         emotionalTitle: 'El final épico que esta etapa se merece.',
         emotionalDesc: 'Años de esfuerzo, momentos compartidos, amigos de por vida. La fiesta de egresados es el cierre perfecto antes de que cada uno tome su propio camino. Que sea una noche que nadie olvide.',
         differentials: ['Producción pensada para grupos grandes', 'DJ y animación de primer nivel', 'Coordinación con delegados del curso', 'Precios accesibles sin sacrificar calidad'],
-        timeline: [
-            { step: '01', title: 'Llegada', desc: 'Bienvenida al grupo con ambientación y música de entrada.' },
-            { step: '02', title: 'Cena', desc: 'Mesa compartida para disfrutar juntos la última gran noche.' },
-            { step: '03', title: 'Discurso y emotividad', desc: 'Palabras de despedida, homenajes y momentos únicos.' },
-            { step: '04', title: 'Show sorpresa', desc: 'Una actuación especial que nadie esperaba.' },
-            { step: '05', title: 'Baile', desc: 'La pista se llena con los temas que marcaron estos años.' },
-            { step: '06', title: 'Cierre', desc: 'El brindis final y los recuerdos que duran para siempre.' },
-        ],
         styles: [
             { name: 'Fiesta total', desc: 'Energía máxima, luces y una pista que no para', bg: '#7c3aed' },
             { name: 'Gala elegante', desc: 'Sofisticación y glamour para cerrar con clase', bg: '#1e3a5f' },
             { name: 'Temática', desc: 'Un concepto creativo que da identidad al grupo', bg: '#b45309' },
             { name: 'Open air', desc: 'Al aire libre, con toda la libertad del verano', bg: '#0f766e' },
-        ],
-        includes: ['Salón o locación especial', 'DJ y sonido profesional', 'Iluminación escénica', 'Cena o cóctel', 'Animación y shows', 'Fotografía del evento'],
-        testimonials: [
-            { name: 'Promo 2024 — Colegio Nacional', text: 'Fue la mejor noche de nuestras vidas. Todos quedamos impactados por la producción y lo bien que salió todo.', detail: 'Fiesta de egresados — 180 alumnos' },
-            { name: 'Delegados 5°A', text: 'Desde la primera reunión hasta el final de la noche, el equipo nos acompañó en todo. Recomendamos 100%.', detail: 'Egresados secundaria' },
         ],
     },
     cumple: {
@@ -194,24 +129,11 @@ const THEMES = {
         emotionalTitle: 'Tu cumpleaños, tu historia. Celebrala en grande.',
         emotionalDesc: 'Un cumpleaños no es solo otro año más: es una excusa perfecta para juntar a los que amás y crear una noche memorable. Nosotros nos encargamos de que todo salga perfecto para que vos solo disfrutes.',
         differentials: ['Concepto personalizado según tu estilo', 'Decoración a medida y producción integral', 'DJ, animación y shows en vivo', 'Coordinación total el día del festejo'],
-        timeline: [
-            { step: '01', title: 'Bienvenida', desc: 'Llegada de los invitados con ambientación temática.' },
-            { step: '02', title: 'Cóctel', desc: 'Aperitivos y bebidas mientras todos se encuentran.' },
-            { step: '03', title: 'Cena o merienda', desc: 'Banquete pensado según el horario y el estilo del festejo.' },
-            { step: '04', title: 'Momento del festejado', desc: 'El soplo de las velitas, el brindis y los mejores deseos.' },
-            { step: '05', title: 'Show y animación', desc: 'Entretenimiento sorpresa para todos los invitados.' },
-            { step: '06', title: 'Baile y cierre', desc: 'La pista se abre y la fiesta continúa hasta el final.' },
-        ],
         styles: [
             { name: 'Íntimo', desc: 'Cena privada con ambiente cálido y personal', bg: '#92400e' },
             { name: 'Festivo', desc: 'Colores, música y energía al máximo', bg: '#c2410c' },
             { name: 'Glam', desc: 'Elegancia y sofisticación para brillar', bg: '#be185d' },
             { name: 'Temático', desc: 'Un concepto creativo que te define', bg: '#1d4ed8' },
-        ],
-        includes: ['Decoración temática', 'DJ o música en vivo', 'Iluminación ambientación', 'Catering o buffet', 'Torta personalizada', 'Coordinación del evento'],
-        testimonials: [
-            { name: 'Romina P.', text: 'Para mis 30 quería algo especial y diferente. JR Eventos convirtió mi idea en una noche absolutamente mágica que nadie va a olvidar.', detail: 'Cumpleaños de 30 — 120 invitados' },
-            { name: 'Familia González', text: 'El cumpleaños de los 50 de mi mamá quedó perfecto. El equipo cuidó cada detalle con una dedicación increíble.', detail: 'Festejo familiar especial' },
         ],
     },
     infantil: {
@@ -228,24 +150,11 @@ const THEMES = {
         emotionalTitle: 'Un mundo mágico para el protagonista del día.',
         emotionalDesc: 'La infancia está hecha de momentos que se recuerdan para siempre. Una fiesta bien organizada, llena de color, juego y sorpresas, se convierte en uno de esos momentos especiales que llevan guardados toda la vida.',
         differentials: ['Animación especializada para niños', 'Decoración temática 100% personalizada', 'Producción segura y adaptada a todas las edades', 'Coordinación para que los papás también disfruten'],
-        timeline: [
-            { step: '01', title: 'Llegada mágica', desc: 'El festejado llega a un mundo transformado especialmente para él.' },
-            { step: '02', title: 'Juegos y actividades', desc: 'Animadores con dinámicas divertidas para todos los chicos.' },
-            { step: '03', title: 'Merienda o almuerzo', desc: 'El menú favorito del festejado servido con todo el amor.' },
-            { step: '04', title: 'Torta y velitas', desc: 'El momento más esperado con sorpresas y canciones.' },
-            { step: '05', title: 'Show especial', desc: 'Personajes, magia o acrobacias para dejar a todos con la boca abierta.' },
-            { step: '06', title: 'Regalitos y despedida', desc: 'Cierre con detalles para llevarse el recuerdo a casa.' },
-        ],
         styles: [
             { name: 'Superhéroes', desc: 'Aventura, poder y mucha acción', bg: '#1d4ed8' },
             { name: 'Princesas', desc: 'Magia, colores pastel y coronas', bg: '#db2777' },
             { name: 'Naturaleza', desc: 'Animales, flores y mundo natural', bg: '#16a34a' },
             { name: 'Personaje favorito', desc: 'El universo de lo que más les gusta', bg: '#d97706' },
-        ],
-        includes: ['Decoración temática', 'Animadores profesionales', 'Mesa de dulces', 'Torta personalizada', 'Juegos y actividades', 'Regalitos para los invitados'],
-        testimonials: [
-            { name: 'Papás de Juani', text: 'El cumpleaños de Juani fue un sueño hecho realidad. Los nenes estuvieron entretenidos toda la tarde y nosotros pudimos disfrutarlo.', detail: 'Cumpleaños de 5 años — temática dinosaurios' },
-            { name: 'Mamá de Cata', text: 'Nunca vi a mi hija tan feliz. El equipo de JR Eventos creó un mundo de princesas absolutamente increíble.', detail: 'Fiesta infantil — 60 invitados' },
         ],
     },
 };
@@ -263,24 +172,11 @@ const DEFAULT_THEME = {
     emotionalTitle: 'Cada evento es una historia única.',
     emotionalDesc: 'No existe un evento igual a otro. Cada celebración tiene su propia energía, sus propias emociones y sus propios protagonistas. Nuestro trabajo es capturar esa esencia y llevarla al máximo nivel.',
     differentials: ['Producción integral de principio a fin', 'Diseño y concepto personalizado', 'Coordinación completa el día del evento', 'Experiencia en todo tipo de eventos'],
-    timeline: [
-        { step: '01', title: 'Consulta inicial', desc: 'Entendemos tu visión y tus necesidades específicas.' },
-        { step: '02', title: 'Propuesta creativa', desc: 'Diseñamos el concepto ideal para tu evento.' },
-        { step: '03', title: 'Producción', desc: 'Coordinamos todos los recursos y proveedores.' },
-        { step: '04', title: 'Ensayo y preparación', desc: 'Revisamos cada detalle antes del gran día.' },
-        { step: '05', title: 'El evento', desc: 'Coordinación en tiempo real para que todo fluya.' },
-        { step: '06', title: 'Cierre', desc: 'Un final memorable que deja a todos con ganas de más.' },
-    ],
     styles: [
         { name: 'Elegante', desc: 'Clásico, sofisticado y atemporal', bg: '#1e3a5f' },
         { name: 'Moderno', desc: 'Vanguardista y con diseño contemporáneo', bg: '#0f172a' },
         { name: 'Festivo', desc: 'Colorido, dinámico y lleno de energía', bg: '#c2410c' },
         { name: 'Íntimo', desc: 'Cálido, personal y cercano', bg: '#92400e' },
-    ],
-    includes: ['Coordinación integral', 'Decoración y ambientación', 'DJ y sonido profesional', 'Iluminación escénica', 'Catering', 'Fotografía del evento'],
-    testimonials: [
-        { name: 'Cliente JR Eventos', text: 'La organización fue impecable de principio a fin. El equipo se encargó de todo y nosotros solo tuvimos que disfrutar.', detail: 'Evento especial — Mar del Plata' },
-        { name: 'Familia Martínez', text: 'Superaron todas nuestras expectativas. Cada detalle estaba pensado para hacer la experiencia única.', detail: 'Celebración familiar' },
     ],
 };
 
@@ -297,7 +193,13 @@ const WA_MSG = encodeURIComponent('Hola, vi un evento en su página y quiero pla
 export default function EventsShow({ event, relatedEvents = [] }) {
     const images = event.images ?? [];
     const theme = getTheme(event.title);
-    const heroImg = theme.hero ?? FALLBACK_HERO;
+    const heroImg = event.hero_image?.image_path
+        ? `/${event.hero_image.image_path}`
+        : (theme.hero ?? FALLBACK_HERO);
+
+    const timeline     = event.timeline     ?? [];
+    const includes     = event.includes     ?? [];
+    const testimonials = event.testimonials ?? [];
 
     const featureImages = images.length >= 4 ? images.slice(1, 4) : [];
     const galleryImages = images.length >= 4 ? images.slice(4) : images.slice(1);
@@ -459,32 +361,34 @@ export default function EventsShow({ event, relatedEvents = [] }) {
                 </section>
 
                 {/* TIMELINE */}
-                <section className="px-8 lg:px-32 py-20 border-t border-white/5">
-                    <div className="mb-14">
-                        <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Cómo se vive</p>
-                        <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
-                            La experiencia, <span style={{ color: theme.accent }}>paso a paso</span>
-                        </h2>
-                    </div>
-                    <div className="relative">
-                        <div className="absolute left-6 top-0 bottom-0 w-px hidden lg:block" style={{ background: `linear-gradient(to bottom, ${theme.accent}60, transparent)` }} />
-                        <div className="flex flex-col gap-0">
-                            {theme.timeline.map((step, i) => (
-                                <div key={i} className="relative flex gap-8 lg:gap-12 items-start group">
-                                    <div className="flex-shrink-0 relative z-10">
-                                        <div className="w-12 h-12 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 group-hover:scale-110" style={{ background: `${theme.accent}15`, border: `2px solid ${theme.accent}40`, color: theme.accent }}>
-                                            {step.step}
+                {timeline.length > 0 && (
+                    <section className="px-8 lg:px-32 py-20 border-t border-white/5">
+                        <div className="mb-14">
+                            <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Cómo se vive</p>
+                            <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
+                                La experiencia, <span style={{ color: theme.accent }}>paso a paso</span>
+                            </h2>
+                        </div>
+                        <div className="relative">
+                            <div className="absolute left-6 top-0 bottom-0 w-px hidden lg:block" style={{ background: `linear-gradient(to bottom, ${theme.accent}60, transparent)` }} />
+                            <div className="flex flex-col gap-0">
+                                {timeline.map((step, i) => (
+                                    <div key={i} className="relative flex gap-8 lg:gap-12 items-start group">
+                                        <div className="flex-shrink-0 relative z-10">
+                                            <div className="w-12 h-12 rounded-full flex items-center justify-center font-black text-sm transition-all duration-300 group-hover:scale-110" style={{ background: `${theme.accent}15`, border: `2px solid ${theme.accent}40`, color: theme.accent }}>
+                                                {step.step}
+                                            </div>
+                                        </div>
+                                        <div className="pb-12 flex-1">
+                                            <h3 className="font-extrabold text-lg uppercase tracking-tight mb-2 group-hover:text-white transition-colors" style={{ color: `${theme.accent}cc` }}>{step.title}</h3>
+                                            <p className="text-white/50 leading-relaxed">{step.desc}</p>
                                         </div>
                                     </div>
-                                    <div className="pb-12 flex-1">
-                                        <h3 className="font-extrabold text-lg uppercase tracking-tight mb-2 group-hover:text-white transition-colors" style={{ color: `${theme.accent}cc` }}>{step.title}</h3>
-                                        <p className="text-white/50 leading-relaxed">{step.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
                 {/* FEATURE SPREAD */}
                 {featureImages.length >= 2 && (
@@ -555,49 +459,53 @@ export default function EventsShow({ event, relatedEvents = [] }) {
                 </section>
 
                 {/* QUÉ INCLUYE */}
-                <section className="px-8 lg:px-32 py-20 border-t border-white/5" style={{ background: 'linear-gradient(180deg, #050505 0%, #000 100%)' }}>
-                    <div className="mb-12">
-                        <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Producción completa</p>
-                        <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
-                            Todo lo que <span style={{ color: theme.accent }}>incluye</span>
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {theme.includes.map((item, i) => (
-                            <div key={i} className="flex items-center gap-4 rounded-xl px-5 py-4 border border-white/6 hover:border-white/15 transition-all" style={{ background: '#0d0d0d' }}>
-                                <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${theme.accent}15` }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} style={{ color: theme.accent }}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                    </svg>
+                {includes.length > 0 && (
+                    <section className="px-8 lg:px-32 py-20 border-t border-white/5" style={{ background: 'linear-gradient(180deg, #050505 0%, #000 100%)' }}>
+                        <div className="mb-12">
+                            <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Producción completa</p>
+                            <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
+                                Todo lo que <span style={{ color: theme.accent }}>incluye</span>
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {includes.map((item, i) => (
+                                <div key={i} className="flex items-center gap-4 rounded-xl px-5 py-4 border border-white/6 hover:border-white/15 transition-all" style={{ background: '#0d0d0d' }}>
+                                    <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${theme.accent}15` }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} style={{ color: theme.accent }}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <span className="font-semibold text-white/75 text-sm">{item}</span>
                                 </div>
-                                <span className="font-semibold text-white/75 text-sm">{item}</span>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* TESTIMONIOS */}
-                <section className="px-8 lg:px-32 py-20 border-t border-white/5">
-                    <div className="mb-12">
-                        <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Lo que dicen</p>
-                        <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
-                            Experiencias <span style={{ color: theme.accent }}>reales</span>
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {theme.testimonials.map((t, i) => (
-                            <div key={i} className="rounded-2xl p-8 border border-white/8 hover:border-white/15 transition-all duration-300 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #111 0%, #0a0a0a 100%)' }}>
-                                <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl" style={{ background: `linear-gradient(to bottom, ${theme.accent}, ${theme.accent}20)` }} />
-                                <div className="text-5xl font-black leading-none mb-4 opacity-20" style={{ color: theme.accent }}>"</div>
-                                <p className="text-white/65 leading-relaxed mb-6 text-lg italic">"{t.text}"</p>
-                                <div>
-                                    <p className="font-extrabold text-white text-sm">{t.name}</p>
-                                    <p className="text-xs font-medium mt-0.5" style={{ color: `${theme.accent}99` }}>{t.detail}</p>
+                {testimonials.length > 0 && (
+                    <section className="px-8 lg:px-32 py-20 border-t border-white/5">
+                        <div className="mb-12">
+                            <p className="text-xs font-black tracking-[0.3em] uppercase mb-3" style={{ color: theme.accent }}>Lo que dicen</p>
+                            <h2 className="text-3xl lg:text-4xl font-black tracking-tight uppercase">
+                                Experiencias <span style={{ color: theme.accent }}>reales</span>
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {testimonials.map((t, i) => (
+                                <div key={i} className="rounded-2xl p-8 border border-white/8 hover:border-white/15 transition-all duration-300 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #111 0%, #0a0a0a 100%)' }}>
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl" style={{ background: `linear-gradient(to bottom, ${theme.accent}, ${theme.accent}20)` }} />
+                                    <div className="text-5xl font-black leading-none mb-4 opacity-20" style={{ color: theme.accent }}>"</div>
+                                    <p className="text-white/65 leading-relaxed mb-6 text-lg italic">"{t.text}"</p>
+                                    <div>
+                                        <p className="font-extrabold text-white text-sm">{t.name}</p>
+                                        <p className="text-xs font-medium mt-0.5" style={{ color: `${theme.accent}99` }}>{t.detail}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* BANNER CTA */}
                 <section className="mx-8 lg:mx-32 mb-24 rounded-2xl overflow-hidden relative" style={{ background: `linear-gradient(135deg, ${theme.accent}18 0%, #111 60%)`, border: `1px solid ${theme.accent}25` }}>
@@ -631,7 +539,9 @@ export default function EventsShow({ event, relatedEvents = [] }) {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                             {relatedEvents.map((item) => {
-                                const cover = item.images?.[0]?.image_path ? `/${item.images[0].image_path}` : null;
+                                const cover = item.card_image?.image_path
+                                    ? `/${item.card_image.image_path}`
+                                    : (item.images?.[0]?.image_path ? `/${item.images[0].image_path}` : null);
                                 const relTheme = getTheme(item.title);
                                 return (
                                     <Link key={item.id} href={route('eventos.show', item.id)} className="group relative overflow-hidden rounded-2xl bg-[#111] border border-white/5 hover:border-white/15 transition-all duration-300">
