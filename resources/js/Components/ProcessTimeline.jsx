@@ -42,6 +42,7 @@ const STEPS = [
 
 // intro + 6 steps + CTA
 const TOTAL = STEPS.length + 2;
+const DISPLAY_TOTAL = STEPS.length + 1;
 
 const SLIDE_TRANSITION = 'opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1)';
 
@@ -75,7 +76,7 @@ export default function ProcessTimeline() {
 
     const isIntro = activeIndex === 0;
     const isCTA = activeIndex === TOTAL - 1;
-    const stepIndex = !isIntro && !isCTA ? activeIndex - 1 : -1;
+    const currentDisplayStep = isCTA ? DISPLAY_TOTAL : Math.max(activeIndex, 1);
 
     return (
         <section
@@ -97,18 +98,18 @@ export default function ProcessTimeline() {
 
                 {/* ── Indicadores laterales — desktop ─────────────────────────── */}
                 <div
-                    className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col gap-4 z-20 transition-opacity duration-700"
-                    style={{ opacity: (isIntro || isCTA) ? 0 : 1 }}
+                    className="hidden lg:flex absolute right-12 top-1/2 -translate-y-1/2 flex-col gap-3 z-20 transition-opacity duration-700"
+                    style={{ opacity: isIntro ? 0 : 1 }}
                     aria-hidden="true"
                 >
-                    {STEPS.map((_, i) => (
+                    {Array.from({ length: DISPLAY_TOTAL }).map((_, i) => (
                         <div
                             key={i}
                             className="rounded-full transition-all duration-500"
                             style={{
-                                width: '10px',
-                                height: i === stepIndex ? '48px' : '10px',
-                                background: i === stepIndex ? '#ffffff' : 'rgba(255,255,255,0.25)',
+                                width: '8px',
+                                height: i === currentDisplayStep - 1 ? '40px' : '8px',
+                                background: i === currentDisplayStep - 1 ? 'rgba(253,224,71,0.95)' : 'rgba(255,255,255,0.18)',
                             }}
                         />
                     ))}
@@ -133,7 +134,7 @@ export default function ProcessTimeline() {
                         <span
                             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs tracking-[0.3em] text-white/40 uppercase font-semibold mb-8 select-none"
                         >
-                            Nuestro proceso &mdash; {STEPS.length} pasos
+                            Nuestro proceso &mdash; {DISPLAY_TOTAL} pasos
                         </span>
 
                         {/* Línea separadora */}
@@ -166,7 +167,7 @@ export default function ProcessTimeline() {
                         {/* Mini indicadores de pasos + hint */}
                         <div className="mt-10 flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                {STEPS.map((_, i) => (
+                                {Array.from({ length: DISPLAY_TOTAL }).map((_, i) => (
                                     <div
                                         key={i}
                                         className="rounded-full bg-white/20"
@@ -330,35 +331,34 @@ export default function ProcessTimeline() {
                 </div>
 
             {/* ── Flechas de navegación ─────────────────────────────────────── */}
-            {/* Mobile: centradas con contador en medio | Desktop: esquina inferior derecha */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-32 lg:bottom-12 z-20 flex items-center gap-4 lg:gap-5">
+            {/* Mobile: centradas y mas cerca del contenido | Desktop: alineadas a la izquierda */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-24 sm:bottom-20 lg:left-32 lg:top-[76%] lg:bottom-auto lg:translate-x-0 z-20 flex items-center gap-4 lg:gap-6">
                 <button
                     onClick={prev}
                     disabled={activeIndex === 0}
                     aria-label="Paso anterior"
-                    className="flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 rounded-full border border-yellow-300/30 text-yellow-300 transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300/70 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
+                    className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-[4.5rem] lg:h-[4.5rem] rounded-full border border-yellow-300/60 bg-black/35 text-yellow-300 shadow-[0_0_30px_rgba(253,224,71,0.12)] backdrop-blur-sm transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
                 >
-                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 lg:w-7 lg:h-7 stroke-current">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 stroke-current">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                 </button>
 
                 {/* Contador — visible solo en mobile, en el centro */}
                 <span
-                    className="lg:hidden text-white/35 text-xs font-bold tracking-[0.3em] uppercase w-16 text-center transition-opacity duration-500"
-                    style={{ opacity: stepIndex >= 0 ? 1 : 0 }}
-                    aria-hidden="true"
+                    className="min-w-[92px] text-center text-sm font-bold tracking-[0.32em] text-white/70 uppercase sm:text-base"
+                    aria-live="polite"
                 >
-                    {String(Math.max(stepIndex + 1, 1)).padStart(2, '0')}&thinsp;/&thinsp;{String(STEPS.length).padStart(2, '0')}
+                    {String(currentDisplayStep).padStart(2, '0')}&thinsp;/&thinsp;{String(DISPLAY_TOTAL).padStart(2, '0')}
                 </span>
 
                 <button
                     onClick={next}
                     disabled={activeIndex === TOTAL - 1}
                     aria-label="Paso siguiente"
-                    className="flex items-center justify-center w-12 h-12 lg:w-16 lg:h-16 rounded-full border border-yellow-300/30 text-yellow-300 transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300/70 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
+                    className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-[4.5rem] lg:h-[4.5rem] rounded-full border border-yellow-300/60 bg-black/35 text-yellow-300 shadow-[0_0_30px_rgba(253,224,71,0.12)] backdrop-blur-sm transition-all duration-200 hover:bg-yellow-300/15 hover:border-yellow-300 hover:scale-110 active:scale-90 active:bg-yellow-300/25 disabled:opacity-20 disabled:pointer-events-none"
                 >
-                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 lg:w-7 lg:h-7 stroke-current">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 stroke-current">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                 </button>

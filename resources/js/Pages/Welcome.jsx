@@ -105,8 +105,6 @@ export default function Welcome() {
             {/* TIMELINE DE PROCESO */}
             <ProcessTimeline />
 
-            {/* FAQ */}
-            <FaqSection />
 
             {/* SECCIÓN CLIENTES */}
             <section className="bg-black py-20 px-8 lg:px-32 overflow-hidden">
@@ -205,6 +203,9 @@ export default function Welcome() {
 
                 </div>
             </section>
+
+            {/* FAQ */}
+            <FaqSection />
 
             <Footer />
         </>
