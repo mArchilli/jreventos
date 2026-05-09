@@ -50,7 +50,7 @@ export default function AboutTimeLine() {
                         className="mt-8 leading-relaxed text-white/60 font-semibold"
                         style={{ fontSize: 'clamp(17px, 2vw, 26px)', maxWidth: '820px' }}
                     >
-                        Porque somos más que una productora de eventos, somos especialistas en que puedas cumplir el evento de tus sueños, seguí leyendo y descubrí qué nos hace la opción correcta para vos.
+                        Somos más que una productora de eventos, somos especialistas en que puedas cumplir la fiesta de tus sueños, seguí leyendo y descubrí qué nos hace la opción correcta para vos.
                     </p>
                     <div className="mt-10">
                         <a
@@ -88,7 +88,7 @@ export default function AboutTimeLine() {
                                     className="text-white/50 leading-relaxed"
                                     style={{ fontSize: 'clamp(14px, 1.4vw, 18px)' }}
                                 >
-                                    Con más de 17 años de experiencia, en JR&nbsp;Eventos nos especializamos en transformar ideas en celebraciones memorables. Desde bodas íntimas, pasando por XV's y hasta grandes producciones corporativas, nuestro equipo de profesionales dedicados acompañan cada evento con dedicación, creatividad y una gestión integral que garantiza resultados impecables.
+                                    Con más de 17 años de experiencia, en JR&nbsp;Eventos nos especializamos en transformar ideas en celebraciones memorables. Desde bodas íntimas, pasando por XV's y hasta grandes producciones corporativas, nuestro equipo de profesionales acompañan cada evento con dedicación, creatividad y una gestión integral que garantiza resultados impecables.
                                 </p>
                                 <p
                                     className="text-white/50 leading-relaxed"

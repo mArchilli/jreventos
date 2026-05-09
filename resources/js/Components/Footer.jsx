@@ -84,7 +84,7 @@ export default function Footer() {
                             <span className="text-yellow-300">TU GRAN MOMENTO</span>
                         </h2>
                         <p className="text-neutral-400 text-lg md:text-xl max-w-xl leading-relaxed">
-                            Transformamos visiones en experiencias cinéticas que perduran en la memoria. Nuestro equipo de producción está a un clic de distancia.
+                            Transformamos visiones en experiencias cinéticas que perduran en la memoria. Nuestro equipo de producción está a un clic de distancia. Te aseguramos qué vos tus invitados vivan un momento mágico e inolvidable.
                         </p>
                     </div>
                     <div className="w-full">

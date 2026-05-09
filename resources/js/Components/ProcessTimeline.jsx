@@ -44,6 +44,9 @@ const STEPS = [
 const TOTAL = STEPS.length + 2;
 const DISPLAY_TOTAL = STEPS.length + 1;
 
+STEPS[5].description =
+    'Dias despues del evento nos pondremos en copntacto para saber como fue tu experiencia. Si tu fiesta cumplio tu sueño, te pediremos una reseña para nuestras redes y te devolvemos el 5% para que ahora disfrutes tu momento.';
+
 const SLIDE_TRANSITION = 'opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1)';
 
 export default function ProcessTimeline() {
