@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { useEffect, useRef } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { getMainWhatsAppHref } from '@/utils/whatsapp';
 
 /* ─── Hook: fade-in al hacer scroll ─────────────────────────── */
 function useFadeIn(threshold = 0.12) {
@@ -54,6 +55,8 @@ const processSteps = [
     { step: '04', title: 'El gran día',        desc: 'Estamos presentes en cada momento para garantizar que todo fluya perfectamente sin que te preocupes por nada.' },
     { step: '05', title: 'Post-evento',        desc: 'Hacemos un seguimiento para asegurarnos de que todo quedó como esperabas y recibir tu valoración.' },
 ];
+
+const ABOUT_WHATSAPP_HREF = getMainWhatsAppHref('Hola, quiero consultar sobre JR Eventos y sus servicios.');
 
 export default function About() {
     const identityRef = useFadeIn(0.08);
@@ -256,7 +259,7 @@ export default function About() {
                     {/* Botón contactar */}
                     <div className="mt-14 flex justify-center">
                         <a
-                            href="https://wa.me/"
+                            href={ABOUT_WHATSAPP_HREF}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-gray-100 hover:shadow-xl hover:scale-105 active:scale-95"

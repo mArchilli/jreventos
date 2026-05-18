@@ -1,8 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { getProductsWhatsAppHref } from '@/utils/whatsapp';
 
 const IMAGES_PATH = import.meta.env.VITE_PRODUCTS_IMAGES_PATH ?? '/images/products/';
+const PRODUCTS_INDEX_WHATSAPP_HREF = getProductsWhatsAppHref('Hola! Le hago una consulta por los productos de la página.');
 
 export default function ProductsIndex({ products }) {
     return (
@@ -62,7 +64,7 @@ export default function ProductsIndex({ products }) {
                         Contactanos y te armamos una propuesta a medida.
                     </p>
                     <a
-                        href="https://wa.me/"
+                        href={PRODUCTS_INDEX_WHATSAPP_HREF}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-yellow-300 hover:shadow-xl hover:scale-105 active:scale-95"

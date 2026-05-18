@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { getMainWhatsAppHref } from '@/utils/whatsapp';
 
 const IMAGES_PATH = import.meta.env.VITE_ARTISTS_IMAGES_PATH ?? '/images/artists/';
 const FALLBACK_HERO = '/images/fondo-hero.jpg';
-
-const WA_MSG = encodeURIComponent('Hola, vi un artista en su página y quiero consultarles para contratar para mi evento');
 
 export default function ArtistsShow({ artist, relatedArtists = [] }) {
     const images = artist.images ?? [];
@@ -17,6 +16,7 @@ export default function ArtistsShow({ artist, relatedArtists = [] }) {
     // Feature spread: imagenes 1-3 (si hay 4+), galería: resto
     const featureImages = images.length >= 4 ? images.slice(1, 4) : [];
     const galleryImages = images.length >= 4 ? images.slice(4) : images.slice(1);
+    const artistWhatsAppHref = getMainWhatsAppHref(`Hola, quiero consultar por ${artist.name} para mi evento.`);
 
     const [lightbox, setLightbox] = useState(null);
     const [lightboxIdx, setLightboxIdx] = useState(0);
@@ -158,7 +158,7 @@ export default function ArtistsShow({ artist, relatedArtists = [] }) {
                                     <div className="h-px bg-white/8" />
                                     <div className="flex flex-col gap-3">
                                         <a
-                                            href={`https://wa.me/?text=${WA_MSG}`}
+                                            href={artistWhatsAppHref}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center justify-center gap-3 bg-[#fdd835] text-[#5b4b00] font-extrabold py-4 px-6 rounded-full text-base hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#fdd835]/15"
@@ -289,7 +289,7 @@ export default function ArtistsShow({ artist, relatedArtists = [] }) {
                             Hablá con nosotros hoy y te armamos una propuesta personalizada sin costo.
                         </p>
                         <a
-                            href={`https://wa.me/?text=${WA_MSG}`}
+                            href={artistWhatsAppHref}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 bg-[#fdd835] text-[#5b4b00] font-extrabold py-4 px-10 rounded-full text-base hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#fdd835]/20"
@@ -369,7 +369,7 @@ export default function ArtistsShow({ artist, relatedArtists = [] }) {
             {/* MOBILE CTA FIJO */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/8 px-5 py-4">
                 <a
-                    href={`https://wa.me/?text=${WA_MSG}`}
+                    href={artistWhatsAppHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex w-full items-center justify-center gap-3 bg-[#fdd835] text-[#5b4b00] font-extrabold py-4 rounded-full text-base active:scale-95 transition-all shadow-lg shadow-[#fdd835]/20"

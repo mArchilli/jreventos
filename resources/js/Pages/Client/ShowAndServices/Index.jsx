@@ -1,8 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { getMainWhatsAppHref } from '@/utils/whatsapp';
 
 const IMAGES_PATH = import.meta.env.VITE_SHOWANDSERVICES_IMAGES_PATH ?? '/images/show-and-services/';
+const SHOWS_INDEX_WHATSAPP_HREF = getMainWhatsAppHref('Hola, quiero consultar por los shows y servicios para mi evento.');
 
 export default function ShowAndServicesIndex({ shows }) {
     return (
@@ -64,7 +66,7 @@ export default function ShowAndServicesIndex({ shows }) {
                         Contactanos y armamos juntos la propuesta ideal para vos.
                     </p>
                     <a
-                        href="https://wa.me/"
+                        href={SHOWS_INDEX_WHATSAPP_HREF}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-base font-bold text-black shadow-lg transition duration-200 hover:bg-yellow-300 hover:shadow-xl hover:scale-105 active:scale-95"

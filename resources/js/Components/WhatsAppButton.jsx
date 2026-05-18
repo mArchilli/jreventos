@@ -1,8 +1,9 @@
 import { usePage } from '@inertiajs/react';
+import { getSectionWhatsAppHref } from '@/utils/whatsapp';
 
 const HIDDEN_COMPONENTS = ['Client/Events/Show'];
-const WHATSAPP_NUMBER = '541123456789';
-const DEFAULT_MESSAGE = 'Hola JR Eventos, quiero consultar por un evento.';
+const DEFAULT_MESSAGE = 'Hola, quiero hacer una consulta sobre un evento.';
+const PRODUCTS_MESSAGE = 'Hola! Le hago una consulta por los productos de la página.';
 
 const WHATSAPP_ICON = (
     <svg
@@ -18,6 +19,10 @@ const WHATSAPP_ICON = (
 
 export default function WhatsAppButton() {
     const { component } = usePage();
+    const whatsappHref = getSectionWhatsAppHref(component, {
+        mainMessage: DEFAULT_MESSAGE,
+        productsMessage: PRODUCTS_MESSAGE,
+    });
 
     if (HIDDEN_COMPONENTS.includes(component)) {
         return null;
@@ -25,7 +30,7 @@ export default function WhatsAppButton() {
 
     return (
         <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`}
+            href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Abrir WhatsApp"

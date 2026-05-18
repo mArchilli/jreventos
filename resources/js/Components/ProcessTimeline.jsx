@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { getMainWhatsAppHref } from '@/utils/whatsapp';
 // CAROUSEL VERSION — replaced scroll-snap with click/swipe navigation
 
 const STEPS = [
@@ -48,6 +49,7 @@ STEPS[5].description =
     'Dias despues del evento nos pondremos en copntacto para saber como fue tu experiencia. Si tu fiesta cumplio tu sueño, te pediremos una reseña para nuestras redes y te devolvemos el 5% para que ahora disfrutes tu momento.';
 
 const SLIDE_TRANSITION = 'opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1)';
+const TIMELINE_WHATSAPP_HREF = getMainWhatsAppHref('Hola, quiero planificar mi evento con JR Eventos.');
 
 export default function ProcessTimeline() {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -305,7 +307,7 @@ export default function ProcessTimeline() {
 
                         {/* Botón */}
                         <a
-                            href="https://wa.me/?text=Hola%2C%20quiero%20planificar%20mi%20evento%20con%20JR%20Eventos"
+                            href={TIMELINE_WHATSAPP_HREF}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="

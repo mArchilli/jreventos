@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { getProductsWhatsAppHref } from '@/utils/whatsapp';
 
 const IMAGES_PATH = import.meta.env.VITE_PRODUCTS_IMAGES_PATH ?? '/images/products/';
 
@@ -16,6 +17,7 @@ export default function ProductsShow({ product, relatedProducts = [] }) {
 
     const activeOrFallback = activeImg ?? mainImage?.filename ?? null;
     const thumbs = allImages.slice(0, 4);
+    const productWhatsAppHref = getProductsWhatsAppHref(`Hola! Le hago una consulta por el producto ${product.title} que vi en la página.`);
 
     const closeLightbox = () => { setLightbox(null); setZoom(1); };
 
@@ -171,7 +173,7 @@ export default function ProductsShow({ product, relatedProducts = [] }) {
                             {/* CTAs */}
                             <div className="flex flex-col gap-4">
                                 <a
-                                    href="https://wa.me/"
+                                    href={productWhatsAppHref}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-center gap-3 bg-[#fdd835] text-[#5b4b00] font-extrabold py-5 px-8 rounded-full text-lg hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#fdd835]/10"

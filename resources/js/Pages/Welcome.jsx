@@ -5,21 +5,25 @@ import AboutTimeLine from '@/Components/AboutTimeLine';
 import EventCategories from '@/Components/EventCategories';
 import ProcessTimeline from '@/Components/ProcessTimeline';
 import FaqSection from '@/Components/FaqSection';
+import { getMainWhatsAppHref } from '@/utils/whatsapp';
 
 const clientLogos = [
     '/images/clientes-1.png',
     '/images/clientes-3.png',
     '/images/clientes-5.png',
-    '/images/clientes-7.png',
+    '/images/clientes-2.png',
     '/images/clientes-8.png',
 ];
 
 const clientLogos2 = [
-    '/images/clientes-2.png',
     '/images/clientes-4.png',
     '/images/clientes-6.png',
     '/images/clientes-1.png',
+    '/images/clientes-3.png',
 ];
+
+const HERO_WHATSAPP_HREF = getMainWhatsAppHref('Hola, quiero consultar por la organización de un evento.');
+const ADVISOR_WHATSAPP_HREF = getMainWhatsAppHref('Hola, quiero hablar con un asesor sobre mi evento.');
 
 export default function Welcome() {
     return (
@@ -64,7 +68,7 @@ export default function Welcome() {
                             Conoce como trabajamos
                         </a>
                         <a
-                            href="https://wa.me/tuNumero"
+                            href={HERO_WHATSAPP_HREF}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 rounded-full border-2 border-white/70 bg-transparent px-7 py-3 text-base font-bold text-white backdrop-blur-sm transition duration-200 hover:bg-white/20 hover:border-white hover:scale-105 active:scale-95"
@@ -120,7 +124,7 @@ export default function Welcome() {
                         <p className="text-white/60 text-lg font-medium">Ellos ya confiaron en nosotros, podes hacerlo vos también</p>
                         {/* Botón solo en desktop */}
                         <a
-                             href="https://wa.me/"
+                             href={ADVISOR_WHATSAPP_HREF}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hidden lg:inline-flex items-center gap-3 bg-white hover:bg-gray-100 hover:shadow-xl hover:scale-105 active:scale-95 text-gray-900 font-semibold py-3.5 px-7 rounded-full transition duration-200 w-fit text-lg shadow-lg"
@@ -152,7 +156,7 @@ export default function Welcome() {
                         >
                             {[...clientLogos2, ...clientLogos2, ...clientLogos2].map((src, i) => (
                                 <div key={`down-${i}`} className="flex items-center justify-center bg-white/5 rounded-2xl p-6 w-64 shrink-0 mb-8" style={{ height: '160px' }}>
-                                    <img src={src} alt="cliente" className={`max-h-24 max-w-full object-contain${src.includes('clientes-2') ? ' brightness-0 invert' : ''}`} />
+                                    <img src={src} alt="cliente" className="max-h-24 max-w-full object-contain" />
                                 </div>
                             ))}
                         </div>
@@ -177,19 +181,19 @@ export default function Welcome() {
                         <div className="overflow-hidden">
                             <div
                                 className="flex animate-scroll-right will-change-transform"
-                                style={{ '--set-width': `${clientLogos2.length * (160 + 24)}px` }}
-                            >
-                                {[...clientLogos2, ...clientLogos2, ...clientLogos2].map((src, i) => (
-                                    <div key={`right-${i}`} className="flex items-center justify-center bg-white/5 rounded-2xl p-4 shrink-0 mr-6" style={{ width: '160px', height: '120px' }}>
-                                        <img src={src} alt="cliente" className={`max-h-16 max-w-full object-contain${src.includes('clientes-2') ? ' brightness-0 invert' : ''}`} />
-                                    </div>
-                                ))}
-                            </div>
+                            style={{ '--set-width': `${clientLogos2.length * (160 + 24)}px` }}
+                        >
+                            {[...clientLogos2, ...clientLogos2, ...clientLogos2].map((src, i) => (
+                                <div key={`right-${i}`} className="flex items-center justify-center bg-white/5 rounded-2xl p-4 shrink-0 mr-6" style={{ width: '160px', height: '120px' }}>
+                                    <img src={src} alt="cliente" className="max-h-16 max-w-full object-contain" />
+                                </div>
+                            ))}
+                        </div>
                         </div>
 
                         {/* Botón solo en mobile, debajo del carrusel */}
                         <a
-                            href="https://wa.me/"
+                            href={ADVISOR_WHATSAPP_HREF}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex self-start items-center justify-center gap-2 bg-white hover:bg-gray-100 active:scale-95 text-gray-900 font-semibold py-3 px-6 rounded-full transition duration-200 w-fit text-sm shadow-lg mt-4"
